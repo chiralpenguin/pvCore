@@ -1,0 +1,7 @@
+# pvCore version 1.0
+verbose: false
+
+rules:
+  - "1. No hacks"
+  - "2. No exploits"
+  - "3. No lag machines"
