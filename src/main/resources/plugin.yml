@@ -6,3 +6,13 @@ authors: [chiralpenguin]
 description: Core plugin suite for the Purity Vanilla Minecraft server
 folia-supported: true
 depend: [pvLib]
+commands:
+  help:
+    description: Sends the help message for the corresponding page (default 0)
+    usage: /help <page>
+    permission: pvcore.help
+  rules:
+    description: Sends the server rules message
+    usage: /rules
+    permission: pvcore.rules
+    aliases: [rule]

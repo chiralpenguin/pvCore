@@ -1,4 +1,24 @@
 {
+  "help1": [
+    "<b><green>----- <aqua>Purity Vanilla Commands <green>-----</b>",
+    "<b><dark_purple>/help <page> </b><light_purple>- This list of commands",
+    "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules.",
+    "<yellow>(1/3)"
+  ],
+  "help2": [
+    "<b><green>----- <aqua>Purity Vanilla Commands <green>-----</b>",
+    "<b><dark_purple>/help <page> </b><light_purple>- This list of commands",
+    "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules.",
+    "<yellow>(2/3)"
+  ],
+  "help3": [
+    "<b><green>----- <aqua>Purity Vanilla Commands <green>-----</b>",
+    "<b><dark_purple>/help <page> </b><light_purple>- This list of commands",
+    "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules.",
+    "<yellow>(3/3)"
+  ],
+  "help-invalid-page": "<dark_red>Please select a page between 1-3",
+  "no-permission": "<dark_red>You do not have permission to use this command.",
   "rules": [
     "<b><green>----- <dark_red>Purity Vanilla Rules <green>-----</b>",
     "<b><dark_red>1.</b> <red>No lag machines or deliberate overuse of server resources.",
