@@ -1,23 +1,19 @@
 package com.purityvanilla.pvcore;
 
-import com.purityvanilla.pvlib.ConfigFile;
-import io.leangen.geantyref.TypeToken;
-
-import java.util.List;
+import com.purityvanilla.pvlib.config.ConfigFile;
+import com.purityvanilla.pvlib.config.Messages;
 
 public class Config extends ConfigFile {
     private final Boolean verbose;
-    private final List<String> rules;
 
-    public Config(String filename) {
-        super(filename);
+    public Config() {
+        super("plugins/pvCore/config.yml");
+        messages = new Messages(this, "plugins/pvCore/messages.json");
 
         verbose = configRoot.node("verbose").getBoolean();
-        rules = configRoot.node("rules").getList(new TypeToken<String>(){}.getType());
     }
 
     public Boolean getVerbose() {
         return verbose;
     }
-
 }

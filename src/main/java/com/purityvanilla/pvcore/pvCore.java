@@ -7,7 +7,7 @@ public class pvCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        config = new Config("plugins/pvCore/config.yml");
-        getLogger().info("Plugin enabled");
+        config = new Config();
+        getLogger().info("Plugin loaded");
     }
 }
