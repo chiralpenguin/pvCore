@@ -15,7 +15,6 @@ repositories {
 dependencies {
     compileOnly("dev.folia", "folia-api", "1.20.1-R0.1-SNAPSHOT")
     compileOnly("com.purityvanilla", "pvLib", "1.0")
-    compileOnly("net.kyori", "adventure-text-minimessage", "4.17.0")
 }
 
 tasks.shadowJar {

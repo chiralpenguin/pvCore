@@ -1,29 +1,36 @@
 {
+  "console-only": "<red>This command can only be used from console.",
+  "player-only": "<red>This command can only be used by a player.",
+  "player-not-found": "<red>Player could not be found.",
   "help1": [
     "<b><green>----- <aqua>Purity Vanilla Commands <green>-----</b>",
-    "<b><dark_purple>/help <page> </b><light_purple>- This list of commands",
+    "<b><dark_purple>/help <page> </b><light_purple>- This list of commands.",
     "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules.",
     "<yellow>(1/3)"
   ],
   "help2": [
     "<b><green>----- <aqua>Purity Vanilla Commands <green>-----</b>",
-    "<b><dark_purple>/help <page> </b><light_purple>- This list of commands",
+    "<b><dark_purple>/help <page> </b><light_purple>- This list of commands.",
     "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules.",
     "<yellow>(2/3)"
   ],
   "help3": [
     "<b><green>----- <aqua>Purity Vanilla Commands <green>-----</b>",
-    "<b><dark_purple>/help <page> </b><light_purple>- This list of commands",
+    "<b><dark_purple>/help <page> </b><light_purple>- This list of commands.",
     "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules.",
     "<yellow>(3/3)"
   ],
-  "help-invalid-page": "<dark_red>Please select a page between 1-3",
-  "no-permission": "<dark_red>You do not have permission to use this command.",
+  "help-invalid-page": "<red>Please select a page between 1-3.",
+  "no-permission": "<red>You do not have permission to use this command.",
   "rules": [
     "<b><green>----- <dark_red>Purity Vanilla Rules <green>-----</b>",
     "<b><dark_red>1.</b> <red>No lag machines or deliberate overuse of server resources.",
     "<b><dark_red>2.</b> <red>No use of exploits or duping (including using the debug pie to locate entities).",
     "<b><dark_red>3.</b> <red>No use of hacked clients, external programs, disallowed client modifications or x-ray resourcepacks.",
     "<dark_red>See <b><blue>http://rules.purityvanilla.com</b> <dark_red>for more information."
-  ]
+  ],
+  "teleported-to-player": "<aqua>Teleporting to player <gold><target><aqua>...",
+  "teleported-to-position": "<aqua>Teleporting to position in <gold><world><aqua>...",
+  "teleport-usage": "<red>Usage: /teleport <player/coordinates> [world]",
+  "teleport-position-usage": "<red>Usage: /teleport <x> <y> <z> [world]"
 }

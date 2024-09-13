@@ -16,3 +16,12 @@ commands:
     usage: /rules
     permission: pvcore.rules
     aliases: [rule]
+  teleport:
+    description: Teleports the player to another player or position
+    usage: /teleport <player/coordinates>
+    permission: pvcore.teleport
+    aliases: [tp]
+  tphere:
+    description: Teleports a player to the player executing the command
+    usage: /tphere <player>
+    permission: pvcore.tphere
