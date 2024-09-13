@@ -32,5 +32,7 @@
   "teleported-to-player": "<aqua>Teleporting to player <gold><target><aqua>...",
   "teleported-to-position": "<aqua>Teleporting to position in <gold><world><aqua>...",
   "teleport-usage": "<red>Usage: /teleport <player/coordinates> [world]",
+  "teleport-here-usage": "<red>Usage: /tphere <player>",
+  "teleported-here": "<aqua>Teleporting player <gold><player><aqua>...",
   "teleport-position-usage": "<red>Usage: /teleport <x> <y> <z> [world]"
 }
