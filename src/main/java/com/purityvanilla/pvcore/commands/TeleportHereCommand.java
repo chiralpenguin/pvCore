@@ -13,7 +13,7 @@ import org.jetbrains.annotations.NotNull;
 import static com.purityvanilla.pvcore.player.Teleports.TeleportPlayerToPlayer;
 
 public class TeleportHereCommand implements CommandExecutor {
-    private pvCore plugin;
+    private final pvCore plugin;
 
     public TeleportHereCommand(pvCore plugin) {
         this.plugin = plugin;

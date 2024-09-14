@@ -7,6 +7,11 @@ description: Core plugin suite for the Purity Vanilla Minecraft server
 folia-supported: true
 depend: [pvLib]
 commands:
+  gamemode:
+    description: Change the players gamemode
+    usage: /gamemode <gamemode> [player]
+    permission: pvcore.gamemode
+    aliases: [gma, gmc, gms, gmsp]
   help:
     description: Sends the help message for the corresponding page (default 0)
     usage: /help <page>
@@ -18,7 +23,7 @@ commands:
     aliases: [rule]
   teleport:
     description: Teleports the player to another player or position
-    usage: /teleport <player/coordinates>
+    usage: /teleport <player/coordinates> [world]
     permission: pvcore.teleport
     aliases: [tp]
   tphere:
