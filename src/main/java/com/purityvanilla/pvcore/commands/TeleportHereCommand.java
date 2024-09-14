@@ -21,7 +21,7 @@ public class TeleportHereCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player target)) {
+        if (!(sender instanceof Player player)) {
             sender.sendMessage(plugin.config().getMessage("player-only"));
             return true;
         }
@@ -31,17 +31,17 @@ public class TeleportHereCommand implements CommandExecutor {
             return true;
         }
 
-        Player player = plugin.getServer().getPlayer(args[0]);
-        if (player == null) {
+        Player target = plugin.getServer().getPlayer(args[0]);
+        if (target == null) {
             sender.sendMessage(plugin.config().getMessage("player-not-found"));
             return true;
         }
 
         String rawMessage = plugin.config().getRawMessage("teleported-here");
-        TagResolver resolver = TagResolver.resolver(Placeholder.component("player", player.displayName()));
+        TagResolver resolver = TagResolver.resolver(Placeholder.component("player", target.displayName()));
         sender.sendMessage(MiniMessage.miniMessage().deserialize(rawMessage, resolver));
 
-        TeleportPlayerToPlayer(plugin, player, target);
+        TeleportPlayerToPlayer(plugin, target, player);
         return true;
     }
 }

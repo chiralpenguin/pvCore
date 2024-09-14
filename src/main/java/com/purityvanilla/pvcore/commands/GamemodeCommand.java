@@ -1,8 +1,6 @@
 package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.pvCore;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
