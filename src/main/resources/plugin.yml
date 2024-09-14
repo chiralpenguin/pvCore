@@ -16,6 +16,10 @@ commands:
     description: Sends the help message for the corresponding page (default 0)
     usage: /help <page>
     permission: pvcore.help
+  reload:
+    description: Reloads the plugin's configs and messages
+    usage: /pvcore-reload
+    permission: pvcore.reload
   rules:
     description: Sends the server rules message
     usage: /rules

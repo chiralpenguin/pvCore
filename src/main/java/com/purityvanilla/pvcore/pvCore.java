@@ -12,9 +12,10 @@ public class pvCore extends JavaPlugin {
     public void onEnable() {
         config = new Config(); // Create/load config, copy default config if file doesn't exist
 
-        // Register command
+        // Register commands
         getCommand("gamemode").setExecutor(new GamemodeCommand(this));
         getCommand("gamemode").setTabCompleter(new GamemodeCompleter(this));
+        getCommand("reload").setExecutor(new ReloadCommand(this));
         getCommand("rules").setExecutor(new RulesCommand(this));
         getCommand("help").setExecutor(new HelpCommand(this));
         getCommand("teleport").setExecutor(new TeleportCommand(this));
@@ -26,5 +27,9 @@ public class pvCore extends JavaPlugin {
 
     public Config config() {
         return config;
+    }
+
+    public void reload() {
+        config = new Config(); // Reload config (including messages.json)
     }
 }

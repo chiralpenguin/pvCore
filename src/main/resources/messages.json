@@ -25,6 +25,8 @@
   "no-permission": "<red>You do not have permission to use this command",
   "player-not-found": "<red>Player could not be found",
   "player-only": "<red>This command can only be used by a player",
+  "reload-plugin": "<aqua>Reloading pvCore",
+  "reload-complete": "<aqua>Reloaded config.yml and messages.json",
   "rules": [
     "<b><green>----- <dark_red>Purity Vanilla Rules <green>-----</b>",
     "<b><dark_red>1.</b> <red>No lag machines or deliberate overuse of server resources.",
