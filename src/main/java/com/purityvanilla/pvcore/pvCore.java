@@ -1,6 +1,7 @@
 package com.purityvanilla.pvcore;
 
 import com.purityvanilla.pvcore.commands.*;
+import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,6 +14,7 @@ public class pvCore extends JavaPlugin {
 
         // Register command
         getCommand("gamemode").setExecutor(new GamemodeCommand(this));
+        getCommand("gamemode").setTabCompleter(new GamemodeCompleter(this));
         getCommand("rules").setExecutor(new RulesCommand(this));
         getCommand("help").setExecutor(new HelpCommand(this));
         getCommand("teleport").setExecutor(new TeleportCommand(this));
