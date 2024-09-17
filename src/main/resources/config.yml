@@ -1,2 +1,13 @@
 # pvCore version 1.0
+database:
+  host: "example.com:3306"
+  dbName: "dbName"
+  username: "user"
+  password: "password"
+  hikari:
+    poolMaximumSize: 16
+    poolMinimumIdle: 4
+    idleTimeout: 30000
+    maxLifetime: 600000
+
 verbose: false

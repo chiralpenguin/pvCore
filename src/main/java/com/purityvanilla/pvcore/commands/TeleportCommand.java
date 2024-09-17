@@ -9,8 +9,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
-import static com.purityvanilla.pvcore.player.Teleports.TeleportPlayerToPlayer;
 import static com.purityvanilla.pvcore.player.Teleports.TeleportPlayerToLocation;
+import static com.purityvanilla.pvcore.player.Teleports.TeleportPlayerToPlayer;
 
 public class TeleportCommand implements CommandExecutor {
     private final pvCore plugin;

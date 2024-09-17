@@ -1,16 +1,23 @@
 package com.purityvanilla.pvcore;
 
 import com.purityvanilla.pvcore.commands.*;
+import com.purityvanilla.pvcore.database.DatabaseConnection;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class pvCore extends JavaPlugin {
     private Config config;
+    private DatabaseConnection database;
 
     @Override
     public void onEnable() {
         config = new Config(); // Create/load config, copy default config if file doesn't exist
+
+        // Connect to database
+        getLogger().info("Connecting to database server...");
+        database = new DatabaseConnection(this);
+        getLogger().info("Successfully connected to database!");
 
         // Register commands
         getCommand("gamemode").setExecutor(new GamemodeCommand(this));

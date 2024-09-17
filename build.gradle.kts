@@ -15,6 +15,9 @@ repositories {
 dependencies {
     compileOnly("dev.folia", "folia-api", "1.20.1-R0.1-SNAPSHOT")
     compileOnly("com.purityvanilla", "pvLib", "1.0")
+
+    implementation("org.mariadb.jdbc", "mariadb-java-client", "3.4.1")
+    implementation("com.zaxxer", "HikariCP", "5.1.0")
 }
 
 tasks.shadowJar {
