@@ -25,6 +25,26 @@ commands:
     usage: /rules
     permission: pvcore.rules
     aliases: [rule]
+  sloc:
+    description: Save the player's current location
+    usage: /sloc <name>
+    permission: pvcore.saveloc
+    aliases: [sethome]
+  dloc:
+    description: Delete a saved location
+    usage: /dloc <name>
+    permission: pvcore.deleteloc
+    aliases: [delhome]
+  tloc:
+    description: Teleport to a saved location
+    usage: /tloc <name>
+    permission: pvcore.tploc
+    aliases: [home]
+  rloc:
+    description: Rename a saved location
+    usage: /rloc <old_name> <new_name>
+    permission: pvcore.renameloc
+    aliases: [renamehome]
   teleport:
     description: Teleports the player to another player or position
     usage: /teleport <player/coordinates> [world]

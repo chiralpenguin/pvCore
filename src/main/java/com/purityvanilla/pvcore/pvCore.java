@@ -1,14 +1,14 @@
 package com.purityvanilla.pvcore;
 
 import com.purityvanilla.pvcore.commands.*;
-import com.purityvanilla.pvcore.database.DatabaseConnection;
+import com.purityvanilla.pvcore.database.DatabaseHandler;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class pvCore extends JavaPlugin {
     private Config config;
-    private DatabaseConnection database;
+    private DatabaseHandler database;
 
     @Override
     public void onEnable() {
@@ -16,7 +16,7 @@ public class pvCore extends JavaPlugin {
 
         // Connect to database
         getLogger().info("Connecting to database server...");
-        database = new DatabaseConnection(this);
+        database = new DatabaseHandler(this);
         getLogger().info("Successfully connected to database!");
 
         // Register commands
@@ -34,6 +34,14 @@ public class pvCore extends JavaPlugin {
 
     public Config config() {
         return config;
+    }
+
+    public DatabaseHandler getDatabase() {
+        return database;
+    }
+
+    public void closeDatabase() {
+        database.getDataSource().close();
     }
 
     public void reload() {
