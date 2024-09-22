@@ -21,6 +21,7 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 public class DatabaseHandler {
     private final pvCore plugin;
     private final HikariDataSource dataSource;
+    private final PlayerDataService playerData;
 
     public DatabaseHandler(pvCore plugin) {
         this.plugin = plugin;
@@ -35,6 +36,7 @@ public class DatabaseHandler {
         config.setDriverClassName("org.mariadb.jdbc.Driver");
 
         dataSource = new HikariDataSource(config);
+        playerData = new PlayerDataService(plugin);
     }
 
     public HikariDataSource getDataSource() {
@@ -52,7 +54,7 @@ public class DatabaseHandler {
         }
     }
 
-    private void LogQueryException(pvCore plugin, String query, SQLException e) {
+    public void logQueryException(pvCore plugin, String query, SQLException e) {
         String rawMessage = plugin.config().getRawMessage("database-query-failure");
         TagResolver resolver = TagResolver.resolver(Placeholder.component("query", Component.text(query)));
         Component warningMessage = MiniMessage.miniMessage().deserialize(rawMessage, resolver);
@@ -71,23 +73,25 @@ public class DatabaseHandler {
 
             return pstmt;
         } catch (SQLException e) {
-            LogQueryException(plugin, query, e);
+            logQueryException(plugin, query, e);
             return null;
         }
     }
 
-    public ResultSet executeQuery(String query, List<String> params) {
+    // Generics used to allow anonymous functions to process ResultSet and capture any exceptions
+    public <T> T executeQuery(String query, List<String> params, ResultSetProcessor<T> processor) {
         PreparedStatement pstmt = prepareStatement(query, params);
         try {
-            return pstmt.executeQuery();
+            ResultSet rs = pstmt.executeQuery();
+            return processor.process(rs);
         } catch (SQLException e) {
-            LogQueryException(plugin, query, e);
+            logQueryException(plugin, query, e);
             return null;
         }
     }
 
-    public ResultSet executeQuery(String query) {
-        return executeQuery(query, new ArrayList<>());
+    public <T> T executeQuery(String query, ResultSetProcessor<T> processor) {
+        return executeQuery(query, new ArrayList<>(), processor);
     }
 
     public int executeUpdate(String query, List<String> params) {
@@ -95,7 +99,7 @@ public class DatabaseHandler {
         try {
             return pstmt.executeUpdate();
         } catch (SQLException e) {
-            LogQueryException(plugin, query, e);
+            logQueryException(plugin, query, e);
             return 0;
         }
     }
@@ -103,4 +107,6 @@ public class DatabaseHandler {
     public int executeUpdate(String query) {
         return executeUpdate(query, new ArrayList<>());
     }
+
+
 }

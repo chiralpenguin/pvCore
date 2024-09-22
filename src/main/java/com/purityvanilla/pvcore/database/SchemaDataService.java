@@ -1,20 +1,24 @@
 package com.purityvanilla.pvcore.database;
 
 import com.purityvanilla.pvcore.pvCore;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SchemaDataService {
     private final pvCore plugin;
-
-    public final int currentVersion = 1;
+    private final DatabaseHandler database;
+    private final int currentVersion = 1;
 
     public SchemaDataService(pvCore plugin) {
         this.plugin = plugin;
+        this.database = plugin.getDatabase();
         createTable();
-        updateSchemaVersion();
+
+        if (getDBVersion() < currentVersion) {
+            migrateSchema();
+        }
     }
 
     private void createTable() {
@@ -23,7 +27,7 @@ public class SchemaDataService {
                     version INT PRIMARY KEY
                 )
                 """;
-        plugin.getDatabase().executeUpdate(query);
+        database.executeUpdate(query);
     }
 
     public int getCurrentVersion() {
@@ -32,12 +36,25 @@ public class SchemaDataService {
 
     public int getDBVersion() {
         String query = "SELECT version FROM schema_version";
-        ResultSet results = plugin.getDatabase().executeQuery(query);
+        ResultSetProcessor<Integer> versionProcessor = rs -> {
+            if (rs.next()) {
+                return rs.getInt("version");
+            }
+            return -1;
+        };
+
+        return database.executeQuery(query, versionProcessor);
     }
 
     private void updateSchemaVersion() {
-        String query = "UPDATE TABLE schema_version SET version = ?";
+        String query = "REPLACE INTO schema_version (version) VALUES (?)";
         List<String> params = new ArrayList<>();
         params.add(currentVersion + "");
+        database.executeUpdate(query, params);
+    }
+
+    private void migrateSchema() {
+        plugin.getLogger().info(PlainTextComponentSerializer.plainText().serialize(plugin.config().getMessage("database-migration")));
+        updateSchemaVersion();
     }
 }

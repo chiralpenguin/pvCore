@@ -6,6 +6,8 @@ import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.HashMap;
+
 public class pvCore extends JavaPlugin {
     private Config config;
     private DatabaseHandler database;
@@ -14,10 +16,11 @@ public class pvCore extends JavaPlugin {
     public void onEnable() {
         config = new Config(); // Create/load config, copy default config if file doesn't exist
 
-        // Connect to database
+        // Connect to database and update schema
         getLogger().info("Connecting to database server...");
         database = new DatabaseHandler(this);
         getLogger().info("Successfully connected to database!");
+
 
         // Register commands
         getCommand("gamemode").setExecutor(new GamemodeCommand(this));

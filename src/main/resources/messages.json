@@ -2,6 +2,7 @@
   "console-only": "<red>This command can only be used from console",
   "database-connection-failure": "<red>There was an error when connecting to the database!",
   "database-query-failure": "<red>There was a database error while executing: <query>",
+  "database-migration": "<aqua>The pvCore database is being updated to the latest schema...",
   "gamemode-updated": "<aqua>Setting gamemode to <gold><gamemode>",
   "gamemode-updated-other": "<aqua>Setting player <gold><player><aqua>'s gamemode to <gold><gamemode>",
   "gamemode-usage": "<red>Usage: /gamemode <mode> [player]",
