@@ -6,22 +6,19 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SchemaDataService {
-    private final pvCore plugin;
-    private final DatabaseHandler database;
+public class SchemaDataService extends DataService {
     private final int currentVersion = 1;
 
-    public SchemaDataService(pvCore plugin) {
-        this.plugin = plugin;
-        this.database = plugin.getDatabase();
-        createTable();
+    public SchemaDataService(pvCore plugin, DatabaseHandler database) {
+        super(plugin, database);
 
         if (getDBVersion() < currentVersion) {
             migrateSchema();
         }
     }
 
-    private void createTable() {
+    @Override
+    protected void createTable() {
         String query = """
                 CREATE TABLE IF NOT EXISTS schema_version (
                     version INT PRIMARY KEY

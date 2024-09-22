@@ -21,7 +21,9 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 public class DatabaseHandler {
     private final pvCore plugin;
     private final HikariDataSource dataSource;
+    private final SchemaDataService schemaData;
     private final PlayerDataService playerData;
+    private final UsernamesDataService usernamesData;
 
     public DatabaseHandler(pvCore plugin) {
         this.plugin = plugin;
@@ -36,7 +38,10 @@ public class DatabaseHandler {
         config.setDriverClassName("org.mariadb.jdbc.Driver");
 
         dataSource = new HikariDataSource(config);
-        playerData = new PlayerDataService(plugin);
+
+        schemaData = new SchemaDataService(plugin, this);
+        playerData = new PlayerDataService(plugin, this);
+        usernamesData = new UsernamesDataService(plugin, this);
     }
 
     public HikariDataSource getDataSource() {
@@ -107,6 +112,4 @@ public class DatabaseHandler {
     public int executeUpdate(String query) {
         return executeUpdate(query, new ArrayList<>());
     }
-
-
 }

@@ -6,8 +6,6 @@ import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.HashMap;
-
 public class pvCore extends JavaPlugin {
     private Config config;
     private DatabaseHandler database;
@@ -33,6 +31,12 @@ public class pvCore extends JavaPlugin {
         getCommand("tphere").setExecutor(new TeleportHereCommand(this));
 
         getLogger().info("Plugin loaded");
+    }
+
+    @Override
+    public void onDisable() {
+        closeDatabase();
+        getLogger().info("Plugin disabled");
     }
 
     public Config config() {
