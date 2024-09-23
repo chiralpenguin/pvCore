@@ -18,7 +18,7 @@ public class SchemaDataService extends DataService {
     }
 
     @Override
-    protected void createTable() {
+    protected void createTables() {
         String query = """
                 CREATE TABLE IF NOT EXISTS schema_version (
                     version INT PRIMARY KEY
@@ -45,7 +45,7 @@ public class SchemaDataService extends DataService {
 
     private void updateSchemaVersion() {
         String query = "REPLACE INTO schema_version (version) VALUES (?)";
-        List<String> params = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
         params.add(currentVersion + "");
         database.executeUpdate(query, params);
     }

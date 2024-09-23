@@ -9,10 +9,7 @@ import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,9 +18,6 @@ import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 public class DatabaseHandler {
     private final pvCore plugin;
     private final HikariDataSource dataSource;
-    private final SchemaDataService schemaData;
-    private final PlayerDataService playerData;
-    private final UsernamesDataService usernamesData;
 
     public DatabaseHandler(pvCore plugin) {
         this.plugin = plugin;
@@ -38,10 +32,6 @@ public class DatabaseHandler {
         config.setDriverClassName("org.mariadb.jdbc.Driver");
 
         dataSource = new HikariDataSource(config);
-
-        schemaData = new SchemaDataService(plugin, this);
-        playerData = new PlayerDataService(plugin, this);
-        usernamesData = new UsernamesDataService(plugin, this);
     }
 
     public HikariDataSource getDataSource() {
@@ -67,13 +57,21 @@ public class DatabaseHandler {
         plugin.getLogger().warning(getStackTrace(e));
     }
 
-    public PreparedStatement prepareStatement(String query, List<String> params) {
+    public PreparedStatement prepareStatement(String query, List<Object> params) {
         try {
             Connection conn = getConnection();
             PreparedStatement pstmt = conn.prepareStatement(query);
 
             for (int i = 0; i < params.size(); i++) {
-                pstmt.setString(i + 1, params.get(i));
+                Object param = params.get(i);
+                switch (param) {
+                    case String str -> pstmt.setString(i + 1, str);
+                    case Integer n -> pstmt.setInt(i + 1, n);
+                    case Double d -> pstmt.setDouble(i + 1, d);
+                    case Timestamp ts -> pstmt.setTimestamp(i + 1, ts);
+                    case null, default ->
+                            throw new IllegalArgumentException("Unsupported parameter type: " + param.getClass());
+                }
             }
 
             return pstmt;
@@ -84,7 +82,7 @@ public class DatabaseHandler {
     }
 
     // Generics used to allow anonymous functions to process ResultSet and capture any exceptions
-    public <T> T executeQuery(String query, List<String> params, ResultSetProcessor<T> processor) {
+    public <T> T executeQuery(String query, List<Object> params, ResultSetProcessor<T> processor) {
         PreparedStatement pstmt = prepareStatement(query, params);
         try {
             ResultSet rs = pstmt.executeQuery();
@@ -99,7 +97,7 @@ public class DatabaseHandler {
         return executeQuery(query, new ArrayList<>(), processor);
     }
 
-    public int executeUpdate(String query, List<String> params) {
+    public int executeUpdate(String query, List<Object> params) {
         PreparedStatement pstmt = prepareStatement(query, params);
         try {
             return pstmt.executeUpdate();

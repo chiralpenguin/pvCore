@@ -10,10 +10,10 @@ public class DataService {
         this.plugin = plugin;
         this.database = database;
 
-        createTable();
+        createTables();
     }
 
-    protected void createTable(){
+    protected void createTables(){
 
     }
 }

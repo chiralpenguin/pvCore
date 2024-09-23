@@ -2,6 +2,8 @@ package com.purityvanilla.pvcore;
 
 import com.purityvanilla.pvcore.commands.*;
 import com.purityvanilla.pvcore.database.DatabaseHandler;
+import com.purityvanilla.pvcore.database.PlayerDataService;
+import com.purityvanilla.pvcore.database.SchemaDataService;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,6 +11,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class pvCore extends JavaPlugin {
     private Config config;
     private DatabaseHandler database;
+    private SchemaDataService schemaData;
+    private PlayerDataService playerData;
 
     @Override
     public void onEnable() {
@@ -19,6 +23,9 @@ public class pvCore extends JavaPlugin {
         database = new DatabaseHandler(this);
         getLogger().info("Successfully connected to database!");
 
+        // Initialise DataServices
+        schemaData = new SchemaDataService(this, database);
+        playerData = new PlayerDataService(this, database);
 
         // Register commands
         getCommand("gamemode").setExecutor(new GamemodeCommand(this));
@@ -45,6 +52,14 @@ public class pvCore extends JavaPlugin {
 
     public DatabaseHandler getDatabase() {
         return database;
+    }
+
+    public PlayerDataService getPlayerData() {
+        return playerData;
+    }
+
+    public SchemaDataService getSchemaData() {
+        return schemaData;
     }
 
     public void closeDatabase() {
