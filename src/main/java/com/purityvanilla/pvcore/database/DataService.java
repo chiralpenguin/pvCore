@@ -2,7 +2,7 @@ package com.purityvanilla.pvcore.database;
 
 import com.purityvanilla.pvcore.pvCore;
 
-public class DataService {
+public abstract class DataService {
     protected final pvCore plugin;
     protected final DatabaseHandler database;
 
@@ -20,4 +20,6 @@ public class DataService {
     public void saveAll() {
 
     }
+
+    // TODO add onPlayerJoin() and onPlayerDisconnect() methods to load/unload all relevant data into cache on events
 }

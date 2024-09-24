@@ -1,10 +1,10 @@
-package com.purityvanilla.pvcore.database.cache;
+package com.purityvanilla.pvcore.player;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
 public class CachedPlayer {
-    private UUID uuid;
+    private final UUID uuid;
     private String name;
     private Timestamp lastSeen;
 

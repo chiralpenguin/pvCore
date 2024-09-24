@@ -1,6 +1,6 @@
 package com.purityvanilla.pvcore.listeners;
 
-import com.purityvanilla.pvcore.database.cache.CachedPlayer;
+import com.purityvanilla.pvcore.player.CachedPlayer;
 import com.purityvanilla.pvcore.pvCore;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

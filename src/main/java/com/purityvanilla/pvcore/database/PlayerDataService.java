@@ -1,6 +1,6 @@
 package com.purityvanilla.pvcore.database;
 
-import com.purityvanilla.pvcore.database.cache.CachedPlayer;
+import com.purityvanilla.pvcore.player.CachedPlayer;
 import com.purityvanilla.pvcore.pvCore;
 import org.bukkit.OfflinePlayer;
 
@@ -89,8 +89,8 @@ public class PlayerDataService extends DataService {
             return playerCache.get(uuid);
         }
 
-        // If UUID invalid or player has not joined server
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(uuid);
+        // If UUID invalid or player has not joined server
         if (player.getName() == null) {
             return null;
         }
