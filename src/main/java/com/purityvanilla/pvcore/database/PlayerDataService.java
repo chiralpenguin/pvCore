@@ -1,5 +1,6 @@
 package com.purityvanilla.pvcore.database;
 
+import com.purityvanilla.pvcore.database.cache.CachedPlayer;
 import com.purityvanilla.pvcore.pvCore;
 import org.bukkit.OfflinePlayer;
 
@@ -23,8 +24,6 @@ public class PlayerDataService extends DataService {
         String query = """
                 CREATE TABLE IF NOT EXISTS players (
                     uuid CHAR(36) PRIMARY KEY,
-                    name VARCHAR(255) NOT NULL,
-                    last_seen TIMESTAMP NOT NULL
                 )
                 """;
         database.executeUpdate(query);
@@ -40,12 +39,8 @@ public class PlayerDataService extends DataService {
         database.executeUpdate(query);
     }
 
-    public record CachedPlayer(UUID uuid, String name, Timestamp lastSeen) {
-
-    }
-
-    public CachedPlayer loadPlayer(UUID uuid) {
-        String query = "SELECT uuid, name, last_seen FROM players WHERE uuid = ?";
+    public CachedPlayer getPlayerData(UUID uuid) {
+        String query = "SELECT name, last_seen FROM usernames WHERE uuid = ? ORDER BY last_seen DESC LIMIT 1";
         List<Object> params = new ArrayList<>();
         params.add(uuid);
         ResultSetProcessor<CachedPlayer> playerProcessor = rs -> {
@@ -57,24 +52,33 @@ public class PlayerDataService extends DataService {
         return database.executeQuery(query, params, playerProcessor);
     }
 
-    public void savePlayer(UUID uuid, String name, Timestamp lastSeen) {
-        String query = """
-                INSERT INTO players (uuid, name, last_seen) VALUES (?, ?, ?)
-                ON DUPLICATE KEY UPDATE name = VALUES(name), last_seen = VALUES(last_seen)
-                """;
+    public void savePlayerData(UUID uuid, String name, Timestamp lastSeen) {
+        String query = "INSERT INTO players (uuid) VALUES (?)";
         List<Object> params = new ArrayList<>();
+        params.add(uuid);
+        database.executeUpdate(query, params);
+
+        query = """
+                INSERT INTO usernames (uuid, name, last_seen) VALUES (?, ?, ?)
+                ON DUPLICATE KEY UPDATE last_seen = VALUES(last_seen)
+                """;
+        params = new ArrayList<>();
         params.add(uuid);
         params.add(name);
         params.add(lastSeen);
         database.executeUpdate(query, params);
     }
 
-    public void savePlayer(CachedPlayer cPlayer) {
-        savePlayer(cPlayer.uuid, cPlayer.name, cPlayer.lastSeen);
+    public void savePlayerData(CachedPlayer cPlayer) {
+        savePlayerData(cPlayer.uuid(), cPlayer.name(), cPlayer.lastSeen());
+    }
+
+    public boolean isCached(UUID uuid) {
+        return playerCache.containsKey(uuid);
     }
 
     public CachedPlayer getPlayer(UUID uuid) {
-        if (playerCache.containsKey(uuid)) {
+        if (isCached(uuid)) {
             return playerCache.get(uuid);
         }
 
@@ -84,14 +88,14 @@ public class PlayerDataService extends DataService {
             return null;
         }
 
-        CachedPlayer cPlayer = loadPlayer(uuid);
-        // If player exists but not stored in database
+        CachedPlayer cPlayer = getPlayerData(uuid);
+        // Initialise player if valid but not yet stored in database
         if (cPlayer == null) {
-            cPlayer = new CachedPlayer(uuid, player.getName(), new Timestamp(player.getLastSeen()));
-            savePlayer(cPlayer);
+            cPlayer = new CachedPlayer(player.getUniqueId(), player.getName(), new Timestamp(player.getLastSeen()));
+            savePlayerData(cPlayer);
         }
 
-        playerCache.put(uuid, cPlayer);
         return cPlayer;
     }
+
 }

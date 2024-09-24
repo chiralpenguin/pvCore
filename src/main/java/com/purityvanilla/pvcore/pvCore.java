@@ -4,8 +4,10 @@ import com.purityvanilla.pvcore.commands.*;
 import com.purityvanilla.pvcore.database.DatabaseHandler;
 import com.purityvanilla.pvcore.database.PlayerDataService;
 import com.purityvanilla.pvcore.database.SchemaDataService;
+import com.purityvanilla.pvcore.listeners.PlayerLoginListener;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
+import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class pvCore extends JavaPlugin {
@@ -36,6 +38,9 @@ public class pvCore extends JavaPlugin {
         getCommand("teleport").setExecutor(new TeleportCommand(this));
         getCommand("teleport").setTabCompleter(new TeleportCompleter(this));
         getCommand("tphere").setExecutor(new TeleportHereCommand(this));
+
+        // Register event listeners
+        getServer().getPluginManager().registerEvents(new PlayerLoginListener(this), this);
 
         getLogger().info("Plugin loaded");
     }
