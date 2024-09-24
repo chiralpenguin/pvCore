@@ -23,7 +23,7 @@ public class PlayerDataService extends DataService {
     protected void createTables() {
         String query = """
                 CREATE TABLE IF NOT EXISTS players (
-                    uuid CHAR(36) PRIMARY KEY,
+                    uuid CHAR(36) PRIMARY KEY
                 )
                 """;
         database.executeUpdate(query);
@@ -37,6 +37,13 @@ public class PlayerDataService extends DataService {
                 )
                 """;
         database.executeUpdate(query);
+    }
+
+    @Override
+    public void saveAll() {
+        for (CachedPlayer cPlayer : playerCache.values()) {
+            savePlayerData(cPlayer);
+        }
     }
 
     public CachedPlayer getPlayerData(UUID uuid) {
@@ -53,7 +60,7 @@ public class PlayerDataService extends DataService {
     }
 
     public void savePlayerData(UUID uuid, String name, Timestamp lastSeen) {
-        String query = "INSERT INTO players (uuid) VALUES (?)";
+        String query = "INSERT IGNORE INTO players (uuid) VALUES (?)";
         List<Object> params = new ArrayList<>();
         params.add(uuid);
         database.executeUpdate(query, params);
@@ -95,7 +102,13 @@ public class PlayerDataService extends DataService {
             savePlayerData(cPlayer);
         }
 
+        playerCache.put(uuid, cPlayer);
         return cPlayer;
     }
 
+    public void unloadPlayer(UUID uuid) {
+        CachedPlayer cPlayer = getPlayer(uuid);
+        savePlayerData(cPlayer);
+        playerCache.remove(uuid);
+    }
 }

@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerQuitListener implements Listener {
-    private pvCore plugin;
+    private final pvCore plugin;
 
     public PlayerQuitListener(pvCore plugin) {
         this.plugin = plugin;
@@ -17,7 +17,13 @@ public class PlayerQuitListener implements Listener {
     public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
+        // Update player lastSeen
+        plugin.getPlayerData().getPlayer(player.getUniqueId()).update();
 
         // Remove player data from cache and save to database
+        plugin.getPlayerData().unloadPlayer(player.getUniqueId());
+        if (plugin.config().verbose()) {
+            plugin.getLogger().info(String.format("Player %s's data removed from cache", player.getName()));
+        }
     }
 }

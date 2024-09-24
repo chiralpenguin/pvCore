@@ -27,6 +27,11 @@ public class SchemaDataService extends DataService {
         database.executeUpdate(query);
     }
 
+    @Override
+    public void saveAll() {
+        updateSchemaVersion();
+    }
+
     public int getCurrentVersion() {
         return currentVersion;
     }

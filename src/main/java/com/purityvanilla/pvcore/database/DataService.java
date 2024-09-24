@@ -16,4 +16,8 @@ public class DataService {
     protected void createTables(){
 
     }
+
+    public void saveAll() {
+
+    }
 }

@@ -63,7 +63,7 @@ public class Config extends ConfigFile {
         return hikariLifetime;
     }
 
-    public Boolean getVerbose() {
+    public Boolean verbose() {
         return verbose;
     }
 }

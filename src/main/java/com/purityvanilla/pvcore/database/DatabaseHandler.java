@@ -12,6 +12,7 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 
@@ -69,6 +70,7 @@ public class DatabaseHandler {
                     case Integer n -> pstmt.setInt(i + 1, n);
                     case Double d -> pstmt.setDouble(i + 1, d);
                     case Timestamp ts -> pstmt.setTimestamp(i + 1, ts);
+                    case UUID uuid -> pstmt.setString(i + 1, uuid.toString());
                     case null, default ->
                             throw new IllegalArgumentException("Unsupported parameter type: " + param.getClass());
                 }
