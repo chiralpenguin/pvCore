@@ -12,14 +12,23 @@ public class SavedLocation {
     private double x;
     private double y;
     private double z;
+    private float yaw;
+    private float pitch;
 
-    public SavedLocation(UUID playerID, String label, String world, double x, double y, double z) {
+    public SavedLocation(UUID playerID, String label, String world, double x, double y, double z, float yaw, float pitch) {
         this.playerID = playerID;
         this.label = label;
         this.world = world;
         this.x = x;
         this.y = y;
         this.z = z;
+        this.yaw = yaw;
+        this.pitch = pitch;
+    }
+
+    // Alternate constructor with yaw = pitch = 0
+    public SavedLocation(UUID playerID, String label, String world, double x, double y, double z) {
+        this(playerID, label, world, x, y, z, 0F, 0F);
     }
 
     public UUID getPlayerID() {
@@ -43,14 +52,16 @@ public class SavedLocation {
     }
 
     public Location getLocation(pvCore plugin) {
-        return new Location(plugin.getServer().getWorld(world), x, y, z);
+        return new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch);
     }
 
     public void setLocation(Location location) {
+        this.world = location.getWorld().getName();
         this.x = location.getX();
         this.y = location.getY();
         this.z = location.getZ();
-        this.world = location.getWorld().getName();
+        this.yaw = location.getYaw();
+        this.pitch = location.getPitch();
     }
 
     public double getX() {
@@ -75,5 +86,21 @@ public class SavedLocation {
 
     public void setZ(double z) {
         this.z = z;
+    }
+
+    public float getYaw() {
+        return yaw;
+    }
+
+    public void setYaw(float yaw) {
+        this.yaw = yaw;
+    }
+
+    public float getPitch() {
+        return pitch;
+    }
+
+    public void setPitch(float pitch) {
+        this.pitch = pitch;
     }
 }
