@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class LocationDataService extends DataService {
-    HashMap<UUID, List<SavedLocation>> locationCache;
+    HashMap<UUID, HashMap<String, SavedLocation>> locationCache;
 
     public LocationDataService(pvCore plugin, DatabaseHandler database) {
         super(plugin, database);
@@ -38,8 +38,8 @@ public class LocationDataService extends DataService {
 
     @Override
     public void saveAll() {
-        for (List<SavedLocation> locationList : locationCache.values()) {
-            for (SavedLocation location : locationList) {
+        for (HashMap<String, SavedLocation> locationList : locationCache.values()) {
+            for (SavedLocation location : locationList.values()) {
                 saveLocationData(location);
             }
         }
@@ -108,13 +108,56 @@ public class LocationDataService extends DataService {
     }
 
     public boolean isCached(UUID playerID, String label) {
-        boolean cached = false;
-        for (SavedLocation location : locationCache.get(playerID)) {
-            if (label.equalsIgnoreCase(location.getLabel())) {
-                cached = true;
-                break;
-            }
+        return locationCache.containsKey(playerID) && locationCache.get(playerID).containsKey(label.toLowerCase());
+    }
+
+    public void addLocationToCache(SavedLocation location) {
+        UUID playerID = location.getPlayerID();
+        if (!locationCache.containsKey(playerID)) {
+            locationCache.put(playerID, new HashMap<>());
         }
-        return cached;
+        locationCache.get(playerID).put(location.getLabel(), location);
+    }
+
+    public void removeLocationFromCache(SavedLocation location) {
+        UUID playerID = location.getPlayerID();
+        if (!locationCache.containsKey(playerID)) {
+            return;
+        }
+
+        locationCache.get(playerID).remove(location.getLabel());
+        if (locationCache.get(playerID).isEmpty()) {
+            locationCache.remove(playerID);
+        }
+    }
+
+    public SavedLocation getLocation(UUID playerID, String label) {
+        if (isCached(playerID, label)) {
+            return locationCache.get(playerID).get(label.toLowerCase());
+        }
+
+        SavedLocation location = getLocationData(playerID, label);
+        locationCache.get(playerID).put(location.getLabel(), location);
+        return location;
+    }
+
+    public int loadAllPlayerLocations(UUID playerID) {
+        List<SavedLocation> locations = getAllPlayerLocationData(playerID);
+        for (SavedLocation location : locations) {
+            addLocationToCache(location);
+        }
+        return locations.size();
+    }
+
+    public int unloadAllPlayerLocations(UUID playerID) {
+        for (SavedLocation location : locationCache.get(playerID).values()) {
+            removeLocationFromCache(location);
+        }
+        return locationCache.get(playerID).size();
+    }
+
+    public int cleanCache() {
+        // TODO Periodically clean cache of locations with players no longer connected
+        return 0;
     }
 }
