@@ -21,14 +21,16 @@ public class LocationDataService extends DataService {
     protected void createTables() {
         String query = """
                 CREATE TABLE IF NOT EXISTS locations (
-                    uuid CHAR(36) NOT NULL,
+                    playerID CHAR(36) NOT NULL,
                     label VARCHAR(255) NOT NULL,
                     world VARCHAR(255) NOT NULL,
                     x DOUBLE NOT NULL,
                     y DOUBLE NOT NULL,
                     z DOUBLE NOT NULL,
+                    yaw FLOAT NOT NULL DEFAULT 0.0,
+                    pitch FLOAT NOT NULL DEFAULT 0.0,
                     PRIMARY KEY (uuid, label),
-                    CONSTRAINT fk_uuid FOREIGN KEY (uuid) REFERENCES players (uuid) ON DELETE CASCADE
+                    CONSTRAINT fk_uuid FOREIGN KEY (playerID) REFERENCES players (uuid) ON DELETE CASCADE
                 )
                 """;
         database.executeUpdate(query);
@@ -38,47 +40,60 @@ public class LocationDataService extends DataService {
     public void saveAll() {
         for (List<SavedLocation> locationList : locationCache.values()) {
             for (SavedLocation location : locationList) {
-
+                saveLocationData(location);
             }
         }
     }
 
-    public SavedLocation getLocationData(UUID uuid, String label) {
-        String query = """
-                SELECT label, world, x, y, z FROM locations
-                WHERE uuid = ? AND label = ?
-                """;
+    public SavedLocation getLocationData(UUID playerID, String label) {
+        String query = "SELECT label, world, x, y, z, yaw, pitch FROM locations WHERE uuid = ? AND label = ?";
         List<Object> params = new ArrayList<>();
-        params.add(uuid);
+        params.add(playerID);
         params.add(label.toLowerCase());
         ResultSetProcessor<SavedLocation> locationProcessor = rs -> {
             if (rs.next()) {
-                return new SavedLocation(uuid, rs.getString("label"), rs.getString("world"),
-                        rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"));
+                return new SavedLocation(playerID, rs.getString("label"), rs.getString("world"),
+                        rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"),
+                        rs.getFloat("yaw"), rs.getFloat("pitch"));
             }
             return null;
         };
         return database.executeQuery(query, params, locationProcessor);
     }
 
-    public void saveLocationData(SavedLocation location) {
-
+    public void saveLocationData(UUID playerID, String label, String world, double x, double y, double z, float yaw, float pitch) {
+        String query = """
+                INSERT INTO locations (playerID, label, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+                ON DUPLICATE KEY UPDATE last_seen = VALUES(last_seen)
+                """;
     }
 
-    public List<SavedLocation> getAllPlayerLocations(UUID uuid) {
-        String query = "SELECT label, world, x, y, z FROM locations WHERE uuid = ?";
+    public void saveLocationData(SavedLocation location) {
+        saveLocationData(location.getPlayerID(), location.getLabel(), location.getWorld(),
+                location.getX(), location.getY(), location.getZ(), location.getYaw(), location.getPitch());
+    }
+
+    public void removeLocationData(UUID playerID, String label) {
+        String query = "DELETE FROM locations WHERE uuid = ? AND label = ?";
         List<Object> params = new ArrayList<>();
-        params.add(uuid);
+        params.add(playerID);
+        params.add(label.toLowerCase());
+        database.executeUpdate(query, params);
+    }
+
+    public List<SavedLocation> getAllPlayerLocations(UUID playerID) {
+        String query = "SELECT label, world, x, y, z, yaw, pitch FROM locations WHERE uuid = ?";
+        List<Object> params = new ArrayList<>();
+        params.add(playerID);
         ResultSetProcessor<List<SavedLocation>> locationsProcessor = rs -> {
             List<SavedLocation> locations = new ArrayList<>();
             while (rs.next()) {
-                locations.add(new SavedLocation(uuid, rs.getString("label"), rs.getString("world"),
-                        rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z")));
+                locations.add(new SavedLocation(playerID, rs.getString("label"), rs.getString("world"),
+                        rs.getDouble("x"), rs.getDouble("y"), rs.getDouble("z"),
+                        rs.getFloat("yaw"), rs.getFloat("pitch")));
             }
             return locations;
         };
         return database.executeQuery(query, params, locationsProcessor);
     }
-
-
 }
