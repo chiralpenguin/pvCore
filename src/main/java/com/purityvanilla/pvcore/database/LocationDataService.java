@@ -66,6 +66,16 @@ public class LocationDataService extends DataService {
                 INSERT INTO locations (playerID, label, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
                 ON DUPLICATE KEY UPDATE last_seen = VALUES(last_seen)
                 """;
+        List<Object> params = new ArrayList<>();
+        params.add(playerID);
+        params.add(label.toLowerCase());
+        params.add(world);
+        params.add(x);
+        params.add(y);
+        params.add(z);
+        params.add(yaw);
+        params.add(pitch);
+        database.executeUpdate(query, params);
     }
 
     public void saveLocationData(SavedLocation location) {
@@ -81,7 +91,7 @@ public class LocationDataService extends DataService {
         database.executeUpdate(query, params);
     }
 
-    public List<SavedLocation> getAllPlayerLocations(UUID playerID) {
+    public List<SavedLocation> getAllPlayerLocationData(UUID playerID) {
         String query = "SELECT label, world, x, y, z, yaw, pitch FROM locations WHERE uuid = ?";
         List<Object> params = new ArrayList<>();
         params.add(playerID);
@@ -95,5 +105,16 @@ public class LocationDataService extends DataService {
             return locations;
         };
         return database.executeQuery(query, params, locationsProcessor);
+    }
+
+    public boolean isCached(UUID playerID, String label) {
+        boolean cached = false;
+        for (SavedLocation location : locationCache.get(playerID)) {
+            if (label.equalsIgnoreCase(location.getLabel())) {
+                cached = true;
+                break;
+            }
+        }
+        return cached;
     }
 }
