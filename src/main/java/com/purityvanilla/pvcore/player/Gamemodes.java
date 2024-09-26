@@ -26,20 +26,16 @@ public class Gamemodes {
 
     public static void updateGamemode(pvCore plugin, Player player, GameMode gamemode) {
         player.setGameMode(gamemode);
-
-        String rawMessage = plugin.config().getRawMessage("gamemode-updated");
         TagResolver resolver = TagResolver.resolver(Placeholder.component("gamemode", Component.text(gamemode.name().toLowerCase())));
-        player.sendMessage(MiniMessage.miniMessage().deserialize(rawMessage, resolver));
+        player.sendMessage(plugin.config().getMessage("gamemode-updated", resolver));
     }
 
     public static void updateOthersGamemode(pvCore plugin, Player player, Player target, GameMode gamemode) {
         updateGamemode(plugin, target, gamemode);
-
-        String rawMessage = plugin.config().getRawMessage("gamemode-updated-other");
         TagResolver resolver = TagResolver.resolver(
                 Placeholder.component("player", Component.text(target.getName())),
                 Placeholder.component("gamemode", Component.text(gamemode.name().toLowerCase()))
         );
-        player.sendMessage(MiniMessage.miniMessage().deserialize(rawMessage, resolver));
+        player.sendMessage(plugin.config().getMessage("gamemode-updated-other", resolver));
     }
 }

@@ -49,17 +49,15 @@ public class LocationSaveCommand implements CommandExecutor {
         if (location == null) {
             locationData.addLocation(playerID, currentLocation);
 
-            String rawMessage = plugin.config().getRawMessage("location-save");
             TagResolver resolver = TagResolver.resolver(Placeholder.component("label", Component.text(locationLabel)));
-            player.sendMessage(MiniMessage.miniMessage().deserialize(rawMessage, resolver));
+            player.sendMessage(plugin.config().getMessage("location-save", resolver));
             return;
         }
 
         location.setLocation(player.getLocation());
         locationData.addLocation(playerID, location);
 
-        String rawMessage = plugin.config().getRawMessage("location-save-overwrite");
         TagResolver resolver = TagResolver.resolver(Placeholder.component("label", Component.text(locationLabel)));
-        player.sendMessage(MiniMessage.miniMessage().deserialize(rawMessage, resolver));
+        player.sendMessage(plugin.config().getMessage("location-save-overwrite", resolver));
     }
 }

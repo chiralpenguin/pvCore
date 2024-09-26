@@ -38,9 +38,8 @@ public class TeleportHereCommand implements CommandExecutor {
         }
 
         TeleportPlayerToPlayer(plugin, target, player);
-        String rawMessage = plugin.config().getRawMessage("teleported-here");
         TagResolver resolver = TagResolver.resolver(Placeholder.component("player", target.displayName()));
-        sender.sendMessage(MiniMessage.miniMessage().deserialize(rawMessage, resolver));
+        sender.sendMessage(plugin.config().getMessage("teleported-here", resolver));
         return true;
     }
 }

@@ -25,8 +25,10 @@
     "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules",
     "<yellow>(3/3)"
   ],
+  "location-deleted": "<aqua>Deleted location <gold><label>",
+  "location-delete-usage": "<red>Usage: /dloc <location name>",
   "location-not-found": "<red>Location could not be found",
-  "location-save": "<aqua>Current location saved as <gold><label>",
+  "location-saved": "<aqua>Current location saved as <gold><label>",
   "location-save-overwrite": "<aqua>Location <gold><label><aqua> overwritten",
   "location-save-usage": "<red>Usage: /sloc <location name>",
   "location-teleported": "<aqua>Teleported to <gold><label>",
