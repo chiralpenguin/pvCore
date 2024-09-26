@@ -6,17 +6,17 @@ import org.bukkit.OfflinePlayer;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerDataService extends DataService {
-    private final HashMap<UUID, CachedPlayer> playerCache;
+    private final ConcurrentHashMap<UUID, CachedPlayer> playerCache;
 
     public PlayerDataService(pvCore plugin, DatabaseHandler database) {
         super(plugin, database);
 
-        playerCache = new HashMap<>();
+        playerCache = new ConcurrentHashMap<>();
     }
 
     // DataServices base methods

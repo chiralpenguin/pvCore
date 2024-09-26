@@ -4,17 +4,17 @@ import com.purityvanilla.pvcore.player.SavedLocation;
 import com.purityvanilla.pvcore.pvCore;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LocationDataService extends DataService {
-    private HashMap<UUID, HashMap<String, SavedLocation>> locationCache;
+    private final ConcurrentHashMap<UUID, ConcurrentHashMap<String, SavedLocation>> locationCache;
 
     public LocationDataService(pvCore plugin, DatabaseHandler database) {
         super(plugin, database);
 
-        locationCache = new HashMap<>();
+        locationCache = new ConcurrentHashMap<>();
     }
 
     // DataServices base methods
@@ -39,7 +39,7 @@ public class LocationDataService extends DataService {
 
     @Override
     public void saveAll() {
-        for (HashMap<String, SavedLocation> locationList : locationCache.values()) {
+        for (ConcurrentHashMap<String, SavedLocation> locationList : locationCache.values()) {
             for (SavedLocation location : locationList.values()) {
                 saveLocationData(location);
             }
@@ -118,7 +118,7 @@ public class LocationDataService extends DataService {
     public void cacheLocation(SavedLocation location) {
         UUID playerID = location.getPlayerID();
         if (!locationCache.containsKey(playerID)) {
-            locationCache.put(playerID, new HashMap<>());
+            locationCache.put(playerID, new ConcurrentHashMap<>());
         }
         locationCache.get(playerID).put(location.getLabel(), location);
     }
@@ -161,10 +161,12 @@ public class LocationDataService extends DataService {
             return 0;
         }
 
+        int unloadedLocations = 0;
         for (SavedLocation location : locationCache.get(playerID).values()) {
             unloadLocation(location);
+            unloadedLocations += 1;
         }
-        return locationCache.get(playerID).size();
+        return unloadedLocations;
     }
 
     /**
