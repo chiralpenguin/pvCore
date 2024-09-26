@@ -2,7 +2,6 @@ package com.purityvanilla.pvcore.player;
 
 import com.purityvanilla.pvcore.pvCore;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.Location;

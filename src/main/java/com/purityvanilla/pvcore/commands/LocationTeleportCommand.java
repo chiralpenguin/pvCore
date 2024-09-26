@@ -2,9 +2,7 @@ package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.player.SavedLocation;
 import com.purityvanilla.pvcore.pvCore;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
+import com.purityvanilla.pvcore.util.CustomTagResolvers;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -38,8 +36,8 @@ public class LocationTeleportCommand implements CommandExecutor {
         }
 
         player.teleportAsync(location.getLocation(plugin));
-        TagResolver resolver = TagResolver.resolver(Placeholder.component("label", Component.text(location.getLabel())));
-        player.sendMessage(plugin.config().getMessage("location-teleported", resolver));
+        player.sendMessage(plugin.config().getMessage("location-teleported",
+                CustomTagResolvers.labelResolver(locationLabel)));
         return true;
     }
 }

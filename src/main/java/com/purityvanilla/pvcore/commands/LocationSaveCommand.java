@@ -3,11 +3,7 @@ package com.purityvanilla.pvcore.commands;
 import com.purityvanilla.pvcore.database.LocationDataService;
 import com.purityvanilla.pvcore.player.SavedLocation;
 import com.purityvanilla.pvcore.pvCore;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
-import org.bukkit.Location;
+import com.purityvanilla.pvcore.util.CustomTagResolvers;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -49,15 +45,15 @@ public class LocationSaveCommand implements CommandExecutor {
         if (location == null) {
             locationData.addLocation(playerID, currentLocation);
 
-            TagResolver resolver = TagResolver.resolver(Placeholder.component("label", Component.text(locationLabel)));
-            player.sendMessage(plugin.config().getMessage("location-save", resolver));
+            player.sendMessage(plugin.config().getMessage("location-save",
+                    CustomTagResolvers.labelResolver(locationLabel)));
             return;
         }
 
         location.setLocation(player.getLocation());
         locationData.addLocation(playerID, location);
 
-        TagResolver resolver = TagResolver.resolver(Placeholder.component("label", Component.text(locationLabel)));
-        player.sendMessage(plugin.config().getMessage("location-save-overwrite", resolver));
+        player.sendMessage(plugin.config().getMessage("location-save-overwrite",
+                CustomTagResolvers.labelResolver(location.getLabel())));
     }
 }
