@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class LocationDataService extends DataService {
-    HashMap<UUID, HashMap<String, SavedLocation>> locationCache;
+    private HashMap<UUID, HashMap<String, SavedLocation>> locationCache;
 
     public LocationDataService(pvCore plugin, DatabaseHandler database) {
         super(plugin, database);
@@ -17,6 +17,7 @@ public class LocationDataService extends DataService {
         locationCache = new HashMap<>();
     }
 
+    // DataServices base methods
     @Override
     protected void createTables() {
         String query = """
@@ -29,8 +30,8 @@ public class LocationDataService extends DataService {
                     z DOUBLE NOT NULL,
                     yaw FLOAT NOT NULL DEFAULT 0.0,
                     pitch FLOAT NOT NULL DEFAULT 0.0,
-                    PRIMARY KEY (uuid, label),
-                    CONSTRAINT fk_uuid FOREIGN KEY (playerID) REFERENCES players (uuid) ON DELETE CASCADE
+                    PRIMARY KEY (playerID, label),
+                    CONSTRAINT fk_locations_playerID FOREIGN KEY (playerID) REFERENCES players (uuid) ON DELETE CASCADE
                 )
                 """;
         database.executeUpdate(query);
@@ -45,6 +46,7 @@ public class LocationDataService extends DataService {
         }
     }
 
+    // Database methods
     public SavedLocation getLocationData(UUID playerID, String label) {
         String query = "SELECT label, world, x, y, z, yaw, pitch FROM locations WHERE uuid = ? AND label = ?";
         List<Object> params = new ArrayList<>();
@@ -64,7 +66,8 @@ public class LocationDataService extends DataService {
     public void saveLocationData(UUID playerID, String label, String world, double x, double y, double z, float yaw, float pitch) {
         String query = """
                 INSERT INTO locations (playerID, label, world, x, y, z, yaw, pitch) VALUES (?, ?, ?, ?, ?, ?, ?, ?)
-                ON DUPLICATE KEY UPDATE last_seen = VALUES(last_seen)
+                ON DUPLICATE KEY UPDATE label = VALUES(label), world = VALUES(world),
+                 x = VALUES(x), y = VALUES(y), z = VALUES(z), yaw = VALUES(yaw), pitch = VALUES(pitch)
                 """;
         List<Object> params = new ArrayList<>();
         params.add(playerID);
@@ -107,11 +110,12 @@ public class LocationDataService extends DataService {
         return database.executeQuery(query, params, locationsProcessor);
     }
 
+    // Cache methods
     public boolean isCached(UUID playerID, String label) {
         return locationCache.containsKey(playerID) && locationCache.get(playerID).containsKey(label.toLowerCase());
     }
 
-    public void addLocationToCache(SavedLocation location) {
+    public void cacheLocation(SavedLocation location) {
         UUID playerID = location.getPlayerID();
         if (!locationCache.containsKey(playerID)) {
             locationCache.put(playerID, new HashMap<>());
@@ -119,12 +123,13 @@ public class LocationDataService extends DataService {
         locationCache.get(playerID).put(location.getLabel(), location);
     }
 
-    public void removeLocationFromCache(SavedLocation location) {
+    public void unloadLocation(SavedLocation location) {
         UUID playerID = location.getPlayerID();
         if (!locationCache.containsKey(playerID)) {
             return;
         }
 
+        saveLocationData(location);
         locationCache.get(playerID).remove(location.getLabel());
         if (locationCache.get(playerID).isEmpty()) {
             locationCache.remove(playerID);
@@ -137,23 +142,49 @@ public class LocationDataService extends DataService {
         }
 
         SavedLocation location = getLocationData(playerID, label);
-        locationCache.get(playerID).put(location.getLabel(), location);
+        if (location != null) {
+            cacheLocation(location);
+        }
         return location;
     }
 
     public int loadAllPlayerLocations(UUID playerID) {
         List<SavedLocation> locations = getAllPlayerLocationData(playerID);
         for (SavedLocation location : locations) {
-            addLocationToCache(location);
+            cacheLocation(location);
         }
         return locations.size();
     }
 
     public int unloadAllPlayerLocations(UUID playerID) {
         for (SavedLocation location : locationCache.get(playerID).values()) {
-            removeLocationFromCache(location);
+            unloadLocation(location);
         }
         return locationCache.get(playerID).size();
+    }
+
+    /**
+     * Get a copy of a player's saved locations from the cache.
+     */
+    public List<SavedLocation> getPlayerLocations(UUID playerID) {
+        return new ArrayList<>(locationCache.get(playerID).values());
+    }
+
+    /**
+     * Add a new saved player location by saving a record in the database and then loading it into the cache.
+     */
+    public void addLocation(UUID playerID, SavedLocation location) {
+        saveLocationData(location);
+        cacheLocation(location);
+    }
+
+    /**
+     * Remove a saved player location entirely by unloading it from the cache and then deleting the
+     * record from the database.
+     */
+    public void removeLocation(UUID playerID, String label) {
+        unloadLocation(getLocation(playerID, label));
+        removeLocationData(playerID, label);
     }
 
     public int cleanCache() {

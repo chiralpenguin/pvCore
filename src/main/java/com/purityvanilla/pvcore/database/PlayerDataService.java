@@ -19,6 +19,7 @@ public class PlayerDataService extends DataService {
         playerCache = new HashMap<>();
     }
 
+    // DataServices base methods
     @Override
     protected void createTables() {
         String query = """
@@ -33,7 +34,7 @@ public class PlayerDataService extends DataService {
                     name VARCHAR(255) NOT NULL,
                     last_seen TIMESTAMP NOT NULL,
                     PRIMARY KEY (uuid, name),
-                    CONSTRAINT fk_uuid FOREIGN KEY (uuid) REFERENCES players (uuid) ON DELETE CASCADE
+                    CONSTRAINT fk_usernames_uuid FOREIGN KEY (uuid) REFERENCES players (uuid) ON DELETE CASCADE
                 )
                 """;
         database.executeUpdate(query);
@@ -46,6 +47,7 @@ public class PlayerDataService extends DataService {
         }
     }
 
+    // Database methods
     public CachedPlayer getPlayerData(UUID uuid) {
         String query = "SELECT name, last_seen FROM usernames WHERE uuid = ? ORDER BY last_seen DESC LIMIT 1";
         List<Object> params = new ArrayList<>();
@@ -80,6 +82,7 @@ public class PlayerDataService extends DataService {
         savePlayerData(cPlayer.uuid(), cPlayer.name(), cPlayer.lastSeen());
     }
 
+    // Cache methods
     public boolean isCached(UUID uuid) {
         return playerCache.containsKey(uuid);
     }
