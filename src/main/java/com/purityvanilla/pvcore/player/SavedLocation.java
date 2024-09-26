@@ -31,6 +31,18 @@ public class SavedLocation {
         this(playerID, label, world, x, y, z, 0F, 0F);
     }
 
+    // Constructor from Location object
+    public SavedLocation(UUID playerID, String label, Location location) {
+        this.playerID = playerID;
+        this.label = label;
+        this.world = location.getWorld().getName();
+        this.x = location.getX();
+        this.y = location.getY();
+        this.z = location.getZ();
+        this.yaw = location.getYaw();
+        this.pitch = location.getPitch();
+    }
+
     public UUID getPlayerID() {
         return playerID;
     }

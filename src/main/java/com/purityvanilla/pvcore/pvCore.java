@@ -1,13 +1,11 @@
 package com.purityvanilla.pvcore;
 
 import com.purityvanilla.pvcore.commands.*;
-import com.purityvanilla.pvcore.database.DataService;
-import com.purityvanilla.pvcore.database.DatabaseHandler;
-import com.purityvanilla.pvcore.database.PlayerDataService;
-import com.purityvanilla.pvcore.database.SchemaDataService;
+import com.purityvanilla.pvcore.database.*;
 import com.purityvanilla.pvcore.listeners.PlayerJoinListener;
 import com.purityvanilla.pvcore.listeners.PlayerQuitListener;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
+import com.purityvanilla.pvcore.tabcompleters.LocationTabCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -31,6 +29,7 @@ public class pvCore extends JavaPlugin {
         dataServices = new HashMap<>();
         dataServices.put("schema", new SchemaDataService(this, database));
         dataServices.put("player", new PlayerDataService(this, database));
+        dataServices.put("locations", new LocationDataService(this, database));
 
         // Register commands
         getCommand("gamemode").setExecutor(new GamemodeCommand(this));
@@ -38,6 +37,8 @@ public class pvCore extends JavaPlugin {
         getCommand("reload").setExecutor(new ReloadCommand(this));
         getCommand("rules").setExecutor(new RulesCommand(this));
         getCommand("help").setExecutor(new HelpCommand(this));
+        getCommand("sloc").setExecutor(new LocationSaveCommand(this));
+        getCommand("sloc").setTabCompleter(new LocationTabCompleter(this));
         getCommand("teleport").setExecutor(new TeleportCommand(this));
         getCommand("teleport").setTabCompleter(new TeleportCompleter(this));
         getCommand("tphere").setExecutor(new TeleportHereCommand(this));
@@ -67,12 +68,12 @@ public class pvCore extends JavaPlugin {
         return database;
     }
 
-    public SchemaDataService getSchemaData() {
-        return (SchemaDataService) dataServices.get("schema");
-    }
-
     public PlayerDataService getPlayerData() {
         return (PlayerDataService) dataServices.get("player");
+    }
+
+    public LocationDataService getLocationData() {
+        return (LocationDataService) dataServices.get("locations");
     }
 
     public void closeDatabase() {
