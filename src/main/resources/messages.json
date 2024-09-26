@@ -25,9 +25,12 @@
     "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules",
     "<yellow>(3/3)"
   ],
+  "location-not-found": "<red>Location could not be found",
   "location-save": "<aqua>Current location saved as <gold><label>",
   "location-save-overwrite": "<aqua>Location <gold><label><aqua> overwritten",
   "location-save-usage": "<red>Usage: /sloc <location name>",
+  "location-teleported": "<aqua>Teleported to <gold><label>",
+  "location-teleport-usage": "<red>Usage: /tloc <location name>",
   "no-permission": "<red>You do not have permission to use this command",
   "player-not-found": "<red>Player could not be found",
   "player-only": "<red>This command can only be used by a player",
