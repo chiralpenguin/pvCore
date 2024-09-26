@@ -58,36 +58,31 @@ public class DatabaseHandler {
         plugin.getLogger().warning(getStackTrace(e));
     }
 
-    public PreparedStatement prepareStatement(String query, List<Object> params) {
-        try {
-            Connection conn = getConnection();
-            PreparedStatement pstmt = conn.prepareStatement(query);
+    public PreparedStatement prepareStatement(Connection conn, String query, List<Object> params) throws SQLException {
+        PreparedStatement pstmt = conn.prepareStatement(query);
 
-            for (int i = 0; i < params.size(); i++) {
-                Object param = params.get(i);
-                switch (param) {
-                    case String str -> pstmt.setString(i + 1, str);
-                    case Integer n -> pstmt.setInt(i + 1, n);
-                    case Double d -> pstmt.setDouble(i + 1, d);
-                    case Timestamp ts -> pstmt.setTimestamp(i + 1, ts);
-                    case UUID uuid -> pstmt.setString(i + 1, uuid.toString());
-                    case null, default ->
-                            throw new IllegalArgumentException("Unsupported parameter type: " + param.getClass());
-                }
+        for (int i = 0; i < params.size(); i++) {
+            Object param = params.get(i);
+            switch (param) {
+                case String str -> pstmt.setString(i + 1, str);
+                case Integer n -> pstmt.setInt(i + 1, n);
+                case Double d -> pstmt.setDouble(i + 1, d);
+                case Float f -> pstmt.setFloat(i + 1, f);
+                case Timestamp ts -> pstmt.setTimestamp(i + 1, ts);
+                case UUID uuid -> pstmt.setString(i + 1, uuid.toString());
+                case null, default ->
+                        throw new IllegalArgumentException("Unsupported parameter type: " + param.getClass());
             }
-
-            return pstmt;
-        } catch (SQLException e) {
-            logQueryException(plugin, query, e);
-            return null;
         }
+        return pstmt;
     }
 
     // Generics used to allow anonymous functions to process ResultSet and capture any exceptions
     public <T> T executeQuery(String query, List<Object> params, ResultSetProcessor<T> processor) {
-        PreparedStatement pstmt = prepareStatement(query, params);
-        try {
-            ResultSet rs = pstmt.executeQuery();
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = prepareStatement(conn, query, params);
+             ResultSet rs = pstmt.executeQuery()
+        ) {
             return processor.process(rs);
         } catch (SQLException e) {
             logQueryException(plugin, query, e);
@@ -100,8 +95,9 @@ public class DatabaseHandler {
     }
 
     public int executeUpdate(String query, List<Object> params) {
-        PreparedStatement pstmt = prepareStatement(query, params);
-        try {
+        try (Connection conn = getConnection();
+             PreparedStatement pstmt = prepareStatement(conn, query, params)
+        ) {
             return pstmt.executeUpdate();
         } catch (SQLException e) {
             logQueryException(plugin, query, e);

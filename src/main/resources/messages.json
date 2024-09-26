@@ -26,7 +26,7 @@
     "<yellow>(3/3)"
   ],
   "location-save": "<aqua>Current location saved as <gold><label>",
-  "location-save-overwrite": "<aqua>Location <gold><label><aqua>overwritten",
+  "location-save-overwrite": "<aqua>Location <gold><label><aqua> overwritten",
   "location-save-usage": "<red>Usage: /sloc <location name>",
   "no-permission": "<red>You do not have permission to use this command",
   "player-not-found": "<red>Player could not be found",
