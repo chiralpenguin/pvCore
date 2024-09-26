@@ -25,6 +25,9 @@
     "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules",
     "<yellow>(3/3)"
   ],
+  "location-save": "<aqua>Current location saved as <gold><label>",
+  "location-save-overwrite": "<aqua>Location <gold><label><aqua>overwritten",
+  "location-save-usage": "<red>Usage: /sloc <location name>",
   "no-permission": "<red>You do not have permission to use this command",
   "player-not-found": "<red>Player could not be found",
   "player-only": "<red>This command can only be used by a player",
@@ -41,7 +44,7 @@
   "teleport-here-usage": "<red>Usage: /tphere <player>",
   "teleport-position-usage": "<red>Usage: /teleport <x> <y> <z> [world]",
   "teleport-usage": "<red>Usage: /teleport <player/coordinates> [world]",
-  "teleported-here": "<aqua>Teleporting player <gold><player>",
-  "teleported-to-player": "<aqua>Teleporting to player <gold><target>",
-  "teleported-to-position": "<aqua>Teleporting to position in <gold><world>"
+  "teleported-here": "<aqua>Teleported player <gold><player>",
+  "teleported-to-player": "<aqua>Teleported to player <gold><target>",
+  "teleported-to-position": "<aqua>Teleported to position in <gold><world>"
 }

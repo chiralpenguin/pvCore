@@ -11,16 +11,18 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class Teleports {
     public static void TeleportPlayerToPlayer(pvCore plugin, Player player, Player target) {
+        player.teleportAsync(target.getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
+
         String rawMessage = plugin.config().getRawMessage("teleported-to-player");
         TagResolver resolver = TagResolver.resolver(Placeholder.component("target", target.displayName()));
         player.sendMessage(MiniMessage.miniMessage().deserialize(rawMessage, resolver));
-        player.teleportAsync(target.getLocation(), PlayerTeleportEvent.TeleportCause.COMMAND);
     }
 
     public static void TeleportPlayerToLocation(pvCore plugin, Player player, Location location) {
+        player.teleportAsync(location, PlayerTeleportEvent.TeleportCause.COMMAND);
+
         String rawMessage = plugin.config().getRawMessage("teleported-to-position");
         TagResolver resolver = TagResolver.resolver(Placeholder.component("world", Component.text(location.getWorld().getName())));
         player.sendMessage(MiniMessage.miniMessage().deserialize(rawMessage, resolver));
-        player.teleportAsync(location, PlayerTeleportEvent.TeleportCause.COMMAND);
     }
 }
