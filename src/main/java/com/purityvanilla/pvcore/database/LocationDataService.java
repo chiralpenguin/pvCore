@@ -48,7 +48,7 @@ public class LocationDataService extends DataService {
 
     // Database methods
     public SavedLocation getLocationData(UUID playerID, String label) {
-        String query = "SELECT label, world, x, y, z, yaw, pitch FROM locations WHERE uuid = ? AND label = ?";
+        String query = "SELECT label, world, x, y, z, yaw, pitch FROM locations WHERE playerID = ? AND label = ?";
         List<Object> params = new ArrayList<>();
         params.add(playerID);
         params.add(label.toLowerCase());
@@ -87,7 +87,7 @@ public class LocationDataService extends DataService {
     }
 
     public void removeLocationData(UUID playerID, String label) {
-        String query = "DELETE FROM locations WHERE uuid = ? AND label = ?";
+        String query = "DELETE FROM locations WHERE playerID = ? AND label = ?";
         List<Object> params = new ArrayList<>();
         params.add(playerID);
         params.add(label.toLowerCase());
@@ -95,7 +95,7 @@ public class LocationDataService extends DataService {
     }
 
     public List<SavedLocation> getAllPlayerLocationData(UUID playerID) {
-        String query = "SELECT label, world, x, y, z, yaw, pitch FROM locations WHERE uuid = ?";
+        String query = "SELECT label, world, x, y, z, yaw, pitch FROM locations WHERE playerID = ?";
         List<Object> params = new ArrayList<>();
         params.add(playerID);
         ResultSetProcessor<List<SavedLocation>> locationsProcessor = rs -> {
@@ -157,6 +157,10 @@ public class LocationDataService extends DataService {
     }
 
     public int unloadAllPlayerLocations(UUID playerID) {
+        if (!locationCache.containsKey(playerID)) {
+            return 0;
+        }
+
         for (SavedLocation location : locationCache.get(playerID).values()) {
             unloadLocation(location);
         }
@@ -167,6 +171,9 @@ public class LocationDataService extends DataService {
      * Get a copy of a player's saved locations from the cache.
      */
     public List<SavedLocation> getPlayerLocations(UUID playerID) {
+        if (!locationCache.containsKey(playerID)) {
+            return new ArrayList<>();
+        }
         return new ArrayList<>(locationCache.get(playerID).values());
     }
 
