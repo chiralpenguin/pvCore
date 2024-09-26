@@ -29,7 +29,7 @@
   "location-delete-usage": "<red>Usage: /dloc <location name>",
   "location-not-found": "<red>Location could not be found",
   "location-saved": "<aqua>Current location saved as <gold><label>",
-  "location-save-overwrite": "<aqua>Location <gold><label><aqua> overwritten",
+  "location-save-overwritten": "<aqua>Location <gold><label><aqua> overwritten",
   "location-save-usage": "<red>Usage: /sloc <location name>",
   "location-teleported": "<aqua>Teleported to <gold><label>",
   "location-teleport-usage": "<red>Usage: /tloc <location name>",

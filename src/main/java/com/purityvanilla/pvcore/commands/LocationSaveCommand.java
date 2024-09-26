@@ -45,7 +45,7 @@ public class LocationSaveCommand implements CommandExecutor {
         if (location == null) {
             locationData.addLocation(playerID, currentLocation);
 
-            player.sendMessage(plugin.config().getMessage("location-save",
+            player.sendMessage(plugin.config().getMessage("location-saved",
                     CustomTagResolvers.labelResolver(locationLabel)));
             return;
         }
@@ -53,7 +53,7 @@ public class LocationSaveCommand implements CommandExecutor {
         location.setLocation(player.getLocation());
         locationData.addLocation(playerID, location);
 
-        player.sendMessage(plugin.config().getMessage("location-save-overwrite",
+        player.sendMessage(plugin.config().getMessage("location-save-overwritten",
                 CustomTagResolvers.labelResolver(location.getLabel())));
     }
 }
