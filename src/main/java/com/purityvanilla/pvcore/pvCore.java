@@ -5,7 +5,7 @@ import com.purityvanilla.pvcore.database.*;
 import com.purityvanilla.pvcore.listeners.PlayerJoinListener;
 import com.purityvanilla.pvcore.listeners.PlayerQuitListener;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
-import com.purityvanilla.pvcore.tabcompleters.LocationTabCompleter;
+import com.purityvanilla.pvcore.tabcompleters.LocationCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,11 +38,13 @@ public class pvCore extends JavaPlugin {
         getCommand("rules").setExecutor(new RulesCommand(this));
         getCommand("help").setExecutor(new HelpCommand(this));
         getCommand("dloc").setExecutor(new LocationDeleteCommand(this));
-        getCommand("dloc").setTabCompleter(new LocationTabCompleter(this));
+        getCommand("dloc").setTabCompleter(new LocationCompleter(this));
+        // getCommand("rloc").setExecutor(new LocationRenameCommand(this));
+        // getCommand("rloc").setTabCompleter(new LocationCompleter(this));
         getCommand("sloc").setExecutor(new LocationSaveCommand(this));
-        getCommand("sloc").setTabCompleter(new LocationTabCompleter(this));
+        getCommand("sloc").setTabCompleter(new LocationCompleter(this));
         getCommand("tloc").setExecutor(new LocationTeleportCommand(this));
-        getCommand("tloc").setTabCompleter(new LocationTabCompleter(this));
+        getCommand("tloc").setTabCompleter(new LocationCompleter(this));
         getCommand("teleport").setExecutor(new TeleportCommand(this));
         getCommand("teleport").setTabCompleter(new TeleportCompleter(this));
         getCommand("tphere").setExecutor(new TeleportHereCommand(this));

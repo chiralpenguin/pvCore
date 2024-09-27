@@ -12,10 +12,10 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LocationTabCompleter implements TabCompleter {
+public class LocationCompleter implements TabCompleter {
     pvCore plugin;
 
-    public LocationTabCompleter(pvCore plugin) {
+    public LocationCompleter(pvCore plugin) {
         this.plugin = plugin;
     }
 
@@ -26,9 +26,15 @@ public class LocationTabCompleter implements TabCompleter {
             return suggestions;
         }
 
-        List<SavedLocation> locations = plugin.getLocationData().getPlayerLocations(player.getUniqueId());
-        for (SavedLocation location : locations) {
-            suggestions.add(location.getLabel());
+        if (args.length == 1) {
+            String partialInput = args[args.length - 1].toLowerCase();
+
+            List<SavedLocation> locations = plugin.getLocationData().getPlayerLocations(player.getUniqueId());
+            for (SavedLocation location : locations) {
+                if (location.getLabel().startsWith(partialInput)) {
+                    suggestions.add(location.getLabel());
+                }
+            }
         }
         return suggestions;
     }
