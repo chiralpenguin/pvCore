@@ -1,7 +1,10 @@
 package com.purityvanilla.pvcore.player;
 
+import com.purityvanilla.pvcore.database.LocationDataService;
 import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.util.CustomTagResolvers;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
@@ -80,39 +83,43 @@ public class SavedLocation {
         return x;
     }
 
-    public void setX(double x) {
-        this.x = x;
-    }
-
     public double getY() {
         return y;
-    }
-
-    public void setY(double y) {
-        this.y = y;
     }
 
     public double getZ() {
         return z;
     }
 
-    public void setZ(double z) {
-        this.z = z;
-    }
-
     public float getYaw() {
         return yaw;
-    }
-
-    public void setYaw(float yaw) {
-        this.yaw = yaw;
     }
 
     public float getPitch() {
         return pitch;
     }
 
-    public void setPitch(float pitch) {
-        this.pitch = pitch;
+    public void playerSave(pvCore plugin, Location location) {
+        LocationDataService locationData = plugin.getLocationData();
+        Player player = plugin.getServer().getPlayer(playerID);
+        if (player == null) {
+            return;
+        }
+
+        setLocation(location);
+        if (!locationData.locationExists(playerID, label)) {
+            locationData.addLocation(playerID, this);
+            player.sendMessage(plugin.config().getMessage("location-saved",
+                    CustomTagResolvers.labelResolver(label)));
+            return;
+        }
+
+        locationData.addLocation(playerID, this);
+        player.sendMessage(plugin.config().getMessage("location-save-overwritten",
+                CustomTagResolvers.labelResolver(label)));
+    }
+
+    public void playerSave(pvCore plugin) {
+        playerSave(plugin, getLocation(plugin));
     }
 }
