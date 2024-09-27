@@ -4,17 +4,17 @@ import com.purityvanilla.pvcore.player.SavedLocation;
 import com.purityvanilla.pvcore.pvCore;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class LocationDataService extends DataService {
-    private final ConcurrentHashMap<UUID, ConcurrentHashMap<String, SavedLocation>> locationCache;
+    private final HashMap<UUID, HashMap<String, SavedLocation>> locationCache;
 
     public LocationDataService(pvCore plugin, DatabaseHandler database) {
         super(plugin, database);
 
-        locationCache = new ConcurrentHashMap<>();
+        locationCache = new HashMap<>();
     }
 
     // DataServices base methods
@@ -39,7 +39,7 @@ public class LocationDataService extends DataService {
 
     @Override
     public void saveAll() {
-        for (ConcurrentHashMap<String, SavedLocation> locationList : locationCache.values()) {
+        for (HashMap<String, SavedLocation> locationList : locationCache.values()) {
             for (SavedLocation location : locationList.values()) {
                 saveLocationData(location);
             }
@@ -118,7 +118,7 @@ public class LocationDataService extends DataService {
     public void cacheLocation(SavedLocation location) {
         UUID playerID = location.getPlayerID();
         if (!locationCache.containsKey(playerID)) {
-            locationCache.put(playerID, new ConcurrentHashMap<>());
+            locationCache.put(playerID, new HashMap<>());
         }
         locationCache.get(playerID).put(location.getLabel(), location);
     }
@@ -136,6 +136,10 @@ public class LocationDataService extends DataService {
         }
     }
 
+    /**
+     * Get a location from the cache if possible, otherwise attempt to load the location's data from database
+     * @return {@code SavedLocation} if it exists, otherwise null
+     */
     public SavedLocation getLocation(UUID playerID, String label) {
         if (isCached(playerID, label)) {
             return locationCache.get(playerID).get(label.toLowerCase());
@@ -148,6 +152,17 @@ public class LocationDataService extends DataService {
         return location;
     }
 
+    /**
+     * @return False if the return value of getLocation() is not null, True otherwise
+     */
+    public boolean locationExists(UUID playerID, String label) {
+        return getLocation(playerID, label) != null;
+    }
+
+    /**
+     * Load all of a player's saved locations into the cache from the database, regardless of any already loaded
+     * @return Number of locations loaded
+     */
     public int loadAllPlayerLocations(UUID playerID) {
         List<SavedLocation> locations = getAllPlayerLocationData(playerID);
         for (SavedLocation location : locations) {
@@ -156,6 +171,10 @@ public class LocationDataService extends DataService {
         return locations.size();
     }
 
+    /**
+     * Remove all of a player's saved locations from the cache and save them in the database
+     * @return Number of locations saved
+     */
     public int unloadAllPlayerLocations(UUID playerID) {
         if (!locationCache.containsKey(playerID)) {
             return 0;
@@ -170,7 +189,8 @@ public class LocationDataService extends DataService {
     }
 
     /**
-     * Get a copy of a player's saved locations from the cache.
+     * Get a copy of a player's saved locations from the cache (no DB).
+     * @return {@code List<SavedLocation>} containing all loaded player locations, empty list if none in cache
      */
     public List<SavedLocation> getPlayerLocations(UUID playerID) {
         if (!locationCache.containsKey(playerID)) {
