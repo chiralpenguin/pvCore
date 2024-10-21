@@ -4,17 +4,9 @@ import com.purityvanilla.pvcore.pvCore;
 
 public abstract class DataService {
     protected final pvCore plugin;
-    protected final DatabaseHandler database;
 
-    public DataService(pvCore plugin, DatabaseHandler database) {
+    public DataService(pvCore plugin) {
         this.plugin = plugin;
-        this.database = database;
-
-        createTables();
-    }
-
-    protected void createTables(){
-
     }
 
     public void saveAll() {

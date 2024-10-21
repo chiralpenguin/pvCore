@@ -16,11 +16,11 @@ import java.util.UUID;
 
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 
-public class DatabaseHandler {
+public class DatabaseConnector {
     private final pvCore plugin;
     private final HikariDataSource dataSource;
 
-    public DatabaseHandler(pvCore plugin) {
+    public DatabaseConnector(pvCore plugin) {
         this.plugin = plugin;
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(plugin.config().getJdbcUrl());

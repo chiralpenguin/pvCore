@@ -7,56 +7,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SchemaDataService extends DataService {
+    private final SchemaOperator operator;
     private final int currentVersion = 1;
 
-    public SchemaDataService(pvCore plugin, DatabaseHandler database) {
-        super(plugin, database);
+    public SchemaDataService(pvCore plugin, DatabaseConnector database) {
+        super(plugin);
+        operator = new SchemaOperator(database);
 
-        if (getDBVersion() < currentVersion) {
+        if (operator.getDBVersion() < currentVersion) {
             migrateSchema();
         }
     }
 
     @Override
-    protected void createTables() {
-        String query = """
-                CREATE TABLE IF NOT EXISTS schema_version (
-                    version INT PRIMARY KEY
-                )
-                """;
-        database.executeUpdate(query);
-    }
-
-    @Override
     public void saveAll() {
-        updateSchemaVersion();
+        operator.updateSchemaVersion(currentVersion);
     }
 
     public int getCurrentVersion() {
         return currentVersion;
     }
 
-    public int getDBVersion() {
-        String query = "SELECT version FROM schema_version";
-        ResultSetProcessor<Integer> versionProcessor = rs -> {
-            if (rs.next()) {
-                return rs.getInt("version");
-            }
-            return -1;
-        };
-
-        return database.executeQuery(query, versionProcessor);
-    }
-
-    private void updateSchemaVersion() {
-        String query = "REPLACE INTO schema_version (version) VALUES (?)";
-        List<Object> params = new ArrayList<>();
-        params.add(currentVersion + "");
-        database.executeUpdate(query, params);
-    }
-
     private void migrateSchema() {
         plugin.getLogger().info(PlainTextComponentSerializer.plainText().serialize(plugin.config().getMessage("database-migration")));
-        updateSchemaVersion();
+        operator.updateSchemaVersion(currentVersion);
     }
 }

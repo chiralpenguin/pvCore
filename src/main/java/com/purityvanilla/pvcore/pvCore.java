@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public class pvCore extends JavaPlugin {
     private Config config;
-    private DatabaseHandler database;
+    private DatabaseConnector database;
     private HashMap<String, DataService> dataServices;
 
     @Override
@@ -22,7 +22,7 @@ public class pvCore extends JavaPlugin {
 
         // Connect to database
         getLogger().info("Connecting to database server...");
-        database = new DatabaseHandler(this);
+        database = new DatabaseConnector(this);
         getLogger().info("Successfully connected to database!");
 
         // Initialise DataServices and update schema
@@ -70,7 +70,7 @@ public class pvCore extends JavaPlugin {
         return config;
     }
 
-    public DatabaseHandler getDatabase() {
+    public DatabaseConnector getDatabase() {
         return database;
     }
 
