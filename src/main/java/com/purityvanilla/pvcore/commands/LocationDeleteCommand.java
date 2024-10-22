@@ -43,7 +43,7 @@ public class LocationDeleteCommand implements CommandExecutor {
         }
 
         locationLabel = location.getLabel();
-        plugin.getLocationData().removeLocation(player.getUniqueId(), locationLabel);
+        plugin.getLocationData().removeLocation(player.getUniqueId(), location);
         player.sendMessage(plugin.config().getMessage("location-deleted",
                 CustomTagResolvers.labelResolver(locationLabel)));
         return true;

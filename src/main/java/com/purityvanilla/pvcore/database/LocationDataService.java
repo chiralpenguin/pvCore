@@ -128,9 +128,9 @@ public class LocationDataService extends DataService {
      * Remove a saved player location entirely by unloading it from the cache and then deleting the
      * record from the database.
      */
-    public void removeLocation(UUID playerID, String label) {
-        unloadLocation(getLocation(playerID, label));
-        operator.removeLocationData(playerID, label);
+    public void removeLocation(UUID playerID, SavedLocation location) {
+        unloadLocation(location);
+        operator.removeLocationData(playerID, location.getLabel());
     }
 
     public int cleanCache() {

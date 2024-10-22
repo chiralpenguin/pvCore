@@ -39,8 +39,8 @@ public class pvCore extends JavaPlugin {
         getCommand("help").setExecutor(new HelpCommand(this));
         getCommand("dloc").setExecutor(new LocationDeleteCommand(this));
         getCommand("dloc").setTabCompleter(new LocationCompleter(this));
-        // getCommand("rloc").setExecutor(new LocationRenameCommand(this));
-        // getCommand("rloc").setTabCompleter(new LocationCompleter(this));
+        getCommand("rloc").setExecutor(new LocationRenameCommand(this));
+        getCommand("rloc").setTabCompleter(new LocationCompleter(this));
         getCommand("sloc").setExecutor(new LocationSaveCommand(this));
         getCommand("sloc").setTabCompleter(new LocationCompleter(this));
         getCommand("tloc").setExecutor(new LocationTeleportCommand(this));

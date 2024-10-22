@@ -44,14 +44,14 @@ public class LocationRenameCommand implements CommandExecutor {
         }
         
         SavedLocation location = locationData.getLocation(playerID, oldLabel);
-        location.setLabel(locationLabel);
         if (locationData.locationExists(playerID, locationLabel)) {
             location.playerSave(plugin, locationData.getLocation(playerID, oldLabel).getLocation(plugin));
             return true;
         }
 
+        locationData.removeLocation(playerID, location);
+        location.setLabel(locationLabel);
         locationData.addLocation(playerID, location);
-        locationData.removeLocation(playerID, oldLabel);
 
         TagResolver resolver = TagResolver.resolver(Placeholder.component("oldlabel", Component.text(oldLabel)),
                 Placeholder.component("label", Component.text(locationLabel)));

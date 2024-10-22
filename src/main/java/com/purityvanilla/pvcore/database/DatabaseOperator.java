@@ -1,6 +1,6 @@
 package com.purityvanilla.pvcore.database;
 
-public class DatabaseOperator {
+public abstract class DatabaseOperator {
     protected final DatabaseConnector database;
 
     public DatabaseOperator(DatabaseConnector database) {
