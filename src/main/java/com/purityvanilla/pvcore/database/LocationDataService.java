@@ -7,21 +7,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class LocationDataService extends DataService {
     private final LocationOperator operator;
-    private final HashMap<UUID, HashMap<String, SavedLocation>> locationCache;
+    private final ConcurrentHashMap<UUID, ConcurrentHashMap<String, SavedLocation>> locationCache;
 
     public LocationDataService(pvCore plugin, DatabaseConnector database) {
         super(plugin);
         operator = new LocationOperator(database);
 
-        locationCache = new HashMap<>();
+        locationCache = new ConcurrentHashMap<>();
     }
 
     @Override
     public void saveAll() {
-        for (HashMap<String, SavedLocation> locationList : locationCache.values()) {
+        for (ConcurrentHashMap<String, SavedLocation> locationList : locationCache.values()) {
             for (SavedLocation location : locationList.values()) {
                 operator.saveLocationData(location);
             }
@@ -35,7 +36,7 @@ public class LocationDataService extends DataService {
     public void cacheLocation(SavedLocation location) {
         UUID playerID = location.getPlayerID();
         if (!locationCache.containsKey(playerID)) {
-            locationCache.put(playerID, new HashMap<>());
+            locationCache.put(playerID, new ConcurrentHashMap<>());
         }
         locationCache.get(playerID).put(location.getLabel(), location);
     }

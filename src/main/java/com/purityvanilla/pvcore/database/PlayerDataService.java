@@ -5,18 +5,18 @@ import com.purityvanilla.pvcore.pvCore;
 import org.bukkit.OfflinePlayer;
 
 import java.sql.Timestamp;
-import java.util.HashMap;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class PlayerDataService extends DataService {
     private final PlayerOperator operator;
-    private final HashMap<UUID, CachedPlayer> playerCache;
+    private final ConcurrentHashMap<UUID, CachedPlayer> playerCache;
 
     public PlayerDataService(pvCore plugin, DatabaseConnector database) {
         super(plugin);
         operator = new PlayerOperator(database);
 
-        playerCache = new HashMap<>();
+        playerCache = new ConcurrentHashMap<>();
     }
 
     @Override
