@@ -13,5 +13,9 @@ public abstract class DataService {
 
     }
 
+    public void cleanCache() {
+
+    }
+
     // TODO add onPlayerJoin() and onPlayerDisconnect() methods to load/unload all relevant data into cache on events
 }

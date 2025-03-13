@@ -26,6 +26,13 @@ public class PlayerDataService extends DataService {
         }
     }
 
+    @Override
+    public void cleanCache() {
+        for (UUID absentPlayer : plugin.getCacheHelper().getAbsentUUIDs(playerCache.keySet())) {
+            unloadPlayer(absentPlayer);
+        }
+    }
+
     public boolean isCached(UUID uuid) {
         return playerCache.containsKey(uuid);
     }

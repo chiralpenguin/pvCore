@@ -7,14 +7,19 @@ import com.purityvanilla.pvcore.listeners.PlayerQuitListener;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.LocationCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
+import com.purityvanilla.pvcore.util.CacheHelper;
+import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class pvCore extends JavaPlugin {
     private Config config;
     private DatabaseConnector database;
     private HashMap<String, DataService> dataServices;
+    private ArrayList<ScheduledTask> tasks;
+    private CacheHelper cacheHelper;
 
     @Override
     public void onEnable() {
@@ -31,27 +36,8 @@ public class pvCore extends JavaPlugin {
         dataServices.put("player", new PlayerDataService(this, database));
         dataServices.put("locations", new LocationDataService(this, database));
 
-        // Register commands
-        getCommand("gamemode").setExecutor(new GamemodeCommand(this));
-        getCommand("gamemode").setTabCompleter(new GamemodeCompleter(this));
-        getCommand("reload").setExecutor(new ReloadCommand(this));
-        getCommand("rules").setExecutor(new RulesCommand(this));
-        getCommand("help").setExecutor(new HelpCommand(this));
-        getCommand("dloc").setExecutor(new LocationDeleteCommand(this));
-        getCommand("dloc").setTabCompleter(new LocationCompleter(this));
-        getCommand("rloc").setExecutor(new LocationRenameCommand(this));
-        getCommand("rloc").setTabCompleter(new LocationCompleter(this));
-        getCommand("sloc").setExecutor(new LocationSaveCommand(this));
-        getCommand("sloc").setTabCompleter(new LocationCompleter(this));
-        getCommand("tloc").setExecutor(new LocationTeleportCommand(this));
-        getCommand("tloc").setTabCompleter(new LocationCompleter(this));
-        getCommand("teleport").setExecutor(new TeleportCommand(this));
-        getCommand("teleport").setTabCompleter(new TeleportCompleter(this));
-        getCommand("tphere").setExecutor(new TeleportHereCommand(this));
-
-        // Register event listeners
-        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
-        getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
+        registerCommands();
+        registerListeners();
 
         getLogger().info("Plugin loaded");
     }
@@ -82,6 +68,10 @@ public class pvCore extends JavaPlugin {
         return (LocationDataService) dataServices.get("locations");
     }
 
+    public CacheHelper getCacheHelper() {
+        return cacheHelper;
+    }
+
     public void closeDatabase() {
         database.getDataSource().close();
     }
@@ -89,4 +79,29 @@ public class pvCore extends JavaPlugin {
     public void reload() {
         config = new Config(); // Reload config (including messages.json)
     }
+
+    private void registerCommands() {
+        getCommand("gamemode").setExecutor(new GamemodeCommand(this));
+        getCommand("gamemode").setTabCompleter(new GamemodeCompleter(this));
+        getCommand("reload").setExecutor(new ReloadCommand(this));
+        getCommand("rules").setExecutor(new RulesCommand(this));
+        getCommand("help").setExecutor(new HelpCommand(this));
+        getCommand("dloc").setExecutor(new LocationDeleteCommand(this));
+        getCommand("dloc").setTabCompleter(new LocationCompleter(this));
+        getCommand("rloc").setExecutor(new LocationRenameCommand(this));
+        getCommand("rloc").setTabCompleter(new LocationCompleter(this));
+        getCommand("sloc").setExecutor(new LocationSaveCommand(this));
+        getCommand("sloc").setTabCompleter(new LocationCompleter(this));
+        getCommand("tloc").setExecutor(new LocationTeleportCommand(this));
+        getCommand("tloc").setTabCompleter(new LocationCompleter(this));
+        getCommand("teleport").setExecutor(new TeleportCommand(this));
+        getCommand("teleport").setTabCompleter(new TeleportCompleter(this));
+        getCommand("tphere").setExecutor(new TeleportHereCommand(this));
+    }
+
+    private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
+        getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
+    }
+
 }

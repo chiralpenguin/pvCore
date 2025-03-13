@@ -2,11 +2,9 @@ package com.purityvanilla.pvcore.database;
 
 import com.purityvanilla.pvcore.player.SavedLocation;
 import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.util.CacheHelper;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class LocationDataService extends DataService {
@@ -26,6 +24,13 @@ public class LocationDataService extends DataService {
             for (SavedLocation location : locationList.values()) {
                 operator.saveLocationData(location);
             }
+        }
+    }
+
+    @Override
+    public void cleanCache() {
+        for (UUID absentPlayer : plugin.getCacheHelper().getAbsentUUIDs(locationCache.keySet())) {
+            unloadAllPlayerLocations(absentPlayer);
         }
     }
 
@@ -132,10 +137,5 @@ public class LocationDataService extends DataService {
     public void removeLocation(UUID playerID, SavedLocation location) {
         unloadLocation(location);
         operator.removeLocationData(playerID, location.getLabel());
-    }
-
-    public int cleanCache() {
-        // TODO Periodically clean cache of locations with players no longer connected
-        return 0;
     }
 }
