@@ -7,8 +7,8 @@ import com.purityvanilla.pvcore.listeners.PlayerQuitListener;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.LocationCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
+import com.purityvanilla.pvcore.tasks.CacheCleanTask;
 import com.purityvanilla.pvcore.util.CacheHelper;
-import io.papermc.paper.threadedregions.scheduler.ScheduledTask;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -18,7 +18,6 @@ public class pvCore extends JavaPlugin {
     private Config config;
     private DatabaseConnector database;
     private HashMap<String, DataService> dataServices;
-    private ArrayList<ScheduledTask> tasks;
     private CacheHelper cacheHelper;
 
     @Override
@@ -36,8 +35,11 @@ public class pvCore extends JavaPlugin {
         dataServices.put("player", new PlayerDataService(this, database));
         dataServices.put("locations", new LocationDataService(this, database));
 
+        cacheHelper = new CacheHelper(this);
+
         registerCommands();
         registerListeners();
+        scheduleTasks();
 
         getLogger().info("Plugin loaded");
     }
@@ -104,4 +106,12 @@ public class pvCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
     }
 
+    private void scheduleTasks() {
+        getServer().getGlobalRegionScheduler().cancelTasks(this);
+
+        // Run cacheClean every 5 minutes after 1 minute
+        CacheCleanTask cacheCleanTask = new CacheCleanTask(dataServices);
+        getServer().getGlobalRegionScheduler().runAtFixedRate(
+                this, task -> cacheCleanTask.run(),1200L, 6000L);
+    }
 }
