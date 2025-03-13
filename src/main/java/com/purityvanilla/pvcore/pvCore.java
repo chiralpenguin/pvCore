@@ -8,6 +8,7 @@ import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.LocationCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import com.purityvanilla.pvcore.tasks.CacheCleanTask;
+import com.purityvanilla.pvcore.tasks.SaveDataTask;
 import com.purityvanilla.pvcore.util.CacheHelper;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -109,9 +110,14 @@ public class pvCore extends JavaPlugin {
     private void scheduleTasks() {
         getServer().getGlobalRegionScheduler().cancelTasks(this);
 
-        // Run cacheClean every 5 minutes after 1 minute
+        // Run saveData every 5 minutes after 1 minute
+        SaveDataTask saveDataTask = new SaveDataTask(dataServices);
+        getServer().getGlobalRegionScheduler().runAtFixedRate(
+                this, task -> saveDataTask.run(),1200L, 6000L);
+
+        // Run cacheClean every 10 minutes after 2 minute
         CacheCleanTask cacheCleanTask = new CacheCleanTask(dataServices);
         getServer().getGlobalRegionScheduler().runAtFixedRate(
-                this, task -> cacheCleanTask.run(),1200L, 6000L);
+                this, task -> cacheCleanTask.run(),2400L, 12000L);
     }
 }
