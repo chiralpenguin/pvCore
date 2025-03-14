@@ -56,8 +56,6 @@ public class PlayerDataService extends DataService {
             operator.savePlayerData(cPlayer);
         }
 
-        // Update player username and last seen
-        cPlayer.update(player.getName());
         playerCache.put(uuid, cPlayer);
         return cPlayer;
     }

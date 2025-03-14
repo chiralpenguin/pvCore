@@ -31,6 +31,16 @@ public class PlayerOperator extends DatabaseOperator {
             )
             """;
         database.executeUpdate(query);
+        query = """
+            CREATE TABLE IF NOT EXISTS nicknames (
+                uuid CHAR(36) NOT NULL,
+                nickname VARCHAR(255) NOT NULL,
+                changed_date TIMESTAMP NOT NULL,
+                PRIMARY KEY (uuid, nickname),
+                CONSTRAINT fk_nicknames_uuid FOREIGN KEY (uuid) REFERENCES players (uuid) ON DELETE CASCADE
+            )
+            """;
+        database.executeUpdate(query);
     }
 
     public CachedPlayer getPlayerData(UUID uuid) {
