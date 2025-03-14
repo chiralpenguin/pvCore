@@ -24,14 +24,14 @@ public class SchemaOperator extends DatabaseOperator {
             if (rs.next()) {
                 return rs.getInt("version");
             }
-            return -1;
+            return 0;
         };
 
         return database.executeQuery(query, versionProcessor);
     }
 
     public void updateSchemaVersion(int currentVersion) {
-        String query = "REPLACE INTO schema_version (version) VALUES (?)";
+        String query = "UPDATE schema_version SET version=?";
         List<Object> params = new ArrayList<>();
         params.add(currentVersion + "");
         database.executeUpdate(query, params);

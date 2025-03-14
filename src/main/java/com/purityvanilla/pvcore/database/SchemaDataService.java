@@ -3,19 +3,19 @@ package com.purityvanilla.pvcore.database;
 import com.purityvanilla.pvcore.pvCore;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SchemaDataService extends DataService {
     private final SchemaOperator operator;
-    private final int currentVersion = 1;
+    private final int currentVersion = 2;
 
     public SchemaDataService(pvCore plugin, DatabaseConnector database) {
         super(plugin);
         operator = new SchemaOperator(database);
+        int dbVersion = operator.getDBVersion();
 
-        if (operator.getDBVersion() < currentVersion) {
-            migrateSchema();
+        // Set stored schema version to current version if no results (assumes entire database is fresh)
+        if (dbVersion == 0) {
+            plugin.getLogger().info(PlainTextComponentSerializer.plainText().serialize(plugin.config().getMessage("database-creation")));
+            updateSchemaVersion();
         }
     }
 
@@ -28,8 +28,11 @@ public class SchemaDataService extends DataService {
         return currentVersion;
     }
 
-    private void migrateSchema() {
-        plugin.getLogger().info(PlainTextComponentSerializer.plainText().serialize(plugin.config().getMessage("database-migration")));
+    public int getDBVersion() {
+        return operator.getDBVersion();
+    }
+
+    public void updateSchemaVersion() {
         operator.updateSchemaVersion(currentVersion);
     }
 }

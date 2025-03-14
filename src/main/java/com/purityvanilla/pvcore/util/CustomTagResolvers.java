@@ -18,4 +18,9 @@ public class CustomTagResolvers {
         return TagResolver.resolver(Placeholder.component("player", Component.text(playerName)),
                 Placeholder.component("date", Component.text(dateString)));
     }
+
+    public static TagResolver databaseMigrationResolver(int currentVersion, int oldVersion) {
+        return TagResolver.resolver(Placeholder.component("currentversion", Component.text(currentVersion)),
+                Placeholder.component("dbversion", Component.text(oldVersion)));
+    }
 }

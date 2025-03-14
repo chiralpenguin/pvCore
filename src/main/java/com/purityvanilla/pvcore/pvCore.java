@@ -2,6 +2,7 @@ package com.purityvanilla.pvcore;
 
 import com.purityvanilla.pvcore.commands.*;
 import com.purityvanilla.pvcore.database.*;
+import com.purityvanilla.pvcore.database.migration.SchemaMigrator;
 import com.purityvanilla.pvcore.listeners.PlayerJoinListener;
 import com.purityvanilla.pvcore.listeners.PlayerQuitListener;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
@@ -29,9 +30,13 @@ public class pvCore extends JavaPlugin {
         database = new DatabaseConnector(this);
         getLogger().info("Successfully connected to database!");
 
-        // Initialise DataServices and update schema
+        // Initialise schema DataService and handle pending migrations
         dataServices = new HashMap<>();
         dataServices.put("schema", new SchemaDataService(this, database));
+        SchemaMigrator schemaMigrator = new SchemaMigrator(getSchemaData(), getLogger(), config, database);
+        schemaMigrator.handleMigrations();
+
+        // Initialise remaining DataServices
         dataServices.put("player", new PlayerDataService(this, database));
         dataServices.put("locations", new LocationDataService(this, database));
 
@@ -60,6 +65,10 @@ public class pvCore extends JavaPlugin {
 
     public DatabaseConnector getDatabase() {
         return database;
+    }
+
+    private SchemaDataService getSchemaData() {
+        return (SchemaDataService) dataServices.get("schema");
     }
 
     public PlayerDataService getPlayerData() {
