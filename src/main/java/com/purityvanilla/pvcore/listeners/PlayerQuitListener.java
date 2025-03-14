@@ -20,8 +20,8 @@ public class PlayerQuitListener implements Listener {
         Player player = event.getPlayer();
         UUID uuid = player.getUniqueId();
 
-        // Update player lastSeen
-        plugin.getPlayerData().getPlayer(uuid).update();
+        // Update player username and last seen
+        plugin.getPlayerData().getPlayer(uuid).update(player.getName());
 
         // Remove player data from cache and save to database
         plugin.getPlayerData().unloadPlayer(uuid);
