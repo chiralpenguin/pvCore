@@ -38,6 +38,7 @@
   "location-teleported": "<aqua>Teleported to <gold><label>",
   "location-teleport-usage": "<red>Usage: /tloc <location name>",
   "nick-removed": "<aqua>Your nickname has been removed",
+  "nick-removed-other": "<aqua>Player <gold><player><aqua>'s nickname was removed",
   "nick-updated": "<aqua>Your nickname has been set to <gold><nickname>",
   "nick-usage": "<red>Usage: /nick <nickname>",
   "no-permission": "<red>You do not have permission to use this command",

@@ -16,6 +16,16 @@ commands:
     description: Sends the help message for the corresponding page (default 0)
     usage: /help <page>
     permission: pvcore.help
+  nick:
+    description: Sets your nickname
+    usage: /nick <nickname>
+    permission: pvcore.nickname
+    aliases: [nickname]
+  nickremove:
+    description: Removes your or another player's nickname
+    usage: /removenick [<player>]
+    permission: pvcore.nickname.remove
+    aliases: [nickoff, nickclear]
   reload:
     description: Reloads the plugin's configs and messages
     usage: /pvcore-reload

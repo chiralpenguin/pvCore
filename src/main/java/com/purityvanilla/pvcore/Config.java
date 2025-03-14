@@ -14,6 +14,8 @@ public class Config extends ConfigFile {
     private long hikariTimeout;
     private long hikariLifetime;
 
+    private int maxNicknameLength;
+
     private final Boolean verbose;
 
     public Config() {
@@ -31,6 +33,8 @@ public class Config extends ConfigFile {
         hikariMinIdle = hikariNode.node("poolMinimumIdle").getInt();
         hikariTimeout = hikariNode.node("idleTimeout").getLong();
         hikariLifetime = hikariNode.node("maxLifetime").getLong();
+
+        maxNicknameLength = configRoot.node("maxNicknameLength").getInt();
 
         verbose = configRoot.node("verbose").getBoolean();
     }
@@ -61,6 +65,10 @@ public class Config extends ConfigFile {
 
     public long getHikariLifetime() {
         return hikariLifetime;
+    }
+
+    public int getMaxNicknameLength() {
+        return maxNicknameLength;
     }
 
     public Boolean verbose() {

@@ -34,5 +34,10 @@ public class PlayerJoinListener implements Listener {
 
         // Update CachedPlayer lastSeen and set name to current username
        cPlayer.update(player.getName());
+
+        // Set displayname to nickname if it exists
+        if (cPlayer.hasNick()) {
+            player.displayName(cPlayer.nickname());
+        }
     }
 }
