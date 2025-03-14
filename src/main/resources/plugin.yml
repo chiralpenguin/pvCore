@@ -25,6 +25,11 @@ commands:
     usage: /rules
     permission: pvcore.rules
     aliases: [rule]
+  seen:
+    description: See when a player was last online
+    usage: /seen <player>
+    permission: pvcore.seen
+    aliases: [lastseen]
   sloc:
     description: Save the player's current location
     usage: /sloc <name>

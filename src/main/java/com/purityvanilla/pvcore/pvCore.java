@@ -12,7 +12,6 @@ import com.purityvanilla.pvcore.tasks.SaveDataTask;
 import com.purityvanilla.pvcore.util.CacheHelper;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class pvCore extends JavaPlugin {
@@ -81,6 +80,7 @@ public class pvCore extends JavaPlugin {
 
     public void reload() {
         config = new Config(); // Reload config (including messages.json)
+        scheduleTasks(); // Cancel and then re-schedule all tasks
     }
 
     private void registerCommands() {
@@ -93,6 +93,7 @@ public class pvCore extends JavaPlugin {
         getCommand("dloc").setTabCompleter(new LocationCompleter(this));
         getCommand("rloc").setExecutor(new LocationRenameCommand(this));
         getCommand("rloc").setTabCompleter(new LocationCompleter(this));
+        getCommand("seen").setExecutor(new SeenCommand(this));
         getCommand("sloc").setExecutor(new LocationSaveCommand(this));
         getCommand("sloc").setTabCompleter(new LocationCompleter(this));
         getCommand("tloc").setExecutor(new LocationTeleportCommand(this));

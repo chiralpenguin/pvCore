@@ -13,4 +13,9 @@ public class CustomTagResolvers {
     public static TagResolver labelResolver(String locationLabel) {
         return TagResolver.resolver(Placeholder.component("label", Component.text(locationLabel)));
     }
+
+    public static TagResolver seenResolver(String playerName, String dateString) {
+        return TagResolver.resolver(Placeholder.component("player", Component.text(playerName)),
+                Placeholder.component("date", Component.text(dateString)));
+    }
 }

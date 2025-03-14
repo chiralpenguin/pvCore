@@ -66,4 +66,17 @@ public class PlayerOperator extends DatabaseOperator {
     public void savePlayerData(CachedPlayer cPlayer) {
         savePlayerData(cPlayer.uuid(), cPlayer.name(), cPlayer.lastSeen());
     }
+
+    public UUID getUUIDFromName(String username) {
+        String query = "SELECT uuid FROM usernames WHERE name = ? ORDER BY last_seen DESC LIMIT 1";
+        List<Object> params = new ArrayList<>();
+        params.add(username);
+        ResultSetProcessor<UUID> uuidProcessor = rs -> {
+            if (rs.next()) {
+                return UUID.fromString(rs.getString("uuid"));
+            }
+            return null;
+        };
+        return database.executeQuery(query, params, uuidProcessor);
+    }
 }

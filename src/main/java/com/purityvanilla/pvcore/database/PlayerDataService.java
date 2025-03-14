@@ -59,6 +59,17 @@ public class PlayerDataService extends DataService {
         return cPlayer;
     }
 
+    public CachedPlayer getPlayer(String name) {
+        UUID uuid = operator.getUUIDFromName(name);
+
+        // Player name does not exist in database
+        if (uuid == null) {
+            return null;
+        }
+
+        return getPlayer(uuid);
+    }
+
     public void unloadPlayer(UUID uuid) {
         CachedPlayer cPlayer = getPlayer(uuid);
         operator.savePlayerData(cPlayer);

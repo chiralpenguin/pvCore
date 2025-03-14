@@ -27,7 +27,7 @@ public class PlayerJoinListener implements Listener {
         if (plugin.config().verbose()) {
             plugin.getLogger().info(String.format("Player %s's data was cached (Last seen %s)",
                     player.getName(),
-                    cPlayer.lastSeen().toLocalDateTime().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME)));
+                    cPlayer.lastSeen().toLocalDateTime().format(DateTimeFormatter.ISO_DATE_TIME)));
             plugin.getLogger().info(String.format("Loaded %s locations for player %s",
                     loadedLocations, player.getName()));
         }
