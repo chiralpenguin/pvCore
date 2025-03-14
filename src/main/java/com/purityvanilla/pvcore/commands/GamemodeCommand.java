@@ -1,6 +1,7 @@
 package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvlib.commands.CommandGuard;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -19,10 +20,8 @@ public class GamemodeCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(plugin.config().getMessage("player-only"));
-            return true;
-        }
+        if (CommandGuard.senderNotPlayer(sender, plugin.config().getMessage("player-only"))) return true;
+        Player player = (Player) sender;
 
         // Shortcuts for changing own gamemode - changing gamemode of others requires full command
         GameMode gameMode;

@@ -3,6 +3,7 @@ package com.purityvanilla.pvcore.commands;
 import com.purityvanilla.pvcore.database.LocationDataService;
 import com.purityvanilla.pvcore.player.SavedLocation;
 import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvlib.commands.CommandGuard;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -23,16 +24,10 @@ public class LocationRenameCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(plugin.config().getMessage("player-only"));
-            return true;
-        }
+        if (CommandGuard.senderNotPlayer(sender, plugin.config().getMessage("player-only"))) return true;
+        if (CommandGuard.argsSizeInvalid(2, args, sender, plugin.config().getMessage("location-rename-usage"))) return true;
 
-        if (args.length < 2) {
-            sender.sendMessage(plugin.config().getMessage("location-rename-usage"));
-            return true;
-        }
-
+        Player player = (Player) sender;
         LocationDataService locationData = plugin.getLocationData();
         UUID playerID = player.getUniqueId();
         String oldLabel = args[0].toLowerCase();

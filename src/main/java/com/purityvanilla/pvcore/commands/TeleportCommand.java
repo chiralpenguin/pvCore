@@ -1,6 +1,7 @@
 package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvlib.commands.CommandGuard;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.Command;
@@ -21,16 +22,10 @@ public class TeleportCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (!(sender instanceof Player player)) {
-            sender.sendMessage(plugin.config().getMessage("player-only"));
-            return true;
-        }
+        if (CommandGuard.senderNotPlayer(sender, plugin.config().getMessage("player-only"))) return true;
+        if (CommandGuard.argsSizeInvalid(1, args, sender, plugin.config().getMessage("teleport-usage"))) return true;
 
-        if (args.length < 1) {
-            sender.sendMessage(plugin.config().getMessage("teleport-usage"));
-            return true;
-        }
-
+        Player player = (Player) sender;
         Player target = plugin.getServer().getPlayer(args[0]);
         if (target != null) {
             TeleportPlayerToPlayer(plugin, player, target);
