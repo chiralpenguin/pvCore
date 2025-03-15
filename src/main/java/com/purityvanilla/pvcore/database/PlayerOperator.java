@@ -34,7 +34,7 @@ public class PlayerOperator extends DatabaseOperator {
         query = """
             CREATE TABLE IF NOT EXISTS nicknames (
                 uuid CHAR(36) PRIMARY KEY,
-                nickname VARCHAR(255) NOT NULL,
+                nickname VARCHAR(1024) NOT NULL,
                 CONSTRAINT fk_nicknames_uuid FOREIGN KEY (uuid) REFERENCES players (uuid) ON DELETE CASCADE
             )
             """;

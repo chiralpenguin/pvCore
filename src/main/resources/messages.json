@@ -12,6 +12,8 @@
     "<b><green>----- <aqua>Purity Vanilla Commands <green>-----</b>",
     "<b><dark_purple>/help <page> </b><light_purple>- This list of commands",
     "<b><dark_purple>/rules </b><light_purple>- Lists the server's rules",
+    "<b><dark_purple>/nick <nickname> </b><light_purple>- Set your nickname (<dark_aqua>Silver<light_purple>)",
+    "<b><dark_purple>/nickremove </b><light_purple>- Removes your nickname (<dark_aqua>Silver<light_purple>)",
     "<b><dark_purple>/seen </b><light_purple>- See when a player was last online (<aqua>Platinum<light_purple>)",
     "<yellow>(1/3)"
   ],
