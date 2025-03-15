@@ -110,13 +110,13 @@ public class SavedLocation {
         if (!locationData.locationExists(playerID, label)) {
             locationData.addLocation(playerID, this);
             player.sendMessage(plugin.config().getMessage("location-saved",
-                    CustomTagResolvers.labelResolver(label)));
+                    CustomTagResolvers.locationLabelResolver(label)));
             return;
         }
 
         locationData.addLocation(playerID, this);
         player.sendMessage(plugin.config().getMessage("location-save-overwritten",
-                CustomTagResolvers.labelResolver(label)));
+                CustomTagResolvers.locationLabelResolver(label)));
     }
 
     public void playerSave(pvCore plugin) {

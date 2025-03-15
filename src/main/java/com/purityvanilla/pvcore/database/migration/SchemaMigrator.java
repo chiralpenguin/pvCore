@@ -3,7 +3,9 @@ package com.purityvanilla.pvcore.database.migration;
 import com.purityvanilla.pvcore.Config;
 import com.purityvanilla.pvcore.database.DatabaseConnector;
 import com.purityvanilla.pvcore.database.SchemaDataService;
-import com.purityvanilla.pvcore.util.CustomTagResolvers;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
+import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 import java.util.ArrayList;
@@ -39,8 +41,11 @@ public class SchemaMigrator {
             return;
         }
 
-        logger.info(PlainTextComponentSerializer.plainText().serialize(config.getMessage(
-                "database-migration", CustomTagResolvers.databaseMigrationResolver(currentVersion, dbVersion))));
+        TagResolver resolver = TagResolver.resolver(
+                Placeholder.component("currentversion", Component.text(currentVersion)),
+                Placeholder.component("dbversion", Component.text(dbVersion))
+        );
+        logger.info(PlainTextComponentSerializer.plainText().serialize(config.getMessage("database-migration", resolver)));
 
         for (Migration migration : migrations) {
             if (dbVersion < migration.getVersion()) {
