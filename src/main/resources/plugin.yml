@@ -69,3 +69,17 @@ commands:
     description: Teleports a player to the player executing the command
     usage: /tphere <player>
     permission: pvcore.tphere
+
+permissions:
+  pvcore.nickname.remove.others:
+    description: Remove other player's nicknames while they are online
+  pvcore.formatcodes.*:
+    description: Gives access to all formatting codes in all contexts
+  pvcore.formatcodes.anvil.*:
+    description: Gives access to all formatting codes in anvils
+  pvcore.formatcodes.chat.*:
+    description: Gives access to all formatting codes in chat
+  pvcore.formatcodes.nickname.*:
+    description: Gives access to all formatting codes in nicknames
+  pvcore.formatcodes.sign.*:
+    description: Gives access to all formatting codes in signs

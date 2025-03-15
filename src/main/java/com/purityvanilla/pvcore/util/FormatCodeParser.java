@@ -1,23 +1,21 @@
 package com.purityvanilla.pvcore.util;
 
-import com.purityvanilla.pvcore.Config;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FormatCodeParser {
     private static final String COLOR_CHARS = "0123456789abcdef";
-    private static final String FORMAT_CHARS = "lmnokr";
+    private static final String FORMAT_CHARS = "lmnor";
     public static final String HEX_PERMISSION = "hex";
 
     private static final Pattern LEGACY_PATTERN = Pattern.compile(
-            "&([0-9a-fk-or]|#[0-9A-Fa-f]{6}|x&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f])"
+            "&([0-9a-fl-or]|#[0-9A-Fa-f]{6}|x&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f])"
     );
 
     private static final String ROOT_PERMISSION_BASE = "pvcore.formatcodes.";
@@ -42,7 +40,7 @@ public class FormatCodeParser {
         }
     }
 
-    public static Component parseString(String rawString, Player player, Context context, Config config, Logger logger) {
+    public static Component parseString(String rawString, Player player, Context context) {
         if (rawString == null || rawString.isEmpty()) {
             return Component.empty();
         }
@@ -58,6 +56,12 @@ public class FormatCodeParser {
     public static boolean hasCodePermission(Player player, String code, Context context) {
         if (code == null || code.isEmpty()) {
             return false;
+        }
+
+        // Handle global and context-specific wildcards
+        if (player.hasPermission(ROOT_PERMISSION_BASE + "*") ||
+                player.hasPermission(context.getPermissionBase() + "*")) {
+            return true;
         }
 
         // Handle character codes
@@ -87,7 +91,7 @@ public class FormatCodeParser {
             // Extract single code character as first matcher group (matcher.group(0) returns full match with leading "&"
             String code = matcher.group(1);
 
-            if (!hasCodePermission(player, rawString, context)) {
+            if (!hasCodePermission(player, code, context)) {
                 matcher.appendReplacement(filteredString, "");
             }
         }
