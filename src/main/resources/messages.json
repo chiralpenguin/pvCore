@@ -51,6 +51,9 @@
   "player-only": "<red>This command can only be used by a player",
   "player-seen": "<gold><player> <aqua>was last online on <gold><date>",
   "server-prefix": "<gold>[<aqua>Purity Vanilla<gold>]",
+  "realname-entry": "<aqua>- <gold><nickname> <aqua>is player <gold><username>",
+  "realname-header": "<aqua>Players found with the name <gold><nickname><aqua>:",
+  "realname-usage": "<red>Usage: /realname <nickname>",
   "reload-plugin": "<aqua>Reloading pvCore",
   "reload-complete": "<aqua>Reloaded config.yml and messages.json",
   "rules": [

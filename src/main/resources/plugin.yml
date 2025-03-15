@@ -26,6 +26,10 @@ commands:
     usage: /removenick [<player>]
     permission: pvcore.nickname.remove
     aliases: [nickoff, nickclear]
+  realname:
+    description: Get all the players with a given nickname
+    usage: /realname <nickname>
+    permission: pvcore.realname
   reload:
     description: Reloads the plugin's configs and messages
     usage: /pvcore-reload

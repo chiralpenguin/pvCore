@@ -95,6 +95,7 @@ public class pvCore extends JavaPlugin {
     private void registerCommands() {
         getCommand("gamemode").setExecutor(new GamemodeCommand(this));
         getCommand("gamemode").setTabCompleter(new GamemodeCompleter(this));
+        getCommand("realname").setExecutor(new RealnameCommand(this));
         getCommand("reload").setExecutor(new ReloadCommand(this));
         getCommand("rules").setExecutor(new RulesCommand(this));
         getCommand("help").setExecutor(new HelpCommand(this));
