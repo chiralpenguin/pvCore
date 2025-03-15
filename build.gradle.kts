@@ -28,10 +28,13 @@ tasks.shadowJar {
 
 val testServerPluginsPath: String by project
 tasks {
-    val copyToServer by creating(Copy::class) {
-        dependsOn("shadowJar")
-        from(layout.buildDirectory.file("libs"))
-        include("pvCore.jar") // Change to "plugin-version.jar" if no shadowing
-        into(file(testServerPluginsPath)) // Use the externalized path here
-    }
+    val copyToServer by
+    registering(
+        Copy // Use the externalized path here
+        ::class, fun Copy.() {
+            dependsOn("shadowJar")
+            from(layout.buildDirectory.file("libs"))
+            include("pvCore.jar") // Change to "plugin-version.jar" if no shadowing
+            into(file(testServerPluginsPath)) // Use the externalized path here
+        })
 }

@@ -28,7 +28,7 @@ public class pvCore extends JavaPlugin {
         // Connect to database
         getLogger().info("Connecting to database server...");
         database = new DatabaseConnector(this);
-        getLogger().info("Successfully connected to database!");
+        getLogger().info("Successfully connected to database");
 
         // Initialise schema DataService and handle pending migrations
         dataServices = new HashMap<>();
