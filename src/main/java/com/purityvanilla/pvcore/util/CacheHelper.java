@@ -1,14 +1,14 @@
 package com.purityvanilla.pvcore.util;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.entity.Player;
 
 import java.util.*;
 
 public class CacheHelper {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public CacheHelper(pvCore plugin) {
+    public CacheHelper(PVCore plugin) {
         this.plugin = plugin;
     }
 

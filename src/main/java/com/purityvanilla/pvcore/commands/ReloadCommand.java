@@ -1,15 +1,15 @@
 package com.purityvanilla.pvcore.commands;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.jetbrains.annotations.NotNull;
 
 public class ReloadCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public ReloadCommand(pvCore plugin) {
+    public ReloadCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

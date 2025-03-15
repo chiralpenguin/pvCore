@@ -1,11 +1,11 @@
 package com.purityvanilla.pvcore.database;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 
 public abstract class DataService {
-    protected final pvCore plugin;
+    protected final PVCore plugin;
 
-    public DataService(pvCore plugin) {
+    public DataService(PVCore plugin) {
         this.plugin = plugin;
     }
 

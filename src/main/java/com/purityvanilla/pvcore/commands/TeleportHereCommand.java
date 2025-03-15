@@ -1,8 +1,7 @@
 package com.purityvanilla.pvcore.commands;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvlib.commands.CommandGuard;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.command.Command;
@@ -14,9 +13,9 @@ import org.jetbrains.annotations.NotNull;
 import static com.purityvanilla.pvcore.player.Teleports.TeleportPlayerToPlayer;
 
 public class TeleportHereCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public TeleportHereCommand(pvCore plugin) {
+    public TeleportHereCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.tabcompleters;
 
 import com.purityvanilla.pvcore.player.Gamemodes;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -12,9 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GamemodeCompleter implements TabCompleter {
-    private pvCore plugin;
+    private PVCore plugin;
 
-    public GamemodeCompleter(pvCore plugin) {
+    public GamemodeCompleter(PVCore plugin) {
         this.plugin = plugin;
     }
 

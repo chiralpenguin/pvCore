@@ -1,6 +1,6 @@
 package com.purityvanilla.pvcore.listeners;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -9,9 +9,9 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import java.util.UUID;
 
 public class PlayerQuitListener implements Listener {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public PlayerQuitListener(pvCore plugin) {
+    public PlayerQuitListener(PVCore plugin) {
         this.plugin = plugin;
     }
 

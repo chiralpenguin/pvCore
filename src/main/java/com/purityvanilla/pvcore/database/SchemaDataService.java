@@ -1,13 +1,13 @@
 package com.purityvanilla.pvcore.database;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 public class SchemaDataService extends DataService {
     private final SchemaOperator operator;
     private final int currentVersion = 2;
 
-    public SchemaDataService(pvCore plugin, DatabaseConnector database) {
+    public SchemaDataService(PVCore plugin, DatabaseConnector database) {
         super(plugin);
         operator = new SchemaOperator(database);
         int dbVersion = operator.getDBVersion();

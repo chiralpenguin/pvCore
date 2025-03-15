@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.listeners;
 
 import com.purityvanilla.pvcore.player.CachedPlayer;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -11,9 +11,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 public class PlayerJoinListener implements Listener {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public PlayerJoinListener(pvCore plugin) {
+    public PlayerJoinListener(PVCore plugin) {
         this.plugin = plugin;
     }
 

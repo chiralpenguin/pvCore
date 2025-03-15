@@ -1,6 +1,6 @@
 package com.purityvanilla.pvcore.commands;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import org.bukkit.GameMode;
 import org.bukkit.command.Command;
@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import static com.purityvanilla.pvcore.player.Gamemodes.*;
 
 public class GamemodeCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public GamemodeCommand(pvCore plugin) {
+    public GamemodeCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

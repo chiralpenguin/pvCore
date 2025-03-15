@@ -1,6 +1,6 @@
 package com.purityvanilla.pvcore.database;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
 import net.kyori.adventure.text.Component;
@@ -17,10 +17,10 @@ import java.util.UUID;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 
 public class DatabaseConnector {
-    private final pvCore plugin;
+    private final PVCore plugin;
     private final HikariDataSource dataSource;
 
-    public DatabaseConnector(pvCore plugin) {
+    public DatabaseConnector(PVCore plugin) {
         this.plugin = plugin;
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(plugin.config().getJdbcUrl());
@@ -50,7 +50,7 @@ public class DatabaseConnector {
         }
     }
 
-    public void logQueryException(pvCore plugin, String query, SQLException e) {
+    public void logQueryException(PVCore plugin, String query, SQLException e) {
         String rawMessage = plugin.config().getRawMessage("database-query-failure");
         TagResolver resolver = TagResolver.resolver(Placeholder.component("query", Component.text(query)));
         Component warningMessage = MiniMessage.miniMessage().deserialize(rawMessage, resolver);

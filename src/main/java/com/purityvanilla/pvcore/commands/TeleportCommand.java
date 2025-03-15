@@ -1,6 +1,6 @@
 package com.purityvanilla.pvcore.commands;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -14,9 +14,9 @@ import static com.purityvanilla.pvcore.player.Teleports.TeleportPlayerToLocation
 import static com.purityvanilla.pvcore.player.Teleports.TeleportPlayerToPlayer;
 
 public class TeleportCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public TeleportCommand(pvCore plugin) {
+    public TeleportCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

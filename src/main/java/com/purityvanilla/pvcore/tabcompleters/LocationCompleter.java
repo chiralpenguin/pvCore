@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.tabcompleters;
 
 import com.purityvanilla.pvcore.player.SavedLocation;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LocationCompleter implements TabCompleter {
-    pvCore plugin;
+    PVCore plugin;
 
-    public LocationCompleter(pvCore plugin) {
+    public LocationCompleter(PVCore plugin) {
         this.plugin = plugin;
     }
 

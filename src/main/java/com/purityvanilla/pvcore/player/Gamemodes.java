@@ -1,8 +1,7 @@
 package com.purityvanilla.pvcore.player;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.GameMode;
@@ -24,13 +23,13 @@ public class Gamemodes {
         return permissionMap.get(gameMode);
     }
 
-    public static void updateGamemode(pvCore plugin, Player player, GameMode gamemode) {
+    public static void updateGamemode(PVCore plugin, Player player, GameMode gamemode) {
         player.setGameMode(gamemode);
         TagResolver resolver = TagResolver.resolver(Placeholder.component("gamemode", Component.text(gamemode.name().toLowerCase())));
         player.sendMessage(plugin.config().getMessage("gamemode-updated", resolver));
     }
 
-    public static void updateOthersGamemode(pvCore plugin, Player player, Player target, GameMode gamemode) {
+    public static void updateOthersGamemode(PVCore plugin, Player player, Player target, GameMode gamemode) {
         updateGamemode(plugin, target, gamemode);
         TagResolver resolver = TagResolver.resolver(
                 Placeholder.component("player", Component.text(target.getName())),

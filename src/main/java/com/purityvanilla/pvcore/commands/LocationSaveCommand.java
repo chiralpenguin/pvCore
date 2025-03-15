@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.player.SavedLocation;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.UUID;
 
 public class LocationSaveCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public LocationSaveCommand(pvCore plugin) {
+    public LocationSaveCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

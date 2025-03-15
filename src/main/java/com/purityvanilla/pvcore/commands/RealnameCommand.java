@@ -2,7 +2,7 @@ package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.player.CachedPlayer;
 import com.purityvanilla.pvcore.player.Nicknames;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -16,9 +16,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class RealnameCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public RealnameCommand(pvCore plugin) {
+    public RealnameCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

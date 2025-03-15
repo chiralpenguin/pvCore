@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.player.Nicknames;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.util.FormatCodeParser;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import net.kyori.adventure.text.Component;
@@ -16,9 +16,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class NicknameCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public NicknameCommand(pvCore plugin) {
+    public NicknameCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

@@ -1,6 +1,6 @@
 package com.purityvanilla.pvcore.tabcompleters;
 
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -13,9 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeleportCompleter implements TabCompleter {
-    private pvCore plugin;
+    private PVCore plugin;
 
-    public TeleportCompleter(pvCore plugin) {
+    public TeleportCompleter(PVCore plugin) {
         this.plugin = plugin;
     }
 

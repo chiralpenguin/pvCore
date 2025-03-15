@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.player.Nicknames;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.util.CustomTagResolvers;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import org.bukkit.command.Command;
@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class NickRemoveCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public NickRemoveCommand(pvCore plugin) {
+    public NickRemoveCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

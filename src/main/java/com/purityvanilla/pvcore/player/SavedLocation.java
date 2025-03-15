@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.player;
 
 import com.purityvanilla.pvcore.database.LocationDataService;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.util.CustomTagResolvers;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -66,7 +66,7 @@ public class SavedLocation {
         this.world = world;
     }
 
-    public Location getLocation(pvCore plugin) {
+    public Location getLocation(PVCore plugin) {
         return new Location(plugin.getServer().getWorld(world), x, y, z, yaw, pitch);
     }
 
@@ -99,7 +99,7 @@ public class SavedLocation {
         return pitch;
     }
 
-    public void playerSave(pvCore plugin, Location location) {
+    public void playerSave(PVCore plugin, Location location) {
         LocationDataService locationData = plugin.getLocationData();
         Player player = plugin.getServer().getPlayer(playerID);
         if (player == null) {
@@ -119,7 +119,7 @@ public class SavedLocation {
                 CustomTagResolvers.locationLabelResolver(label)));
     }
 
-    public void playerSave(pvCore plugin) {
+    public void playerSave(PVCore plugin) {
         playerSave(plugin, getLocation(plugin));
     }
 }

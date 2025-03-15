@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.player.SavedLocation;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.util.CustomTagResolvers;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import org.bukkit.command.Command;
@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 public class LocationDeleteCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public LocationDeleteCommand(pvCore plugin) {
+    public LocationDeleteCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

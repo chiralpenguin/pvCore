@@ -1,8 +1,7 @@
 package com.purityvanilla.pvcore.database;
 
 import com.purityvanilla.pvcore.player.SavedLocation;
-import com.purityvanilla.pvcore.pvCore;
-import com.purityvanilla.pvcore.util.CacheHelper;
+import com.purityvanilla.pvcore.PVCore;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,7 +10,7 @@ public class LocationDataService extends DataService {
     private final LocationOperator operator;
     private final ConcurrentHashMap<UUID, ConcurrentHashMap<String, SavedLocation>> locationCache;
 
-    public LocationDataService(pvCore plugin, DatabaseConnector database) {
+    public LocationDataService(PVCore plugin, DatabaseConnector database) {
         super(plugin);
         operator = new LocationOperator(database);
 

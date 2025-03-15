@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.player.CachedPlayer;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.util.CustomTagResolvers;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import org.bukkit.command.Command;
@@ -12,9 +12,9 @@ import org.jetbrains.annotations.NotNull;
 import java.time.format.DateTimeFormatter;
 
 public class SeenCommand implements CommandExecutor {
-    private final pvCore plugin;
+    private final PVCore plugin;
 
-    public SeenCommand(pvCore plugin) {
+    public SeenCommand(PVCore plugin) {
         this.plugin = plugin;
     }
 

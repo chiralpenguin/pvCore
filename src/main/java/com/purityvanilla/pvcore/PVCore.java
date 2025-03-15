@@ -1,5 +1,7 @@
 package com.purityvanilla.pvcore;
 
+import com.purityvanilla.pvcore.api.PVCoreAPI;
+import com.purityvanilla.pvcore.api.PVCoreAPIProvider;
 import com.purityvanilla.pvcore.commands.*;
 import com.purityvanilla.pvcore.database.*;
 import com.purityvanilla.pvcore.database.migration.SchemaMigrator;
@@ -11,11 +13,14 @@ import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import com.purityvanilla.pvcore.tasks.CacheCleanTask;
 import com.purityvanilla.pvcore.tasks.SaveDataTask;
 import com.purityvanilla.pvcore.util.CacheHelper;
+import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 
-public class pvCore extends JavaPlugin {
+public class PVCore extends JavaPlugin {
+    private static PVCoreAPI apiInstance;
+
     private Config config;
     private DatabaseConnector database;
     private HashMap<String, DataService> dataServices;
@@ -23,6 +28,11 @@ public class pvCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        // Register api provider as Bukkit service
+        PVCoreAPIProvider apiProvider = new PVCoreAPIProvider(this);
+        apiInstance = apiProvider;
+        getServer().getServicesManager().register(PVCoreAPI.class, apiProvider, this, ServicePriority.Normal);
+
         config = new Config(); // Create/load config, copy default config if file doesn't exist
 
         // Connect to database
@@ -59,12 +69,12 @@ public class pvCore extends JavaPlugin {
         getLogger().info("Plugin disabled");
     }
 
-    public Config config() {
-        return config;
+    public static PVCoreAPI getAPI() {
+        return apiInstance;
     }
 
-    public DatabaseConnector getDatabase() {
-        return database;
+    public Config config() {
+        return config;
     }
 
     private SchemaDataService getSchemaData() {
@@ -81,10 +91,6 @@ public class pvCore extends JavaPlugin {
 
     public CacheHelper getCacheHelper() {
         return cacheHelper;
-    }
-
-    public void closeDatabase() {
-        database.getDataSource().close();
     }
 
     public void reload() {
@@ -132,5 +138,9 @@ public class pvCore extends JavaPlugin {
         CacheCleanTask cacheCleanTask = new CacheCleanTask(dataServices);
         getServer().getGlobalRegionScheduler().runAtFixedRate(
                 this, task -> cacheCleanTask.run(),2400L, 12000L);
+    }
+
+    private void closeDatabase() {
+        database.getDataSource().close();
     }
 }

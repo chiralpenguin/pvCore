@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.database;
 
 import com.purityvanilla.pvcore.player.CachedPlayer;
-import com.purityvanilla.pvcore.pvCore;
+import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.OfflinePlayer;
 
 import java.sql.Timestamp;
@@ -12,7 +12,7 @@ public class PlayerDataService extends DataService {
     private final PlayerOperator operator;
     private final ConcurrentHashMap<UUID, CachedPlayer> playerCache;
 
-    public PlayerDataService(pvCore plugin, DatabaseConnector database) {
+    public PlayerDataService(PVCore plugin, DatabaseConnector database) {
         super(plugin);
         operator = new PlayerOperator(database);
 
