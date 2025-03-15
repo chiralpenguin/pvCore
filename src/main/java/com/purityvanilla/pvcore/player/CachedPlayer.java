@@ -2,7 +2,6 @@ package com.purityvanilla.pvcore.player;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.Server;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -48,6 +47,9 @@ public class CachedPlayer {
     }
 
     public String getNickString() {
+        if (nickname == null) {
+            return null;
+        }
         return MiniMessage.miniMessage().serialize(nickname);
     }
 
@@ -62,5 +64,9 @@ public class CachedPlayer {
 
     public void setNickname(Component nickname) {
         this.nickname = nickname;
+    }
+
+    public void removeNickname() {
+        this.nickname = null;
     }
 }

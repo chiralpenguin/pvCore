@@ -1,21 +1,14 @@
 package com.purityvanilla.pvcore.commands;
 
-import com.purityvanilla.pvcore.database.LocationDataService;
 import com.purityvanilla.pvcore.player.SavedLocation;
 import com.purityvanilla.pvcore.pvCore;
 import com.purityvanilla.pvcore.util.CustomTagResolvers;
 import com.purityvanilla.pvlib.commands.CommandGuard;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
-import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.UUID;
 
 public class LocationDeleteCommand implements CommandExecutor {
     private final pvCore plugin;
@@ -40,7 +33,7 @@ public class LocationDeleteCommand implements CommandExecutor {
         locationLabel = location.getLabel();
         plugin.getLocationData().removeLocation(player.getUniqueId(), location);
         player.sendMessage(plugin.config().getMessage("location-deleted",
-                CustomTagResolvers.labelResolver(locationLabel)));
+                CustomTagResolvers.locationLabelResolver(locationLabel)));
         return true;
     }
 }

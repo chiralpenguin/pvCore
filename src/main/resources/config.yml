@@ -10,6 +10,6 @@ database:
     idleTimeout: 30000
     maxLifetime: 600000
 
-maxNicknameLength: 24
+maxNicknameLength: 18
 
 verbose: false

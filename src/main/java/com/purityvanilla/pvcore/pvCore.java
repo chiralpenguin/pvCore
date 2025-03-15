@@ -98,6 +98,8 @@ public class pvCore extends JavaPlugin {
         getCommand("reload").setExecutor(new ReloadCommand(this));
         getCommand("rules").setExecutor(new RulesCommand(this));
         getCommand("help").setExecutor(new HelpCommand(this));
+        getCommand("nick").setExecutor(new NicknameCommand(this));
+        getCommand("nickremove").setExecutor(new NickRemoveCommand(this));
         getCommand("dloc").setExecutor(new LocationDeleteCommand(this));
         getCommand("dloc").setTabCompleter(new LocationCompleter(this));
         getCommand("rloc").setExecutor(new LocationRenameCommand(this));

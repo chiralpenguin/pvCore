@@ -32,7 +32,7 @@ public class LocationTeleportCommand implements CommandExecutor {
 
         player.teleportAsync(location.getLocation(plugin));
         player.sendMessage(plugin.config().getMessage("location-teleported",
-                CustomTagResolvers.labelResolver(locationLabel)));
+                CustomTagResolvers.locationLabelResolver(locationLabel)));
         return true;
     }
 }

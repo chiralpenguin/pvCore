@@ -71,8 +71,6 @@ commands:
     permission: pvcore.tphere
 
 permissions:
-  pvcore.nickname.remove.others:
-    description: Remove other player's nicknames while they are online
   pvcore.formatcodes.*:
     description: Gives access to all formatting codes in all contexts
   pvcore.formatcodes.anvil.*:
@@ -83,3 +81,5 @@ permissions:
     description: Gives access to all formatting codes in nicknames
   pvcore.formatcodes.sign.*:
     description: Gives access to all formatting codes in signs
+  pvcore.nickname.remove.others:
+    description: Remove other player's nicknames while they are online
