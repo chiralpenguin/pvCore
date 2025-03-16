@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore;
 
 import com.purityvanilla.pvcore.api.PVCoreAPI;
-import com.purityvanilla.pvcore.api.PVCoreAPIProvider;
+import com.purityvanilla.pvcore.api.impl.PVCoreAPIProvider;
 import com.purityvanilla.pvcore.commands.*;
 import com.purityvanilla.pvcore.database.*;
 import com.purityvanilla.pvcore.database.migration.SchemaMigrator;

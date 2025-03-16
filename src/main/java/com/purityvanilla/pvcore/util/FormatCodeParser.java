@@ -18,13 +18,15 @@ public class FormatCodeParser {
             "&([0-9a-fl-or]|#[0-9A-Fa-f]{6}|x&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f]&[0-9A-Fa-f])"
     );
 
-    private static final String ROOT_PERMISSION_BASE = "pvcore.formatcodes.";
+    private static final String CORE_PERMISSION_BASE = "pvcore.formatcodes.";
+    private static final String CHAT_PERMISSION_BASE = "pvchat.formatcodes.";
+    private static final String PERKS_PERMISSION_BASE = "pvperks.formatcodes.";
 
     public enum Context {
-        ANVIL(ROOT_PERMISSION_BASE + "anvil"),
-        CHAT(ROOT_PERMISSION_BASE + "chat"),
-        NICKNAME(ROOT_PERMISSION_BASE + "nickname"),
-        SIGN(ROOT_PERMISSION_BASE + "sign");
+        ANVIL(PERKS_PERMISSION_BASE + "anvil"),
+        CHAT(CHAT_PERMISSION_BASE + "chat"),
+        NICKNAME(CORE_PERMISSION_BASE + "nickname"),
+        SIGN(PERKS_PERMISSION_BASE + "sign");
 
         private final String permissionNode;
         Context(String permissionNode) {
@@ -59,7 +61,7 @@ public class FormatCodeParser {
         }
 
         // Handle global and context-specific wildcards
-        if (player.hasPermission(ROOT_PERMISSION_BASE + "*") ||
+        if (player.hasPermission(CORE_PERMISSION_BASE + "*") ||
                 player.hasPermission(context.getPermissionBase() + "*")) {
             return true;
         }
