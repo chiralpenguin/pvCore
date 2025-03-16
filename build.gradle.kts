@@ -1,6 +1,7 @@
 plugins {
     id("java")
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("maven-publish")
 }
 
 group = "com.purityvanilla"
@@ -28,13 +29,27 @@ tasks.shadowJar {
 
 val testServerPluginsPath: String by project
 tasks {
-    val copyToServer by
-    registering(
-        Copy // Use the externalized path here
-        ::class, fun Copy.() {
+    val copyToServer by registering(Copy::class, fun Copy.() {
             dependsOn("shadowJar")
             from(layout.buildDirectory.file("libs"))
             include("pvCore.jar") // Change to "plugin-version.jar" if no shadowing
             into(file(testServerPluginsPath)) // Use the externalized path here
         })
+}
+
+val localMavenRepoPath: String by project
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            artifact(tasks.shadowJar.get()) {
+                classifier = "" // Ensure this is different or empty if not using a classifier
+            }
+        }
+    }
+    repositories {
+        maven {
+            name = "local"
+            url = uri(localMavenRepoPath) // Local Maven repo path
+        }
+    }
 }
