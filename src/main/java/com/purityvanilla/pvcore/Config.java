@@ -16,7 +16,7 @@ public class Config extends ConfigFile {
 
     private int maxNicknameLength;
 
-    private final Boolean verbose;
+    private final boolean verbose;
 
     public Config() {
         super("plugins/pvCore/config.yml");
@@ -71,7 +71,7 @@ public class Config extends ConfigFile {
         return maxNicknameLength;
     }
 
-    public Boolean verbose() {
+    public boolean verbose()  {
         return verbose;
     }
 }

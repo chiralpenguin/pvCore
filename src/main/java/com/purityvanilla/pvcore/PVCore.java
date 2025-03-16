@@ -28,11 +28,6 @@ public class PVCore extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        // Register api provider as Bukkit service
-        PVCoreAPIProvider apiProvider = new PVCoreAPIProvider(this);
-        apiInstance = apiProvider;
-        getServer().getServicesManager().register(PVCoreAPI.class, apiProvider, this, ServicePriority.Normal);
-
         config = new Config(); // Create/load config, copy default config if file doesn't exist
 
         // Connect to database
@@ -52,6 +47,12 @@ public class PVCore extends JavaPlugin {
 
         cacheHelper = new CacheHelper(this);
 
+        // Register api provider as Bukkit service
+        PVCoreAPIProvider apiProvider = new PVCoreAPIProvider(this);
+        apiInstance = apiProvider;
+        getServer().getServicesManager().register(PVCoreAPI.class, apiProvider, this, ServicePriority.Normal);
+
+        // Other plugin startup tasks
         registerCommands();
         registerListeners();
         scheduleTasks();

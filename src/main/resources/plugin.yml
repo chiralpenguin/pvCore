@@ -1,5 +1,5 @@
 name: pvCore
-main: com.purityvanilla.pvcore.pvCore
+main: com.purityvanilla.pvcore.PVCore
 version: 1.0
 api-version: 1.20
 authors: [chiralpenguin]
@@ -77,13 +77,7 @@ commands:
 permissions:
   pvcore.formatcodes.*:
     description: Gives access to all formatting codes in all contexts
-  pvcore.formatcodes.anvil.*:
-    description: Gives access to all formatting codes in anvils
-  pvcore.formatcodes.chat.*:
-    description: Gives access to all formatting codes in chat
   pvcore.formatcodes.nickname.*:
     description: Gives access to all formatting codes in nicknames
-  pvcore.formatcodes.sign.*:
-    description: Gives access to all formatting codes in signs
   pvcore.nickname.remove.others:
     description: Remove other player's nicknames while they are online
