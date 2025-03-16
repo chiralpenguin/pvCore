@@ -5,9 +5,7 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 public class Nicknames {
     public static void setPlayerNickname(Player player, PlayerDataService playerData, Component nickname) {
@@ -20,8 +18,8 @@ public class Nicknames {
         player.displayName(Component.text(player.getName()));
     }
 
-    public static List<CachedPlayer> getPlayersFromNickname(String nickname, Collection<? extends Player> players, PlayerDataService playerData) {
-        List<CachedPlayer> matchingPlayers = new ArrayList<>();
+    public static Set<CachedPlayer> getPlayersFromNickname(String nickname, Collection<? extends Player> players, PlayerDataService playerData) {
+        Set<CachedPlayer> matchingPlayers = new HashSet<>();
 
         for (Player player : players) {
            CachedPlayer cPlayer = playerData.getPlayer(player.getUniqueId());
