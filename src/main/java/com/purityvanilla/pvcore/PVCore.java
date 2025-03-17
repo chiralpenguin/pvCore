@@ -121,7 +121,6 @@ public class PVCore extends JavaPlugin {
         getCommand("dloc").setTabCompleter(new LocationCompleter(this));
         getCommand("rloc").setExecutor(new LocationRenameCommand(this));
         getCommand("rloc").setTabCompleter(new LocationCompleter(this));
-        getCommand("seen").setExecutor(new SeenCommand(this));
         getCommand("sloc").setExecutor(new LocationSaveCommand(this));
         getCommand("sloc").setTabCompleter(new LocationCompleter(this));
         getCommand("tloc").setExecutor(new LocationTeleportCommand(this));
