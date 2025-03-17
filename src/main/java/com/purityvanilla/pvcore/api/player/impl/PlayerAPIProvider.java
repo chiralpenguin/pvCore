@@ -11,6 +11,7 @@ import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 public class PlayerAPIProvider implements PlayerAPI {
     private final PlayerDataService playerData;
@@ -42,8 +43,8 @@ public class PlayerAPIProvider implements PlayerAPI {
     }
 
     @Override
-    public Timestamp getPlayerLastSeen(Player player) {
-        return playerData.getPlayer(player.getUniqueId()).lastSeen();
+    public Timestamp getPlayerLastSeen(UUID uuid) {
+        return playerData.getPlayer(uuid).lastSeen();
     }
 
     private enum MetaComponent {

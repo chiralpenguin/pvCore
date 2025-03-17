@@ -62,7 +62,6 @@
     "<b><dark_red>3.</b> <red>No use of hacked clients, external programs, disallowed client modifications or x-ray resourcepacks.",
     "<dark_red>See <b><blue>http://rules.purityvanilla.com</b> <dark_red>for more information."
   ],
-  "seen-usage": "<red>Usage: /seen <player>",
   "teleport-here-usage": "<red>Usage: /tphere <player>",
   "teleport-position-usage": "<red>Usage: /teleport <x> <y> <z> [world]",
   "teleport-usage": "<red>Usage: /teleport <player/coordinates> [world]",

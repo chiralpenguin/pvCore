@@ -4,6 +4,7 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
+import java.util.UUID;
 
 public interface PlayerAPI {
 
@@ -25,5 +26,10 @@ public interface PlayerAPI {
      */
     Component getPlayerSuffix(Player player);
 
-    Timestamp getPlayerLastSeen(Player player);
+    /**
+     * Get the lastSeen value of a player from their UUID
+     * @param uuid
+     * @return Timestamp when player was last online
+     */
+    Timestamp getPlayerLastSeen(UUID uuid);
 }
