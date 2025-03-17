@@ -13,6 +13,8 @@ import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import com.purityvanilla.pvcore.tasks.CacheCleanTask;
 import com.purityvanilla.pvcore.tasks.SaveDataTask;
 import com.purityvanilla.pvcore.util.CacheHelper;
+import net.luckperms.api.LuckPerms;
+import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -25,6 +27,8 @@ public class PVCore extends JavaPlugin {
     private DatabaseConnector database;
     private HashMap<String, DataService> dataServices;
     private CacheHelper cacheHelper;
+
+    private LuckPerms luckPerms;
 
     @Override
     public void onEnable() {
@@ -51,6 +55,9 @@ public class PVCore extends JavaPlugin {
         PVCoreAPIProvider apiProvider = new PVCoreAPIProvider(this);
         apiInstance = apiProvider;
         getServer().getServicesManager().register(PVCoreAPI.class, apiProvider, this, ServicePriority.Normal);
+
+        // Initialise external API objects
+        luckPerms = LuckPermsProvider.get();
 
         // Other plugin startup tasks
         registerCommands();
@@ -92,6 +99,10 @@ public class PVCore extends JavaPlugin {
 
     public CacheHelper getCacheHelper() {
         return cacheHelper;
+    }
+
+    public LuckPerms getLuckPerms() {
+        return luckPerms;
     }
 
     public void reload() {

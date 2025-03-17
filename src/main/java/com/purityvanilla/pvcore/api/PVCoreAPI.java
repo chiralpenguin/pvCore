@@ -9,5 +9,12 @@ public interface PVCoreAPI {
 
     PlayerAPI getPlayerAPI();
 
+    /**
+     * Parses a player-submitted string for legacy ('&') format codes and returns a permission-based formatted Component
+     * @param rawString The unparsed string containing format codes
+     * @param player The player whose permissions will be checked for formatting
+     * @param context The context of the message
+     * @return Component containing the stripped and formatted messages
+     */
     Component parsePlayerFormatString(String rawString, Player player, FormatCodeParser.Context context);
 }

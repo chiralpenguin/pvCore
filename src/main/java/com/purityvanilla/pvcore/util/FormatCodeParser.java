@@ -1,6 +1,7 @@
 package com.purityvanilla.pvcore.util;
 
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 
@@ -49,6 +50,15 @@ public class FormatCodeParser {
 
         String filteredString = filterUnpermittedCodes(player, rawString, context);
         return LegacyComponentSerializer.legacyAmpersand().deserialize(filteredString);
+    }
+
+    public static Component deserialiseFormatString(String rawString) {
+        // Deserialise with MiniMessage if codes are found otherwise fallback to legacy ampersand
+        if (rawString.contains("<") && rawString.contains(">")) {
+            return MiniMessage.miniMessage().deserialize(rawString);
+        } else {
+            return LegacyComponentSerializer.legacyAmpersand().deserialize(rawString);
+        }
     }
 
     public static boolean validCodeCharacter(char codeChar) {
