@@ -3,6 +3,7 @@ package com.purityvanilla.pvcore.util;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
+import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 import org.bukkit.entity.Player;
 
 import java.util.HashSet;
@@ -50,6 +51,10 @@ public class FormatCodeParser {
 
         String filteredString = filterUnpermittedCodes(player, rawString, context);
         return LegacyComponentSerializer.legacyAmpersand().deserialize(filteredString);
+    }
+
+    public static Component parseComponent(Component rawComponent, Player player, Context context) {
+        return parseString(PlainTextComponentSerializer.plainText().serialize(rawComponent), player, context);
     }
 
     public static Component deserialiseFormatString(String rawString) {

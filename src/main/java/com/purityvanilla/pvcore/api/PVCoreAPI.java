@@ -17,4 +17,6 @@ public interface PVCoreAPI {
      * @return Component containing the stripped and formatted messages
      */
     Component parsePlayerFormatString(String rawString, Player player, FormatCodeParser.Context context);
+
+    Component parsePlayerComponent(Component rawComponent, Player player, FormatCodeParser.Context context);
 }

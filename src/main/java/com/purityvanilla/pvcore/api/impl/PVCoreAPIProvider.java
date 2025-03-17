@@ -30,4 +30,9 @@ public class PVCoreAPIProvider implements PVCoreAPI {
     public Component parsePlayerFormatString(String rawString, Player player, FormatCodeParser.Context context) {
         return FormatCodeParser.parseString(rawString, player, context);
     }
+
+    @Override
+    public Component parsePlayerComponent(Component rawComponent, Player player, FormatCodeParser.Context context) {
+        return FormatCodeParser.parseComponent(rawComponent, player, context);
+    }
 }
