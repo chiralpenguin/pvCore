@@ -11,8 +11,8 @@ import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 
 public class PlayerAPIProvider implements PlayerAPI {
-    private PlayerDataService playerData;
-    private LuckPerms luckPerms;
+    private final PlayerDataService playerData;
+    private final LuckPerms luckPerms;
 
     public PlayerAPIProvider(PVCore plugin) {
         this.playerData = plugin.getPlayerData();
