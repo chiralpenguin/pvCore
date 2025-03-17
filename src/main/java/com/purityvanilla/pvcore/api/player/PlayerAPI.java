@@ -3,6 +3,8 @@ package com.purityvanilla.pvcore.api.player;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
+import java.sql.Timestamp;
+
 public interface PlayerAPI {
 
     Component getPlayerNickname(Player player);
@@ -22,4 +24,6 @@ public interface PlayerAPI {
      * @return Component of suffix string parsed with either MiniMessage or legacy ampersand
      */
     Component getPlayerSuffix(Player player);
+
+    Timestamp getPlayerLastSeen(Player player);
 }

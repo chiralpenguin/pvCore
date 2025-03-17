@@ -10,6 +10,8 @@ import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 
+import java.sql.Timestamp;
+
 public class PlayerAPIProvider implements PlayerAPI {
     private final PlayerDataService playerData;
     private final LuckPerms luckPerms;
@@ -37,6 +39,11 @@ public class PlayerAPIProvider implements PlayerAPI {
     @Override
     public Component getPlayerSuffix(Player player) {
         return getPlayerMetaComponent(player, MetaComponent.SUFFIX);
+    }
+
+    @Override
+    public Timestamp getPlayerLastSeen(Player player) {
+        return playerData.getPlayer(player.getUniqueId()).lastSeen();
     }
 
     private enum MetaComponent {
