@@ -45,7 +45,7 @@ public class PlayerDataService extends DataService {
 
         OfflinePlayer player = plugin.getServer().getOfflinePlayer(uuid);
         // If UUID invalid or player has not joined server
-        if (player.getName() == null) {
+        if (player.getLastSeen() == 0) {
             return null;
         }
 
