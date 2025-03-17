@@ -75,15 +75,15 @@ public class FormatCodeParser {
             return false;
         }
 
-        // Handle magic (obfuscated) format code as special case not covered by wildcards
+        // Handle magic (obfuscated) format code as special case not covered by catch-all ("*" will cover magic)
         if (code.equals("k")) {
             return player.hasPermission(CORE_PERMISSION_BASE + "magic") ||
                     player.hasPermission(context.getPermissionBase() + "magic");
         }
 
-        // Handle global and context-specific wildcards
-        if (player.hasPermission(CORE_PERMISSION_BASE + "*") ||
-                player.hasPermission(context.getPermissionBase() + "*")) {
+        // Handle global and context-specific catch-all perms
+        if (player.hasPermission(CORE_PERMISSION_BASE + "all") ||
+                player.hasPermission(context.getPermissionBase() + "all")) {
             return true;
         }
 

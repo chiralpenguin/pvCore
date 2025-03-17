@@ -75,11 +75,11 @@ commands:
     permission: pvcore.tphere
 
 permissions:
-  pvcore.formatcodes.*:
+  pvcore.formatcodes.all:
     description: Gives access to all formatting codes in all contexts
   pvcore.formatcodes.magic:
     description: Gives access to magic (obfuscated) formatting in all contexts
-  pvcore.formatcodes.nickname.*:
+  pvcore.formatcodes.nickname.all:
     description: Gives access to all formatting codes in nicknames
   pvcore.formatcodes.nickname.magic:
     description: Gives access to magic (obfuscated) formatting in nicknames
