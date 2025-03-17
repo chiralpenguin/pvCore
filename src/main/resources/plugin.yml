@@ -77,7 +77,11 @@ commands:
 permissions:
   pvcore.formatcodes.*:
     description: Gives access to all formatting codes in all contexts
+  pvcore.formatcodes.magic:
+    description: Gives access to magic (obfuscated) formatting in all contexts
   pvcore.formatcodes.nickname.*:
     description: Gives access to all formatting codes in nicknames
+  pvcore.formatcodes.nickname.magic:
+    description: Gives access to magic (obfuscated) formatting in nicknames
   pvcore.nickname.remove.others:
     description: Remove other player's nicknames while they are online
