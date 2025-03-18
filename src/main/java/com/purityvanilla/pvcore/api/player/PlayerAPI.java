@@ -32,4 +32,11 @@ public interface PlayerAPI {
      * @return Timestamp when player was last online
      */
     Timestamp getPlayerLastSeen(UUID uuid);
+
+    /**
+     * Get the UUID of the player who most recently connected from a given username
+     * @param name username to search
+     * @return UUID of player
+     */
+    UUID getUUIDFromName(String name);
 }

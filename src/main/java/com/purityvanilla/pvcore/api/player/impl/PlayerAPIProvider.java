@@ -47,6 +47,11 @@ public class PlayerAPIProvider implements PlayerAPI {
         return playerData.getPlayer(uuid).lastSeen();
     }
 
+    @Override
+    public UUID getUUIDFromName(String name) {
+        return playerData.getUUIDFromName(name);
+    }
+
     private enum MetaComponent {
         PREFIX,
         SUFFIX

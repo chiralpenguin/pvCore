@@ -61,7 +61,7 @@ public class PlayerDataService extends DataService {
     }
 
     public CachedPlayer getPlayer(String name) {
-        UUID uuid = operator.getUUIDFromName(name);
+      UUID uuid = getUUIDFromName(name);
 
         // Player name does not exist in database
         if (uuid == null) {
@@ -75,5 +75,9 @@ public class PlayerDataService extends DataService {
         CachedPlayer cPlayer = getPlayer(uuid);
         operator.savePlayerData(cPlayer);
         playerCache.remove(uuid);
+    }
+
+    public UUID getUUIDFromName(String name) {
+        return operator.getUUIDFromName(name);
     }
 }
