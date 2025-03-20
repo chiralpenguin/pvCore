@@ -3,6 +3,7 @@ package com.purityvanilla.pvcore.api.player.impl;
 import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.api.player.PlayerAPI;
 import com.purityvanilla.pvcore.database.PlayerDataService;
+import com.purityvanilla.pvcore.player.Nicknames;
 import com.purityvanilla.pvcore.util.FormatCodeParser;
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
@@ -30,6 +31,16 @@ public class PlayerAPIProvider implements PlayerAPI {
     @Override
     public void setPlayerNickname(Player player, Component nickname) {
         playerData.getPlayer(player.getUniqueId()).nickname();
+    }
+
+    @Override
+    public boolean playerHasNickname(Player player) {
+        return playerData.getPlayer(player.getUniqueId()).hasNick();
+    }
+
+    @Override
+    public void removePlayerNickname(Player player) {
+        Nicknames.removePlayerNickname(player, playerData);
     }
 
     @Override
