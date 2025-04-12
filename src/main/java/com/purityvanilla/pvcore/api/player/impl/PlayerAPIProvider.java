@@ -54,13 +54,28 @@ public class PlayerAPIProvider implements PlayerAPI {
     }
 
     @Override
-    public Timestamp getPlayerLastSeen(UUID uuid) {
-        return playerData.getPlayer(uuid).lastSeen();
+    public Timestamp getPlayerLastSeen(Player player) {
+        return playerData.getPlayer(player.getUniqueId()).lastSeen();
     }
 
     @Override
     public UUID getUUIDFromName(String name) {
         return playerData.getUUIDFromName(name);
+    }
+
+    @Override
+    public boolean isPlayerIgnored(Player player, Player ignoredPlayer) {
+        return playerData.getPlayer(player.getUniqueId()).ignores(ignoredPlayer.getUniqueId());
+    }
+
+    @Override
+    public void ignorePlayer(Player player, Player ignoredPlayer) {
+        playerData.getPlayer(player.getUniqueId()).ignorePlayer(ignoredPlayer.getUniqueId());
+    }
+
+    @Override
+    public void unignorePlayer(Player player, Player ignoredPlayer) {
+        playerData.getPlayer(player.getUniqueId()).unignorePlayer(ignoredPlayer.getUniqueId());
     }
 
     private enum MetaComponent {

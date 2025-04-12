@@ -49,9 +49,13 @@ public class CachedPlayer {
         }
         return MiniMessage.miniMessage().serialize(nickname);
     }
-
+    
     public Set<UUID> getIgnoredPlayers() {
         return ignoredPlayers;
+    }
+
+    public boolean ignores(UUID uuid) {
+        return ignoredPlayers.contains(uuid);
     }
 
     public void update(String name) {

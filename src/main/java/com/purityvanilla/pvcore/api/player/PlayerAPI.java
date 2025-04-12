@@ -41,10 +41,10 @@ public interface PlayerAPI {
 
     /**
      * Get the lastSeen value of a player from their UUID
-     * @param uuid
+     * @param player
      * @return Timestamp when player was last online
      */
-    Timestamp getPlayerLastSeen(UUID uuid);
+    Timestamp getPlayerLastSeen(Player player);
 
     /**
      * Get the UUID of the player who most recently connected from a given username
@@ -52,4 +52,26 @@ public interface PlayerAPI {
      * @return UUID of player
      */
     UUID getUUIDFromName(String name);
+
+    /**
+     * Check if the player has another player in their ignore list
+     * @param player player whose ignore list is checked
+     * @param ignoredPlayer player to check presence of
+     * @return True if ignoredUuid exists within the player's ignore list
+     */
+    boolean isPlayerIgnored(Player player, Player ignoredPlayer);
+
+    /**
+     * Add a new player a player's ignore list
+     * @param player player whose ignore list is updated
+     * @param ignoredPlayer player to ignore
+     */
+    void ignorePlayer(Player player, Player ignoredPlayer);
+
+    /**
+     * Remove a player from a player's ignore list
+     * @param player player whose ignore list is updated
+     * @param ignoredPlayer player to unignore
+     */
+    void unignorePlayer(Player player, Player ignoredPlayer);
 }
