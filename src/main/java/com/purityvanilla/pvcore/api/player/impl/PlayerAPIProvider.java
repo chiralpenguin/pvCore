@@ -12,6 +12,7 @@ import net.luckperms.api.model.user.User;
 import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
+import java.util.Set;
 import java.util.UUID;
 
 public class PlayerAPIProvider implements PlayerAPI {
@@ -71,6 +72,11 @@ public class PlayerAPIProvider implements PlayerAPI {
     @Override
     public boolean isPlayerIgnored(Player player, Player ignoredPlayer) {
         return playerData.getPlayer(player.getUniqueId()).ignores(ignoredPlayer.getUniqueId());
+    }
+
+    @Override
+    public Set<UUID> getIgnoredPlayers(Player player) {
+       return playerData.getPlayer(player.getUniqueId()).getIgnoredPlayers();
     }
 
     @Override

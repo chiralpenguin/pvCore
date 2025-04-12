@@ -4,6 +4,8 @@ import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 
 public interface PlayerAPI {
@@ -67,6 +69,13 @@ public interface PlayerAPI {
      * @return True if ignoredUuid exists within the player's ignore list
      */
     boolean isPlayerIgnored(Player player, Player ignoredPlayer);
+
+    /**
+     * Get a copy of the player's ignore list for iteration
+     * @param player player whose ignore list is retrieved
+     * @return Set of player UUIDs
+     */
+    Set<UUID> getIgnoredPlayers(Player player);
 
     /**
      * Add a new player a player's ignore list
