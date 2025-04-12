@@ -113,7 +113,12 @@ public class PlayerOperator extends DatabaseOperator {
         }
         database.executeUpdate(query, params);
 
-        // Update player_ignores table
+        // Update player_ignores table by first clearing any existing records
+        query = "DELETE FROM player_ignores WHERE player_uuid = ?";
+        params = new ArrayList<>();
+        params.add(uuid);
+        database.executeUpdate(query, params);
+
         // TODO Replace with (batched) combined queries to avoid network overhead
         for (UUID ignored_uuid : ignoredPlayers) {
             query = "INSERT IGNORE INTO player_ignores (player_uuid, ignored_uuid) VALUES (?, ?)";
