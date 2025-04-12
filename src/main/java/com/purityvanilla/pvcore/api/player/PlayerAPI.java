@@ -41,6 +41,13 @@ public interface PlayerAPI {
 
     /**
      * Get the lastSeen value of a player from their UUID
+     * @param uuid
+     * @return Timestamp when player was last online
+     */
+    Timestamp getPlayerLastSeen(UUID uuid);
+
+    /**
+     * Get the lastSeen value of a player
      * @param player
      * @return Timestamp when player was last online
      */

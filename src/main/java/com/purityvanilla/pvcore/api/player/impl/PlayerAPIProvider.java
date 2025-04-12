@@ -54,8 +54,13 @@ public class PlayerAPIProvider implements PlayerAPI {
     }
 
     @Override
+    public Timestamp getPlayerLastSeen(UUID uuid) {
+        return playerData.getPlayer(uuid).lastSeen();
+    }
+
+    @Override
     public Timestamp getPlayerLastSeen(Player player) {
-        return playerData.getPlayer(player.getUniqueId()).lastSeen();
+        return getPlayerLastSeen(player.getUniqueId());
     }
 
     @Override
