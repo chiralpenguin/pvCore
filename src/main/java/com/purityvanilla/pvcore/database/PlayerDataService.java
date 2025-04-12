@@ -5,6 +5,7 @@ import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.OfflinePlayer;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -52,7 +53,7 @@ public class PlayerDataService extends DataService {
         CachedPlayer cPlayer = operator.getPlayerData(uuid);
         // Initialise player if valid but not yet stored in database
         if (cPlayer == null) {
-            cPlayer = new CachedPlayer(player.getUniqueId(), player.getName(), new Timestamp(player.getLastSeen()));
+            cPlayer = new CachedPlayer(player.getUniqueId(), player.getName(), new Timestamp(player.getLastSeen()), null, new HashSet<>());
             operator.savePlayerData(cPlayer);
         }
 

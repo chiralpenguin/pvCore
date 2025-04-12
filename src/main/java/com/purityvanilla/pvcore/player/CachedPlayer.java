@@ -4,6 +4,8 @@ import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 
 public class CachedPlayer {
@@ -11,19 +13,14 @@ public class CachedPlayer {
     private String name;
     private Timestamp lastSeen;
     private Component nickname;
+    private Set<UUID> ignoredPlayers;
 
-    public CachedPlayer(UUID uuid, String name, Timestamp lastSeen, String nickString) {
+    public CachedPlayer(UUID uuid, String name, Timestamp lastSeen, String nickString, Set<UUID> ignoredPlayers) {
         this.uuid = uuid;
         this.name = name;
         this.lastSeen = lastSeen;
-
-        if (nickString != null) {
-            this.nickname = MiniMessage.miniMessage().deserialize(nickString);
-        }
-    }
-
-    public CachedPlayer(UUID uuid, String name, Timestamp lastSeen) {
-        this(uuid, name, lastSeen, null);
+        this.nickname = (nickString == null) ? null : MiniMessage.miniMessage().deserialize(nickString);
+        this.ignoredPlayers = (ignoredPlayers == null) ? new HashSet() : ignoredPlayers;
     }
 
     public UUID uuid() {
@@ -53,6 +50,10 @@ public class CachedPlayer {
         return MiniMessage.miniMessage().serialize(nickname);
     }
 
+    public Set<UUID> getIgnoredPlayers() {
+        return ignoredPlayers;
+    }
+
     public void update(String name) {
         this.name = name;
         this.lastSeen = new Timestamp(System.currentTimeMillis());
@@ -68,5 +69,13 @@ public class CachedPlayer {
 
     public void removeNickname() {
         this.nickname = null;
+    }
+
+    public void ignorePlayer(UUID uuid) {
+        this.ignoredPlayers.add(uuid);
+    }
+
+    public void unignorePlayer(UUID uuid) {
+        this.ignoredPlayers.remove(uuid);
     }
 }

@@ -1,11 +1,10 @@
 package com.purityvanilla.pvcore.database;
 
 import com.purityvanilla.pvcore.player.CachedPlayer;
+import com.zaxxer.hikari.HikariJNDIFactory;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerOperator extends DatabaseOperator {
 
@@ -39,26 +38,49 @@ public class PlayerOperator extends DatabaseOperator {
             )
             """;
         database.executeUpdate(query);
+        query = """
+            CREATE TABLE IF NOT EXISTS player_ignores (
+                player_uuid CHAR(36) NOT NULL,
+                ignored_uuid CHAR(36) NOT NULL,
+                PRIMARY KEY (player_uuid, ignored_uuid),
+                CONSTRAINT fk_player_uuid FOREIGN KEY (player_uuid) REFERENCES players (uuid) ON DELETE CASCADE,
+                CONSTRAINT fk_ignored_uuid FOREIGN KEY (ignored_uuid) REFERENCES players (uuid) ON DELETE CASCADE,
+                CONSTRAINT player_self_reference CHECK (player_uuid <> ignored_uuid)
+            )
+            """;
+        database.executeUpdate(query);
     }
 
     public CachedPlayer getPlayerData(UUID uuid) {
-        String query = """
+        String query = "SELECT ignored_uuid FROM player_ignores WHERE player_uuid = ?";
+        List<Object> params = new ArrayList<>();
+        params.add(uuid);
+        ResultSetProcessor<Set<UUID>> ignoredPlayerProcessor = rs -> {
+            Set<UUID> ignoredPlayers = new HashSet<>();
+            if (rs.next()) {
+                ignoredPlayers.add(UUID.fromString(rs.getString("ignored_uuid")));
+            }
+            return ignoredPlayers;
+        };
+        Set<UUID> ignoredPlayers = database.executeQuery(query, params, ignoredPlayerProcessor);
+
+        query = """
             SELECT u.name, u.last_seen, n.nickname FROM usernames u
             LEFT JOIN nicknames n ON u.uuid = n.uuid
             WHERE u.uuid = ? ORDER BY u.last_seen DESC LIMIT 1
             """;
-        List<Object> params = new ArrayList<>();
+        params = new ArrayList<>();
         params.add(uuid);
         ResultSetProcessor<CachedPlayer> playerProcessor = rs -> {
             if (rs.next()) {
-                return new CachedPlayer(uuid, rs.getString("u.name"), rs.getTimestamp("u.last_seen"), rs.getString("n.nickname"));
+                return new CachedPlayer(uuid, rs.getString("u.name"), rs.getTimestamp("u.last_seen"), rs.getString("n.nickname"), ignoredPlayers);
             }
             return null;
         };
         return database.executeQuery(query, params, playerProcessor);
     }
 
-    public void savePlayerData(UUID uuid, String name, Timestamp lastSeen, String nickString) {
+    public void savePlayerData(UUID uuid, String name, Timestamp lastSeen, String nickString, Set<UUID> ignoredPlayers) {
         // Update players table
         String query = "INSERT IGNORE INTO players (uuid) VALUES (?)";
         List<Object> params = new ArrayList<>();
@@ -90,10 +112,20 @@ public class PlayerOperator extends DatabaseOperator {
                     """;
         }
         database.executeUpdate(query, params);
+
+        // Update player_ignores table
+        // TODO Replace with (batched) combined queries to avoid network overhead
+        for (UUID ignored_uuid : ignoredPlayers) {
+            query = "INSERT IGNORE INTO player_ignores (player_uuid, ignored_uuid) VALUES (?, ?)";
+            params = new ArrayList<>();
+            params.add(uuid);
+            params.add(ignored_uuid);
+            database.executeUpdate(query, params);
+        }
     }
 
     public void savePlayerData(CachedPlayer cPlayer) {
-        savePlayerData(cPlayer.uuid(), cPlayer.name(), cPlayer.lastSeen(), cPlayer.getNickString());
+        savePlayerData(cPlayer.uuid(), cPlayer.name(), cPlayer.lastSeen(), cPlayer.getNickString(), cPlayer.getIgnoredPlayers());
     }
 
     public UUID getUUIDFromName(String username) {

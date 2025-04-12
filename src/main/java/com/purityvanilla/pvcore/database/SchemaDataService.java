@@ -5,7 +5,7 @@ import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
 
 public class SchemaDataService extends DataService {
     private final SchemaOperator operator;
-    private final int currentVersion = 2;
+    private final int currentVersion = 3;
 
     public SchemaDataService(PVCore plugin, DatabaseConnector database) {
         super(plugin);

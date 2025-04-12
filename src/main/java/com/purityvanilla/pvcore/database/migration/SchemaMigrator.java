@@ -31,6 +31,7 @@ public class SchemaMigrator {
 
     private void registerMigrations() {
         migrations.add(new V2Migration(database));
+        migrations.add(new V3Migration(database));
     }
 
     public void handleMigrations() {
