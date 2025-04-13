@@ -50,7 +50,8 @@ public class PVCore extends JavaPlugin {
         dataServices.put("locations", new LocationDataService(this, database));
 
         // Initialise external API objects
-        luckPerms = LuckPermsProvider.get();       cacheHelper = new CacheHelper(this);
+        luckPerms = LuckPermsProvider.get();
+        cacheHelper = new CacheHelper(this);
 
         // Register api provider as Bukkit service
         PVCoreAPIProvider apiProvider = new PVCoreAPIProvider(this);

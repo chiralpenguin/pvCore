@@ -31,7 +31,10 @@ public class SchemaOperator extends DatabaseOperator {
     }
 
     public void updateSchemaVersion(int currentVersion) {
-        String query = "UPDATE schema_version SET version=?";
+        String query = "DELETE FROM schema_version";
+        database.executeUpdate(query);
+
+        query = "INSERT INTO schema_version (version) VALUES (?)";
         List<Object> params = new ArrayList<>();
         params.add(currentVersion + "");
         database.executeUpdate(query, params);
