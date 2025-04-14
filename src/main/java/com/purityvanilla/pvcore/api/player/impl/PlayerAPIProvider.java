@@ -43,7 +43,7 @@ public class PlayerAPIProvider implements PlayerAPI {
 
     @Override
     public void setPlayerNickname(Player player, Component nickname) {
-        playerData.getPlayer(player.getUniqueId()).nickname();
+        playerData.getPlayer(player.getUniqueId()).setNickname(nickname);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class PlayerAPIProvider implements PlayerAPI {
 
     @Override
     public Set<UUID> getIgnoredPlayers(Player player) {
-       return playerData.getPlayer(player.getUniqueId()).getIgnoredPlayers();
+       return new HashSet<>(playerData.getPlayer(player.getUniqueId()).getIgnoredPlayers());
     }
 
     @Override
