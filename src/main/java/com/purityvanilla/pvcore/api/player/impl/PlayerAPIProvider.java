@@ -9,11 +9,13 @@ import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.user.User;
+import net.luckperms.api.node.Node;
+import net.luckperms.api.node.types.PermissionNode;
+import net.luckperms.api.query.QueryOptions;
 import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerAPIProvider implements PlayerAPI {
     private final PlayerDataService playerData;
@@ -97,6 +99,24 @@ public class PlayerAPIProvider implements PlayerAPI {
     @Override
     public void unignorePlayer(Player player, Player ignoredPlayer) {
         playerData.getPlayer(player.getUniqueId()).unignorePlayer(ignoredPlayer.getUniqueId());
+    }
+
+    @Override
+    public Set<String> getPlayerPermissions(UUID uuid) {
+        Set<String> permissions = new HashSet<>();
+        Collection<Node> nodes = luckPerms.getUserManager().getUser(uuid).resolveDistinctInheritedNodes(QueryOptions.defaultContextualOptions());
+
+        for (Node node : nodes) {
+            if (node.isNegated() || node.hasExpired()) continue;
+            permissions.add(node.getKey());
+        }
+
+        return permissions;
+    }
+
+    @Override
+    public Set<String> getPlayerPermissions(Player player) {
+        return getPlayerPermissions(player.getUniqueId());
     }
 
     private enum MetaComponent {
