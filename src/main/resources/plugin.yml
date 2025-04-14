@@ -59,6 +59,11 @@ commands:
     usage: /rloc <old_name> <new_name>
     permission: pvcore.renameloc
     aliases: [renamehome]
+  suicide:
+    description: Kills the player
+    usage: /suicide
+    permission: pvcore.suicide
+    aliases: [kill]
   teleport:
     description: Teleports the player to another player or position
     usage: /teleport <player/coordinates> [world]

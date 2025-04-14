@@ -50,6 +50,7 @@
   "player-not-found": "<red>Player could not be found",
   "player-only": "<red>This command can only be used by a player",
   "server-prefix": "<gold>[<aqua>Purity Vanilla<gold>]",
+  "suicide": "<aqua>You had so much to live for...",
   "realname-entry": "<gold><nickname> <aqua>is player <gold><username>",
   "realname-header": "<aqua>Players found with the name <gold><nickname><aqua>:",
   "realname-usage": "<red>Usage: /realname <nickname>",
