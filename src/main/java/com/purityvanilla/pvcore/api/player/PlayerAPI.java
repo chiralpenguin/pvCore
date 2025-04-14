@@ -9,6 +9,19 @@ import java.util.Set;
 import java.util.UUID;
 
 public interface PlayerAPI {
+    /**
+     * Get the most recent username of a player from their UUID
+     * @param uuid
+     * @return String username
+     */
+    String getPlayerUsername(UUID uuid);
+
+    /**
+     * Get the most recent username from a Player
+     * @param player
+     * @return String username
+     */
+    String getPlayerUsername(Player player);
 
     Component getPlayerNickname(Player player);
 

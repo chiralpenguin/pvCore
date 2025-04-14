@@ -25,6 +25,16 @@ public class PlayerAPIProvider implements PlayerAPI {
     }
 
     @Override
+    public String getPlayerUsername(UUID uuid) {
+        return playerData.getPlayer(uuid).name();
+    }
+
+    @Override
+    public String getPlayerUsername(Player player) {
+        return getPlayerUsername(player.getUniqueId());
+    }
+
+    @Override
     public Component getPlayerNickname(Player player) {
         return playerData.getPlayer(player.getUniqueId()).nickname();
     }
