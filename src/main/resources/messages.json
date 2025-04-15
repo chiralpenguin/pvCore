@@ -1,9 +1,25 @@
 {
+  "blog": [
+    "<b><dark_grey>----- <aqua>Purity Vanilla Blog <dark_grey>-----</b>",
+    "<light_purple><click:open_url:'https://blog.purityvanilla.com'>https://blog.purityvanilla.com</click>"
+  ],
   "console-only": "<red>This command can only be used from console",
   "database-connection-failure": "<red>There was an error when connecting to the database!",
   "database-creation": "<aqua>No existing database schema version found, creating tables for current version.",
   "database-query-failure": "<red>There was a database error while executing: <query>",
   "database-migration": "<aqua>The pvCore database is being updated to version <currentversion> (currently <dbversion>)",
+  "discord": [
+    "<b><dark_purple>----- <aqua>Purity Vanilla Discord <dark_purple>-----</b>",
+    "<light_purple><click:open_url:'https://discord.gg/uCa9n2n'>https://discord.gg/uCa9n2n</click>"
+  ],
+  "donate": [
+    "<b><gold>----- <aqua>Purity Vanilla Store <gold>-----</b>",
+    "<light_purple><click:open_url:'https://purity-vanilla.tebex.io/'>https://purity-vanilla.tebex.io/</click>"
+  ],
+  "faq": [
+    "<b>If this is anarchy, why can't I hack?",
+    "<grey>You can, but only once (twice)..."
+  ],
   "gamemode-updated": "<aqua>Setting gamemode to <gold><gamemode>",
   "gamemode-updated-other": "<aqua>Setting player <gold><player><aqua>'s gamemode to <gold><gamemode>",
   "gamemode-usage": "<red>Usage: /gamemode <mode> [player]",
@@ -54,10 +70,22 @@
   "realname-entry": "<gold><nickname> <aqua>is player <gold><username>",
   "realname-header": "<aqua>Players found with the name <gold><nickname><aqua>:",
   "realname-usage": "<red>Usage: /realname <nickname>",
+  "reddit": [
+    "<b><dark_red>----- <aqua>Unofficial Subreddit <dark_red>-----</b>",
+    "<light_purple><click:open_url:'https://www.reddit.com/r/purityvanilla/'>https://www.reddit.com/r/purityvanilla/</click>"
+  ],
   "reload-plugin": "<aqua>Reloading pvCore",
   "reload-complete": "<aqua>Reloaded config.yml and messages.json",
+  "rewards": [
+    "<b><yellow>----- <gold><aqua>Voting Rewards <yellow>-----</b>",
+    "<b><gold>3+ Day Streak: </b><yellow>Skip ahead of other players in queue!",
+    "<b><gold>7+ Day Streak: </b><yellow>Access to /nick, /seen and coloured signs.",
+    "<b><gold>14+ Day Streak: </b><yellow>Special flare in chat, coloured nicknames and more!",
+    "<aqua>For more information on our voting rewards, click the link below",
+    "<light_purple><click:open_url:'https://www.purityvanilla.com/#vote-scroll'>https://www.purityvanilla.com/#vote-scroll</click>"
+  ],
   "rules": [
-    "<b><green>----- <dark_red>Purity Vanilla Rules <green>-----</b>",
+    "<b><dark_red>----- <aqua>Purity Vanilla Rules <dark_red>-----</b>",
     "<b><dark_red>1.</b> <red>No lag machines or deliberate overuse of server resources.",
     "<b><dark_red>2.</b> <red>No use of exploits or duping (including using the debug pie to locate entities).",
     "<b><dark_red>3.</b> <red>No use of hacked clients, external programs, disallowed client modifications or x-ray resourcepacks.",

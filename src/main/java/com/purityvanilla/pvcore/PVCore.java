@@ -15,6 +15,7 @@ import com.purityvanilla.pvcore.tasks.SaveDataTask;
 import com.purityvanilla.pvcore.util.CacheHelper;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -110,11 +111,19 @@ public class PVCore extends JavaPlugin {
     }
 
     private void registerCommands() {
+        CommandExecutor textCommandExecutor = new TextCommand(this);
+
+        getCommand("blog").setExecutor(textCommandExecutor);
+        getCommand("discord").setExecutor(textCommandExecutor);
+        getCommand("donate").setExecutor(textCommandExecutor);
+        getCommand("faq").setExecutor(textCommandExecutor);
         getCommand("gamemode").setExecutor(new GamemodeCommand(this));
         getCommand("gamemode").setTabCompleter(new GamemodeCompleter(this));
         getCommand("realname").setExecutor(new RealnameCommand(this));
+        getCommand("reddit").setExecutor(textCommandExecutor);
         getCommand("reload").setExecutor(new ReloadCommand(this));
-        getCommand("rules").setExecutor(new RulesCommand(this));
+        getCommand("rewards").setExecutor(textCommandExecutor);
+        getCommand("rules").setExecutor(textCommandExecutor);
         getCommand("help").setExecutor(new HelpCommand(this));
         getCommand("nick").setExecutor(new NicknameCommand(this));
         getCommand("nickremove").setExecutor(new NickRemoveCommand(this));

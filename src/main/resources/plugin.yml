@@ -7,6 +7,23 @@ description: Core plugin suite for the Purity Vanilla Minecraft server
 folia-supported: true
 depend: [pvLib, LuckPerms]
 commands:
+  blog:
+    description: Get the link to the server blog
+    usage: /blog
+    permission: pvcore.blog
+  discord:
+    description: Get the link to the Discord server
+    usage: /discord
+    permission: pvcore.discord
+  donate:
+    description: Get the link to the server webstore
+    usage: /donate
+    permission: pvcore.donate
+    aliases: [buy, shop, store, ranks, upgrade]
+  faq:
+    description: Displays a list of frequently asked questions
+    usage: /faq
+    permission: pvcore.faq
   gamemode:
     description: Change the players gamemode
     usage: /gamemode <gamemode> [player]
@@ -30,10 +47,18 @@ commands:
     description: Get all the players with a given nickname
     usage: /realname <nickname>
     permission: pvcore.realname
+  reddit:
+    description: Get the link to the server's subreddit
+    usage: /reddit
+    permission: pvcore.reddit
   reload:
     description: Reloads the plugin's configs and messages
     usage: /pvcore-reload
     permission: pvcore.reload
+  rewards:
+    description: See the servers voting rewards
+    usage: /rewards
+    permission: pvcore.rewards
   rules:
     description: Sends the server rules message
     usage: /rules
