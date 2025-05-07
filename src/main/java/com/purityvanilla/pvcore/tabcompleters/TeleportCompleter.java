@@ -28,7 +28,7 @@ public class TeleportCompleter implements TabCompleter {
 
                 for (Player player : plugin.getServer().getOnlinePlayers()) {
                     String playerName = player.getName();
-                    if (playerName.startsWith(partialInput)) {
+                    if (playerName.toLowerCase().startsWith(partialInput)) {
                         suggestions.add(playerName);
                     }
                 }
