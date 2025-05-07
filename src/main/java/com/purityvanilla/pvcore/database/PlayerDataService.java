@@ -23,7 +23,10 @@ public class PlayerDataService extends DataService {
     @Override
     public void saveAll() {
         for (CachedPlayer cPlayer : playerCache.values()) {
-            cPlayer.update();
+            // Update player last seen if they are currently online
+            if (plugin.getServer().getPlayer(cPlayer.name()) != null ) {
+                cPlayer.update();
+            }
             operator.savePlayerData(cPlayer);
         }
     }
