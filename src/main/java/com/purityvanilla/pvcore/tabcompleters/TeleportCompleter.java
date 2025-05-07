@@ -24,9 +24,13 @@ public class TeleportCompleter implements TabCompleter {
         List<String> suggestions = new ArrayList<>();
         switch (args.length) {
             case 1:
+                String partialInput = args[args.length - 1].toLowerCase();
+
                 for (Player player : plugin.getServer().getOnlinePlayers()) {
-                    // Need partial input check to filter by what is already typed
-                    suggestions.add(player.getName());
+                    String playerName = player.getName();
+                    if (playerName.startsWith(partialInput)) {
+                        suggestions.add(playerName);
+                    }
                 }
                 break;
             case 4:
