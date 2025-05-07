@@ -7,6 +7,10 @@ description: Core plugin suite for the Purity Vanilla Minecraft server
 folia-supported: true
 depend: [pvLib, LuckPerms]
 commands:
+  back:
+    description: Teleport to your previous or death location
+    usage: /back
+    permission: pvcore.back
   blog:
     description: Get the link to the server blog
     usage: /blog
@@ -100,6 +104,8 @@ commands:
     permission: pvcore.tphere
 
 permissions:
+  pvcore.back.on-death:
+    description: Saves death positions for teleporting with /back
   pvcore.formatcodes.all:
     description: Gives access to all formatting codes in all contexts
   pvcore.formatcodes.magic:

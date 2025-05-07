@@ -2,6 +2,7 @@ package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.player.SavedLocation;
 import com.purityvanilla.pvcore.PVCore;
+import com.purityvanilla.pvcore.player.Teleports;
 import com.purityvanilla.pvcore.util.CustomTagResolvers;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import org.bukkit.command.Command;
@@ -30,9 +31,7 @@ public class LocationTeleportCommand implements CommandExecutor {
             return true;
         }
 
-        player.teleportAsync(location.getLocation(plugin));
-        player.sendMessage(plugin.config().getMessage("location-teleported",
-                CustomTagResolvers.locationLabelResolver(locationLabel)));
+        Teleports.TeleportPlayerToSavedLocation(plugin, player, location.getLocation(plugin), locationLabel);
         return true;
     }
 }

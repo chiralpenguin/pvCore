@@ -1,4 +1,5 @@
 {
+  "back-no-previous-location": "<red>You have no previous positions since login",
   "blog": [
     "<b><dark_grey>----- <aqua>Purity Vanilla Blog <dark_grey>-----</b>",
     "<light_purple><click:open_url:'https://blog.purityvanilla.com'>https://blog.purityvanilla.com</click>"
@@ -94,6 +95,7 @@
   "teleport-here-usage": "<red>Usage: /tphere <player>",
   "teleport-position-usage": "<red>Usage: /teleport <x> <y> <z> [world]",
   "teleport-usage": "<red>Usage: /teleport <player/coordinates> [world]",
+  "teleported-back": "<aqua>Teleported to previous position",
   "teleported-here": "<aqua>Teleported player <gold><player>",
   "teleported-to-player": "<aqua>Teleported to player <gold><target>",
   "teleported-to-position": "<aqua>Teleported to position in <gold><world>"

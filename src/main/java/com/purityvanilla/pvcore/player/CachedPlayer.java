@@ -2,11 +2,10 @@ package com.purityvanilla.pvcore.player;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Location;
 
 import java.sql.Timestamp;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class CachedPlayer {
     private final UUID uuid;
@@ -14,13 +13,17 @@ public class CachedPlayer {
     private Timestamp lastSeen;
     private Component nickname;
     private Set<UUID> ignoredPlayers;
+    private List<Location> previousLocations;
 
     public CachedPlayer(UUID uuid, String name, Timestamp lastSeen, String nickString, Set<UUID> ignoredPlayers) {
         this.uuid = uuid;
         this.name = name;
         this.lastSeen = lastSeen;
         this.nickname = (nickString == null) ? null : MiniMessage.miniMessage().deserialize(nickString);
-        this.ignoredPlayers = (ignoredPlayers == null) ? new HashSet() : ignoredPlayers;
+        this.ignoredPlayers = (ignoredPlayers == null) ? new HashSet<>() : ignoredPlayers;
+
+        // Transitory Attributes
+        this.previousLocations = new ArrayList<>();
     }
 
     public UUID uuid() {
@@ -58,6 +61,10 @@ public class CachedPlayer {
         return ignoredPlayers.contains(uuid);
     }
 
+    public boolean hasPreviousLocation() {
+        return !this.previousLocations.isEmpty();
+    }
+
     public void update(String name) {
         this.name = name;
         this.lastSeen = new Timestamp(System.currentTimeMillis());
@@ -81,5 +88,18 @@ public class CachedPlayer {
 
     public void unignorePlayer(UUID uuid) {
         this.ignoredPlayers.remove(uuid);
+    }
+
+    public void putLastLocation(Location location) {
+        this.previousLocations.add(location);
+
+        // Enforce list length cap
+        if (previousLocations.size() > 512) {
+            previousLocations.removeFirst();
+        }
+    }
+
+    public Location removeLastLocation() {
+        return this.previousLocations.removeLast();
     }
 }

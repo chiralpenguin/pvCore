@@ -5,6 +5,7 @@ import com.purityvanilla.pvcore.api.impl.PVCoreAPIProvider;
 import com.purityvanilla.pvcore.commands.*;
 import com.purityvanilla.pvcore.database.*;
 import com.purityvanilla.pvcore.database.migration.SchemaMigrator;
+import com.purityvanilla.pvcore.listeners.PlayerDeathListener;
 import com.purityvanilla.pvcore.listeners.PlayerJoinListener;
 import com.purityvanilla.pvcore.listeners.PlayerQuitListener;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
@@ -113,6 +114,7 @@ public class PVCore extends JavaPlugin {
     private void registerCommands() {
         CommandExecutor textCommandExecutor = new TextCommand(this);
 
+        getCommand("back").setExecutor(new BackCommand(this));
         getCommand("blog").setExecutor(textCommandExecutor);
         getCommand("discord").setExecutor(textCommandExecutor);
         getCommand("donate").setExecutor(textCommandExecutor);
@@ -142,6 +144,7 @@ public class PVCore extends JavaPlugin {
     }
 
     private void registerListeners() {
+        getServer().getPluginManager().registerEvents(new PlayerDeathListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         getServer().getPluginManager().registerEvents(new PlayerQuitListener(this), this);
     }
