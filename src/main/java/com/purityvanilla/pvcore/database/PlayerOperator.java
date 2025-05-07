@@ -57,7 +57,7 @@ public class PlayerOperator extends DatabaseOperator {
         params.add(uuid);
         ResultSetProcessor<Set<UUID>> ignoredPlayerProcessor = rs -> {
             Set<UUID> ignoredPlayers = new HashSet<>();
-            if (rs.next()) {
+            while (rs.next()) {
                 ignoredPlayers.add(UUID.fromString(rs.getString("ignored_uuid")));
             }
             return ignoredPlayers;
