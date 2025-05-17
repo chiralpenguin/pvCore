@@ -8,6 +8,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ import java.util.UUID;
 import static org.apache.commons.lang3.exception.ExceptionUtils.getStackTrace;
 
 public class DatabaseConnector {
-    private final PVCore plugin;
+    private final JavaPlugin plugin;
     private final HikariDataSource dataSource;
 
     public DatabaseConnector(PVCore plugin) {
@@ -35,6 +36,11 @@ public class DatabaseConnector {
         dataSource = new HikariDataSource(config);
     }
 
+    public DatabaseConnector(JavaPlugin plugin, HikariDataSource dataSource) {
+        this.plugin = plugin;
+        this.dataSource = dataSource;
+    }
+
     public HikariDataSource getDataSource() {
         return dataSource;
     }
@@ -43,15 +49,14 @@ public class DatabaseConnector {
         try {
             return dataSource.getConnection();
         } catch (SQLException e) {
-            Component warningMessage = plugin.config().getMessage("database-connection-failure");
-            plugin.getLogger().warning(PlainTextComponentSerializer.plainText().serialize(warningMessage));
+            plugin.getLogger().warning("There was an error when connecting to the database!");
             plugin.getLogger().warning(getStackTrace(e));
             return null;
         }
     }
 
-    public void logQueryException(PVCore plugin, String query, SQLException e) {
-        String rawMessage = plugin.config().getRawMessage("database-query-failure");
+    public void logQueryException(String query, SQLException e) {
+        String rawMessage = "<red>There was a database error while executing: <query>";
         TagResolver resolver = TagResolver.resolver(Placeholder.component("query", Component.text(query)));
         Component warningMessage = MiniMessage.miniMessage().deserialize(rawMessage, resolver);
         plugin.getLogger().warning(PlainTextComponentSerializer.plainText().serialize(warningMessage));
@@ -85,7 +90,7 @@ public class DatabaseConnector {
         ) {
             return processor.process(rs);
         } catch (SQLException e) {
-            logQueryException(plugin, query, e);
+            logQueryException(query, e);
             return null;
         }
     }
@@ -100,7 +105,7 @@ public class DatabaseConnector {
         ) {
             return pstmt.executeUpdate();
         } catch (SQLException e) {
-            logQueryException(plugin, query, e);
+            logQueryException(query, e);
             return 0;
         }
     }

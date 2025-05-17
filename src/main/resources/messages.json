@@ -5,9 +5,7 @@
     "<light_purple><click:open_url:'https://blog.purityvanilla.com'>https://blog.purityvanilla.com</click>"
   ],
   "console-only": "<red>This command can only be used from console",
-  "database-connection-failure": "<red>There was an error when connecting to the database!",
   "database-creation": "<aqua>No existing database schema version found, creating tables for current version.",
-  "database-query-failure": "<red>There was a database error while executing: <query>",
   "database-migration": "<aqua>The pvCore database is being updated to version <currentversion> (currently <dbversion>)",
   "discord": [
     "<b><dark_purple>----- <aqua>Purity Vanilla Discord <dark_purple>-----</b>",
