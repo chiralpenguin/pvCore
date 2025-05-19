@@ -1,11 +1,11 @@
 package com.purityvanilla.pvcore.database;
 
-import com.purityvanilla.pvcore.PVCore;
+import org.bukkit.plugin.java.JavaPlugin;
 
 public abstract class DataService {
-    protected final PVCore plugin;
+    protected final JavaPlugin plugin;
 
-    public DataService(PVCore plugin) {
+    public DataService(JavaPlugin plugin) {
         this.plugin = plugin;
     }
 
