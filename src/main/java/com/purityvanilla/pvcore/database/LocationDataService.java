@@ -2,6 +2,7 @@ package com.purityvanilla.pvcore.database;
 
 import com.purityvanilla.pvcore.player.SavedLocation;
 import com.purityvanilla.pvcore.PVCore;
+import com.purityvanilla.pvcore.util.CacheHelper;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,7 +29,7 @@ public class LocationDataService extends DataService {
 
     @Override
     public void cleanCache() {
-        for (UUID absentPlayer : plugin.getCacheHelper().getAbsentUUIDs(locationCache.keySet())) {
+        for (UUID absentPlayer : CacheHelper.getAbsentUUIDs(locationCache.keySet(), plugin)) {
             unloadAllPlayerLocations(absentPlayer);
         }
     }

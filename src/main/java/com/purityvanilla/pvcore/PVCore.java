@@ -28,7 +28,6 @@ public class PVCore extends JavaPlugin {
     private Config config;
     private DatabaseConnector database;
     private HashMap<String, DataService> dataServices;
-    private CacheHelper cacheHelper;
 
     private LuckPerms luckPerms;
 
@@ -53,7 +52,6 @@ public class PVCore extends JavaPlugin {
 
         // Initialise external API objects
         luckPerms = LuckPermsProvider.get();
-        cacheHelper = new CacheHelper(this);
 
         // Register api provider as Bukkit service
         PVCoreAPIProvider apiProvider = new PVCoreAPIProvider(this);
@@ -96,10 +94,6 @@ public class PVCore extends JavaPlugin {
 
     public LocationDataService getLocationData() {
         return (LocationDataService) dataServices.get("locations");
-    }
-
-    public CacheHelper getCacheHelper() {
-        return cacheHelper;
     }
 
     public LuckPerms getLuckPerms() {

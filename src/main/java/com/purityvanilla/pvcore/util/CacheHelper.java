@@ -1,18 +1,12 @@
 package com.purityvanilla.pvcore.util;
 
-import com.purityvanilla.pvcore.PVCore;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
 public class CacheHelper {
-    private final PVCore plugin;
-
-    public CacheHelper(PVCore plugin) {
-        this.plugin = plugin;
-    }
-
-    public Set<UUID> getOnlineUUIDs() {
+    public static Set<UUID> getOnlineUUIDs(JavaPlugin plugin) {
         HashSet<UUID> uuids = new HashSet<>();
         for (Player player : plugin.getServer().getOnlinePlayers()) {
             uuids.add(player.getUniqueId());
@@ -21,7 +15,7 @@ public class CacheHelper {
         return uuids;
     }
 
-    public List<UUID> getAbsentUUIDs(Collection<UUID> cachedUUIDs, Set<UUID> onlineUUIDs) {
+    public static List<UUID> getAbsentUUIDs(Collection<UUID> cachedUUIDs, Set<UUID> onlineUUIDs) {
         ArrayList<UUID> absentUUIDs = new ArrayList<>();
         for (UUID uuid : cachedUUIDs) {
             if (!onlineUUIDs.contains(uuid)) {
@@ -32,7 +26,7 @@ public class CacheHelper {
         return  absentUUIDs;
     }
 
-    public List<UUID> getAbsentUUIDs(Collection<UUID> cachedUUIDs) {
-        return getAbsentUUIDs(cachedUUIDs, getOnlineUUIDs());
+    public static List<UUID> getAbsentUUIDs(Collection<UUID> cachedUUIDs, JavaPlugin plugin) {
+        return getAbsentUUIDs(cachedUUIDs, getOnlineUUIDs(plugin));
     }
 }

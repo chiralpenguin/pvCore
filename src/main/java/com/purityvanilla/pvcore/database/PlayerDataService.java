@@ -2,6 +2,7 @@ package com.purityvanilla.pvcore.database;
 
 import com.purityvanilla.pvcore.player.CachedPlayer;
 import com.purityvanilla.pvcore.PVCore;
+import com.purityvanilla.pvcore.util.CacheHelper;
 import org.bukkit.OfflinePlayer;
 
 import java.sql.Timestamp;
@@ -33,7 +34,7 @@ public class PlayerDataService extends DataService {
 
     @Override
     public void cleanCache() {
-        for (UUID absentPlayer : plugin.getCacheHelper().getAbsentUUIDs(playerCache.keySet())) {
+        for (UUID absentPlayer : CacheHelper.getAbsentUUIDs(playerCache.keySet(), plugin)) {
             unloadPlayer(absentPlayer);
         }
     }
