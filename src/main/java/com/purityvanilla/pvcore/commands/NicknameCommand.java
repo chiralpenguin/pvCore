@@ -2,8 +2,8 @@ package com.purityvanilla.pvcore.commands;
 
 import com.purityvanilla.pvcore.player.Nicknames;
 import com.purityvanilla.pvcore.PVCore;
-import com.purityvanilla.pvcore.util.FormatCodeParser;
 import com.purityvanilla.pvlib.commands.CommandGuard;
+import com.purityvanilla.pvlib.util.FormatCodeParser;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;

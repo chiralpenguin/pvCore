@@ -4,13 +4,12 @@ import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.api.player.PlayerAPI;
 import com.purityvanilla.pvcore.database.PlayerDataService;
 import com.purityvanilla.pvcore.player.Nicknames;
-import com.purityvanilla.pvcore.util.FormatCodeParser;
+import com.purityvanilla.pvlib.util.FormatCodeParser;
 import net.kyori.adventure.text.Component;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.Node;
-import net.luckperms.api.node.types.PermissionNode;
 import net.luckperms.api.query.QueryOptions;
 import org.bukkit.entity.Player;
 

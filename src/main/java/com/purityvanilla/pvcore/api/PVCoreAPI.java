@@ -1,7 +1,7 @@
 package com.purityvanilla.pvcore.api;
 
 import com.purityvanilla.pvcore.api.player.PlayerAPI;
-import com.purityvanilla.pvcore.util.FormatCodeParser;
+import com.purityvanilla.pvlib.util.FormatCodeParser;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 

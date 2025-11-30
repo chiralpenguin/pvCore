@@ -5,12 +5,11 @@ import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.api.PVCoreAPI;
 import com.purityvanilla.pvcore.api.player.PlayerAPI;
 import com.purityvanilla.pvcore.api.player.impl.PlayerAPIProvider;
-import com.purityvanilla.pvcore.util.FormatCodeParser;
+import com.purityvanilla.pvlib.util.FormatCodeParser;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
 
 import java.util.function.Supplier;
-import java.util.logging.Logger;
 
 public class PVCoreAPIProvider implements PVCoreAPI {
     private final Supplier<Config> configSupplier;
