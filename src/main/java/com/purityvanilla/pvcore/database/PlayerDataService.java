@@ -3,6 +3,8 @@ package com.purityvanilla.pvcore.database;
 import com.purityvanilla.pvcore.player.CachedPlayer;
 import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.util.CacheHelper;
+import com.purityvanilla.pvlib.database.DataService;
+import com.purityvanilla.pvlib.database.DatabaseConnector;
 import org.bukkit.OfflinePlayer;
 
 import java.sql.Timestamp;

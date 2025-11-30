@@ -1,6 +1,7 @@
 package com.purityvanilla.pvcore.database.migration;
 
-import com.purityvanilla.pvcore.database.DatabaseConnector;
+import com.purityvanilla.pvlib.database.DatabaseConnector;
+import com.purityvanilla.pvlib.database.migration.Migration;
 
 public class V3Migration implements Migration {
     private final DatabaseConnector database;

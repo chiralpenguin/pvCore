@@ -1,6 +1,6 @@
 plugins {
     id("java")
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("com.gradleup.shadow") version "9.2.2"
     id("maven-publish")
 }
 
@@ -17,13 +17,9 @@ dependencies {
     compileOnly("dev.folia", "folia-api", "1.20.1-R0.1-SNAPSHOT")
     compileOnly("com.purityvanilla", "pvLib", "1.0")
     compileOnly("net.luckperms", "api", "5.4")
-
-    implementation("org.mariadb.jdbc", "mariadb-java-client", "3.4.1")
-    implementation("com.zaxxer", "HikariCP", "5.1.0")
 }
 
 tasks.shadowJar {
-    dependsOn(tasks.build)
     archiveClassifier.set("") // This removes the default "-all" classifier
     archiveFileName.set("pvCore.jar")
 }

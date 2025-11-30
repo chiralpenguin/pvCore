@@ -4,7 +4,7 @@ import com.purityvanilla.pvcore.api.PVCoreAPI;
 import com.purityvanilla.pvcore.api.impl.PVCoreAPIProvider;
 import com.purityvanilla.pvcore.commands.*;
 import com.purityvanilla.pvcore.database.*;
-import com.purityvanilla.pvcore.database.migration.SchemaMigrator;
+import com.purityvanilla.pvcore.database.migration.MigrationHelper;
 import com.purityvanilla.pvcore.listeners.PlayerDeathListener;
 import com.purityvanilla.pvcore.listeners.PlayerJoinListener;
 import com.purityvanilla.pvcore.listeners.PlayerQuitListener;
@@ -13,7 +13,10 @@ import com.purityvanilla.pvcore.tabcompleters.LocationCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
 import com.purityvanilla.pvcore.tasks.CacheCleanTask;
 import com.purityvanilla.pvcore.tasks.SaveDataTask;
-import com.purityvanilla.pvcore.util.CacheHelper;
+import com.purityvanilla.pvlib.database.DataService;
+import com.purityvanilla.pvlib.database.DatabaseConnector;
+import com.purityvanilla.pvlib.database.SchemaDataService;
+import com.zaxxer.hikari.HikariConfig;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import org.bukkit.command.CommandExecutor;
@@ -37,14 +40,14 @@ public class PVCore extends JavaPlugin {
 
         // Connect to database
         getLogger().info("Connecting to database server...");
-        database = new DatabaseConnector(this);
+        HikariConfig dbConfig = getDatabaseConfig();
+        database = new DatabaseConnector(this ,dbConfig);
         getLogger().info("Successfully connected to database");
 
         // Initialise schema DataService and handle pending migrations
         dataServices = new HashMap<>();
         dataServices.put("schema", new SchemaDataService(this, database));
-        SchemaMigrator schemaMigrator = new SchemaMigrator(getSchemaData(), getLogger(), config, database);
-        schemaMigrator.handleMigrations();
+        MigrationHelper.handleMigrations(getSchemaData(), getLogger(), database);
 
         // Initialise remaining DataServices
         dataServices.put("player", new PlayerDataService(this, database));
@@ -159,5 +162,19 @@ public class PVCore extends JavaPlugin {
 
     private void closeDatabase() {
         database.getDataSource().close();
+    }
+
+    private HikariConfig getDatabaseConfig() {
+        HikariConfig dbConfig = new HikariConfig();
+        dbConfig.setJdbcUrl(this.config.getJdbcUrl());
+        dbConfig.setUsername(this.config.getDbUser());
+        dbConfig.setPassword(this.config.getDbPassword());
+        dbConfig.setMaximumPoolSize(this.config.getHikariMaxSize());
+        dbConfig.setMinimumIdle(this.config.getHikariMinIdle());
+        dbConfig.setIdleTimeout(this.config.getHikariTimeout());
+        dbConfig.setMaxLifetime(this.config.getHikariLifetime());
+        dbConfig.setDriverClassName("org.mariadb.jbdc.Driver");
+
+        return dbConfig;
     }
 }

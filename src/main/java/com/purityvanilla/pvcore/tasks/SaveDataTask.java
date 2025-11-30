@@ -1,6 +1,6 @@
 package com.purityvanilla.pvcore.tasks;
 
-import com.purityvanilla.pvcore.database.DataService;
+import com.purityvanilla.pvlib.database.DataService;
 
 import java.util.HashMap;
 

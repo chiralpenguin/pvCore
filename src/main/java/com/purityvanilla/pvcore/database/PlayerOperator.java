@@ -1,7 +1,9 @@
 package com.purityvanilla.pvcore.database;
 
 import com.purityvanilla.pvcore.player.CachedPlayer;
-import com.zaxxer.hikari.HikariJNDIFactory;
+import com.purityvanilla.pvlib.database.DatabaseConnector;
+import com.purityvanilla.pvlib.database.DatabaseOperator;
+import com.purityvanilla.pvlib.database.ResultSetProcessor;
 
 import java.sql.Timestamp;
 import java.util.*;

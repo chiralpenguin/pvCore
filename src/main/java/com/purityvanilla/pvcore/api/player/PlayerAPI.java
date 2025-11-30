@@ -1,12 +1,9 @@
 package com.purityvanilla.pvcore.api.player;
 
 import net.kyori.adventure.text.Component;
-import net.luckperms.api.node.types.PermissionNode;
 import org.bukkit.entity.Player;
 
 import java.sql.Timestamp;
-import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
