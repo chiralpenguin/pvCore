@@ -11,11 +11,11 @@ import com.purityvanilla.pvcore.listeners.PlayerQuitListener;
 import com.purityvanilla.pvcore.tabcompleters.GamemodeCompleter;
 import com.purityvanilla.pvcore.tabcompleters.LocationCompleter;
 import com.purityvanilla.pvcore.tabcompleters.TeleportCompleter;
-import com.purityvanilla.pvcore.tasks.CacheCleanTask;
-import com.purityvanilla.pvcore.tasks.SaveDataTask;
 import com.purityvanilla.pvlib.database.DataService;
 import com.purityvanilla.pvlib.database.DatabaseConnector;
 import com.purityvanilla.pvlib.database.SchemaDataService;
+import com.purityvanilla.pvlib.tasks.CacheCleanTask;
+import com.purityvanilla.pvlib.tasks.SaveDataTask;
 import com.zaxxer.hikari.HikariConfig;
 import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
@@ -173,7 +173,7 @@ public class PVCore extends JavaPlugin {
         dbConfig.setMinimumIdle(this.config.getHikariMinIdle());
         dbConfig.setIdleTimeout(this.config.getHikariTimeout());
         dbConfig.setMaxLifetime(this.config.getHikariLifetime());
-        dbConfig.setDriverClassName("org.mariadb.jbdc.Driver");
+        dbConfig.setDriverClassName("org.mariadb.jdbc.Driver");
 
         return dbConfig;
     }
