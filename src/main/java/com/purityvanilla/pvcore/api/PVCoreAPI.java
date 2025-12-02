@@ -1,6 +1,7 @@
 package com.purityvanilla.pvcore.api;
 
 import com.purityvanilla.pvcore.api.player.PlayerAPI;
+import com.purityvanilla.pvlib.database.DatabaseConnector;
 import com.purityvanilla.pvlib.util.FormatCodeParser;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -8,6 +9,8 @@ import org.bukkit.entity.Player;
 public interface PVCoreAPI {
 
     PlayerAPI getPlayerAPI();
+
+    DatabaseConnector getDatabase();
 
     /**
      * Parses a player-submitted string for legacy ('&') format codes and returns a permission-based formatted Component

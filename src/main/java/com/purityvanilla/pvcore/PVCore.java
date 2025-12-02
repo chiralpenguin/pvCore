@@ -57,7 +57,7 @@ public class PVCore extends JavaPlugin {
         luckPerms = LuckPermsProvider.get();
 
         // Register api provider as Bukkit service
-        PVCoreAPIProvider apiProvider = new PVCoreAPIProvider(this);
+        PVCoreAPIProvider apiProvider = new PVCoreAPIProvider(this, database);
         apiInstance = apiProvider;
         getServer().getServicesManager().register(PVCoreAPI.class, apiProvider, this, ServicePriority.Normal);
 

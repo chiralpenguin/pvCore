@@ -5,6 +5,7 @@ import com.purityvanilla.pvcore.PVCore;
 import com.purityvanilla.pvcore.api.PVCoreAPI;
 import com.purityvanilla.pvcore.api.player.PlayerAPI;
 import com.purityvanilla.pvcore.api.player.impl.PlayerAPIProvider;
+import com.purityvanilla.pvlib.database.DatabaseConnector;
 import com.purityvanilla.pvlib.util.FormatCodeParser;
 import net.kyori.adventure.text.Component;
 import org.bukkit.entity.Player;
@@ -14,15 +15,22 @@ import java.util.function.Supplier;
 public class PVCoreAPIProvider implements PVCoreAPI {
     private final Supplier<Config> configSupplier;
     private final PlayerAPI playerAPI;
+    private final DatabaseConnector database;
 
-    public PVCoreAPIProvider(PVCore plugin) {
+    public PVCoreAPIProvider(PVCore plugin, DatabaseConnector database) {
         this.configSupplier = plugin::config;
         this.playerAPI = new PlayerAPIProvider(plugin);
+        this.database = database;
     }
 
     @Override
     public PlayerAPI getPlayerAPI() {
         return playerAPI;
+    }
+
+    @Override
+    public DatabaseConnector getDatabase() {
+        return database;
     }
 
     @Override
