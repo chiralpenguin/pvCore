@@ -8,6 +8,7 @@ import com.purityvanilla.pvcore.api.player.impl.PlayerAPIProvider;
 import com.purityvanilla.pvlib.database.DatabaseConnector;
 import com.purityvanilla.pvlib.util.FormatCodeParser;
 import net.kyori.adventure.text.Component;
+import net.luckperms.api.LuckPerms;
 import org.bukkit.entity.Player;
 
 import java.util.function.Supplier;
@@ -16,11 +17,13 @@ public class PVCoreAPIProvider implements PVCoreAPI {
     private final Supplier<Config> configSupplier;
     private final PlayerAPI playerAPI;
     private final DatabaseConnector database;
+    private final LuckPerms luckPerms;
 
     public PVCoreAPIProvider(PVCore plugin, DatabaseConnector database) {
         this.configSupplier = plugin::config;
         this.playerAPI = new PlayerAPIProvider(plugin);
         this.database = database;
+        this.luckPerms = plugin.getLuckPerms();
     }
 
     @Override
@@ -31,6 +34,11 @@ public class PVCoreAPIProvider implements PVCoreAPI {
     @Override
     public DatabaseConnector getDatabase() {
         return database;
+    }
+
+    @Override
+    public LuckPerms getLuckPerms() {
+        return luckPerms;
     }
 
     @Override
