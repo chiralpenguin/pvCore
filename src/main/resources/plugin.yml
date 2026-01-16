@@ -92,7 +92,7 @@ commands:
     description: Kills the player
     usage: /suicide
     permission: pvcore.suicide
-    aliases: [kill]
+#    aliases: [kill] - Disabled due to conflict with minecraft:kill
   teleport:
     description: Teleports the player to another player or position
     usage: /teleport <player/coordinates> [world]
