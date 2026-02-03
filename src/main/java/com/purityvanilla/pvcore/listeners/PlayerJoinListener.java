@@ -2,6 +2,10 @@ package com.purityvanilla.pvcore.listeners;
 
 import com.purityvanilla.pvcore.player.CachedPlayer;
 import com.purityvanilla.pvcore.PVCore;
+import com.purityvanilla.pvlib.util.FormatCodeParser;
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.minimessage.MiniMessage;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,9 +39,24 @@ public class PlayerJoinListener implements Listener {
         // Update CachedPlayer lastSeen and set name to current username
        cPlayer.update(player.getName());
 
-        // Set displayname to nickname if it exists
         if (cPlayer.hasNick()) {
-            player.displayName(cPlayer.nickname());
+            applyNickname(cPlayer, player);
+        }
+    }
+
+    private void applyNickname(CachedPlayer cPlayer, Player player) {
+        // Ensure player still has permission for any format codes present in nickname
+        Component nickname = cPlayer.nickname();
+        String nickString = LegacyComponentSerializer.legacyAmpersand().serialize(nickname);
+        Component updatedNickname = FormatCodeParser.parseString(nickString, player, FormatCodeParser.Context.NICKNAME);
+
+        if (!nickname.equals(updatedNickname)) {
+            cPlayer.setNickname(updatedNickname);
+        }
+
+        // Set displayname to nickname if it exists and the player is permitted
+        if (player.hasPermission("pvcore.nickname")) {
+            player.displayName(updatedNickname);
         }
     }
 }
