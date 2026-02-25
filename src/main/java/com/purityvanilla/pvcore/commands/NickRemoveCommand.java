@@ -19,7 +19,7 @@ public class NickRemoveCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command command, @NotNull String label, @NotNull String[] args) {
-        if (args.length == 0) {
+        if (args.length == 0 || !sender.hasPermission("pvcore.nickname.remove.others")) {
             if (CommandGuard.senderNotPlayer(sender, plugin.config().getMessage("nick-remove-usage"))) return true;
 
             Player player = (Player) sender;
