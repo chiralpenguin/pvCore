@@ -19,9 +19,11 @@ dependencies {
     compileOnly("net.luckperms", "api", "5.4")
 }
 
+val shadowJarName = "pvCore.jar"
+
 tasks.shadowJar {
     archiveClassifier.set("") // This removes the default "-all" classifier
-    archiveFileName.set("pvCore.jar")
+    archiveFileName.set(shadowJarName);
 }
 
 val testServerPluginsPath: String by project
@@ -29,7 +31,7 @@ tasks {
     val copyToServer by registering(Copy::class, fun Copy.() {
             dependsOn("shadowJar")
             from(layout.buildDirectory.file("libs"))
-            include("pvCore.jar") // Change to "plugin-version.jar" if no shadowing
+            include(shadowJarName) // Change to "plugin-version.jar" if no shadowing
             into(file(testServerPluginsPath)) // Use the externalized path here
         })
 }
