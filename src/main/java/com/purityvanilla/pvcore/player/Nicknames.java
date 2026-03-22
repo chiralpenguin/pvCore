@@ -29,7 +29,7 @@ public class Nicknames {
 
            String plainTextNick = PlainTextComponentSerializer.plainText().serialize(cPlayer.nickname());
            nickname = nickname.toLowerCase();
-           if (plainTextNick.toLowerCase().contains(nickname)) {
+           if (plainTextNick.toLowerCase().contains(nickname) && !Vanish.isVanished(player)) {
                 matchingPlayers.add(cPlayer);
            }
         }

@@ -3,6 +3,7 @@ package com.purityvanilla.pvcore.commands;
 import com.purityvanilla.pvcore.player.CachedPlayer;
 import com.purityvanilla.pvcore.player.Nicknames;
 import com.purityvanilla.pvcore.PVCore;
+import com.purityvanilla.pvcore.player.Vanish;
 import com.purityvanilla.pvlib.commands.CommandGuard;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.minimessage.tag.resolver.Placeholder;
@@ -32,9 +33,9 @@ public class RealnameCommand implements CommandExecutor {
                 plugin.getServer().getOnlinePlayers(), plugin.getPlayerData()
         );
 
-        // Add any players whose username matches the search string
+        // Add any players whose username matches the search string as long as they are not vanished
         for (Player player : plugin.getServer().getOnlinePlayers()) {
-            if (player.getName().toLowerCase().contains(nickname.toLowerCase())) {
+            if (player.getName().toLowerCase().contains(nickname.toLowerCase()) && !Vanish.isVanished(player)) {
                 matchingPlayers.add(plugin.getPlayerData().getPlayer(player.getUniqueId()));
             }
         }
